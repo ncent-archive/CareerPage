@@ -153,10 +153,20 @@ body {
 }
 
 .positionContainer {
+  width: 100%;
+  border-bottom: 1px solid #e1e3e8;
+}
+
+.positionDefaultContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  padding: 24px 0px;
+}
+
+.positionDefaultContainer:hover {
+  color: #0366d6;
 }
 
 .positionOpenings {
@@ -164,8 +174,7 @@ body {
   flex-direction: row;
 }
 
-.positionName,
-.positionOpeningsText {
+.positionName, .positionOpeningsText {
   font-size: 19px;
   font-weight: 400;
   color: #586069;
@@ -185,4 +194,10 @@ body {
 
 .positionArrowHidden {
   display: none;
+}
+
+.positionsList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
