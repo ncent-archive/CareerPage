@@ -1,0 +1,188 @@
+body {
+  margin: 0px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  line-height: 1.5;
+}
+
+.headerContainer {
+  width: 100vw;
+  background-color: #24292e;
+  color: white;
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* padding: 12px 0px; */
+}
+
+.headerMain {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.headerItems {
+  display: flex;
+  flex-direction: row;
+}
+
+.headerItem {
+  padding: 5px;
+}
+
+.headerItemRowEnd {
+  padding-right: 0px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 48px 16px;
+  max-width: 1012px;
+}
+
+.mainHeader {
+  font-size: 40px;
+  text-align: center;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, Helvetica;
+  font-weight: 500;
+  line-height: 1.25;
+  margin-bottom: 24px;
+}
+
+.mainDescription {
+  font-size: 21px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.rolesAnchorsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 54px;
+}
+
+.role {
+  font-size: 18px;
+  font-weight: 300;
+  text-decoration: unset;
+  color: #0366d6;
+}
+
+.moreInfo {
+  margin-bottom: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.infoIcon {
+  width: 106px;
+  height: 80px;
+  background-color: black;
+  margin-bottom: 16px;
+}
+
+.infoHeader {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.infoText {
+  font-size: 14px;
+  color: #586069;
+  margin-bottom: 10px;
+}
+
+.divider {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.dividerLine {
+  border-bottom: 1px solid #dfe2e5;
+  width: 90vw;
+  max-width: 300px;
+}
+
+.disclaimer {
+  text-align: center;
+  font-size: 14px;
+  color: #586069;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.positionsContainer {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.positionsHeader {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 32px;
+}
+
+.positions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+}
+
+.positionContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.positionOpenings {
+  display: flex;
+  flex-direction: row;
+}
+
+.positionName,
+.positionOpeningsText {
+  font-size: 19px;
+  font-weight: 400;
+  color: #586069;
+}
+
+.positionOpeningsText {
+  margin-right: 14px;
+}
+
+.positionArrowContainer {
+  display: flex;
+}
+
+.positionArrow {
+  align-self: center;
+}
+
+.positionArrowHidden {
+  display: none;
+}
