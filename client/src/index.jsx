@@ -6,29 +6,25 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      positions: {
+        Engineering: [{
+          jobTitle: "Senior Back-end Engineer",
+          location: "Redwood City, CA"
+        }, {
+          jobTitle: "Senior Kotlin Engineer",
+          location: "Remote"
+        }],
+        Finance: [{
+          jobTitle: "Marketing Assistant",
+          location: "Remote"
+        }]
+      }
     }
     //bindings
-    this.arrowSwitch = this.arrowSwitch.bind(this);
 
   }
   //functions
 
-  arrowSwitch(e) {
-    if (e.target.classList.contains("positionArrowUp")) {
-      e.target.classList.add("positionArrowDown");
-      e.target.classList.remove("positionArrowUp");
-      e.target.innerHTML = `<svg class="positionArrow arrowDown" viewBox="0 0 10 16" version="1.1" width="12" height="20">
-        <path fill-rule="evenodd" d="M10 10l-1.5 1.5L5 7.75 1.5 11.5 0 10l5-5 5 5z"></path>
-      </svg>`;
-    } else {
-      e.target.classList.add("positionArrowUp");
-      e.target.classList.remove("positionArrowDown");
-      e.target.innerHTML = `<svg class="positionArrow arrowUp" viewBox="0 0 10 16" version="1.1" width="12" height="20">
-        <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"></path>
-      </svg>`;
-    }
-  }
 
   render() {
     return (
@@ -169,26 +165,9 @@ class App extends React.Component {
             <div className="positionsHeader">
               Open Positions
             </div>
-            {/* <div className="positions">
-              <div className="position">
-                <div className="positionName">
-                  Engineering
-                </div>
-                <div className="positionOpenings">
-                  <span className="positionOpeningsText">
-                    3 openings
-                  </span>
-                  <span className="positionArrowContainer">
-                    <span className="positionArrowUp" onClick={this.arrowSwitch}>
-                      <svg className="positionArrow arrowUp" viewBox="0 0 10 16" version="1.1" width="12" height="20">
-                        <path fillRule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"></path>
-                      </svg>
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div> */}
-            <Positions />
+            {Object.keys(this.state.positions).map((jobType, i) => {
+              return <Positions jobType={jobType} data={this.state.positions[jobType]} key={i} />
+            })}
           </div>
 
         </div>

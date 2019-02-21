@@ -152,10 +152,11 @@ body {
   max-width: 900px;
 }
 
-.position {
+.positionContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
 }
 
 .positionOpenings {
