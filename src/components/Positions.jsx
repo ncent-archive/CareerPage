@@ -15,6 +15,7 @@ class Positions extends React.Component {
   //functions
 
   handleExpansion(e) {
+    e.stopPropagation();
     this.setState({ arrowUp: !this.state.arrowUp });
     this.setState({ renderListing: !this.state.renderListing });
   }
