@@ -65,6 +65,7 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  padding-bottom: 54px;
 }
 
 .role {
@@ -75,7 +76,7 @@ body {
 }
 
 .moreInfo {
-  margin-bottom: 32px;
+  margin-bottom: 3px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -85,12 +86,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  padding-bottom: 40px;
 }
 
 .infoIcon {
   width: 106px;
   height: 80px;
   background-color: black;
+  margin-bottom: 16px;
 }
 
 .infoHeader {
@@ -106,6 +110,77 @@ body {
   margin-bottom: 10px;
 }
 
-.positions {
+.divider {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.dividerLine {
+  border-bottom: 1px solid #dfe2e5;
+  width: 90vw;
+  max-width: 300px;
+}
+
+.disclaimer {
+  text-align: center;
+  font-size: 14px;
+  color: #586069;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.positionsContainer {
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.positionsHeader {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 32px;
+}
+
+.positions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+}
+
+.position {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.positionOpenings {
+  display: flex;
+  flex-direction: row;
+}
+
+.positionName, .positionOpeningsText {
+  font-size: 19px;
+  font-weight: 400;
+  color: #586069;
+}
+
+.positionOpeningsText {
+  margin-right: 14px;
+}
+
+.positionArrowContainer {
+  display: flex;
+}
+
+.positionArrow {
+  align-self: center;
+}
+
+.positionArrowHidden {
+  display: none;
 }
