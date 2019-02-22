@@ -1,9 +1,11 @@
 //setting up redux store
-import {createStore} from "redux";
+import {createStore, applyMiddleware} from "redux";
 import reducer from "./../reducers/combinedReducer.js";
+import defaultState from "./../reducers/defaultState.json";
+import {logger} from "redux-logger";
 
 function initializeStore() {
-  return createStore(reducer);
+  return createStore(reducer, defaultState, applyMiddleware(logger));
 }
 
 export default initializeStore;
