@@ -28,7 +28,8 @@ class JobDetails extends React.Component {
 
   parseParams() {
     let obj = {};
-    let paramStr = window.location.href.split("?")[1];
+    let paramStr = window.location.href.split("?")[1].split(
+      "#")[0];
     paramStr.split("&").forEach(pair => {
       let split = pair.split("=");
       obj[split[0]] = split[1];
@@ -119,9 +120,9 @@ class JobDetails extends React.Component {
           </div>
 
           <div className="moreInfoPs">
-            {this.state.extraParas.map(el => {
+            {this.state.extraParas.map((el, i) => {
               return (
-                <div className="moreInfoP">
+                <div className="moreInfoP" key={i}>
                   <div className="moreInfoPHeader">
                     {el.header}
                   </div>
