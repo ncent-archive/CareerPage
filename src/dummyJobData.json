@@ -1,0 +1,109 @@
+{
+  "statusCode": 200,
+  "body": {
+    "createdAt": "2019-01-24T12:36:40.636-08:00",
+    "updatedAt": "null",
+    "deletedAt": "null",
+    "parentChallenge": "null",
+    "challengeSettings": {
+      "createdAt": "2019-01-24T12:36:40.630-08:00",
+      "updatedAt": "null",
+      "deletedAt": "null",
+      "name": "Senior Kotlin Engineer",
+      "description": "GitHub is looking for engineers to join our Database Infrastructure team. We are a team passionate about the availability, performance and stability of the databases that power GitHub. As a database infrastructure engineer, you will focus on crafting the next generation of cluster automation powering MySQL at GitHub, improving the speed at which we iterate and build new things.\n\nThe Infrastructure team is highly distributed and we thrive in an environment of remote work and asynchronous communication. You have strong written communication skills and are able to develop working relationships with coworkers in locations around the globe. As a member of our team, you'll always be challenged to solve unique and interesting problems that have real impact on how the world builds software.",
+      "imageUrl": "TESTimageUrl0",
+      "sponsorName": "nCent Labs",
+      "expiration": "2019-01-25T12:36:40.623-08:00",
+      "shareExpiration": "2019-01-25T12:36:40.623-08:00",
+      "admin": 1,
+      "offChain": false,
+      "maxShares": 100,
+      "maxRewards": "null",
+      "maxDistributionFeeReward": "null",
+      "maxSharesPerReceivedShare": "null",
+      "maxDepth": "null",
+      "maxNodes": "null"
+    },
+    "subChallenges": [],
+    "completionCriteria": {
+      "createdAt": "2019-01-24T12:36:40.635-08:00",
+      "updatedAt": "null",
+      "deletedAt": "null",
+      "address": "[B@5320f6f0",
+      "reward": {
+        "createdAt": "2019-01-24T12:36:40.635-08:00",
+        "updatedAt": "null",
+        "deletedAt": "null",
+        "type": {
+          "createdAt": "2019-01-24T12:36:40.635-08:00",
+          "updatedAt": "null",
+          "deletedAt": "null",
+          "audience": "PROVIDENCE",
+          "type": "EVEN"
+        },
+        "pool": {
+          "createdAt": "2019-01-24T12:36:40.635-08:00",
+          "updatedAt": "null",
+          "deletedAt": "null",
+          "cryptoKeyPair": {
+            "createdAt": "2019-01-24T12:36:40.635-08:00",
+            "updatedAt": "null",
+            "deletedAt": "null",
+            "publicKey": "[B@5ed940c1"
+          },
+          "transactions": []
+        },
+        "metadatas": [{
+          "minQuals": [
+            "At least 1 year of Kotlin experience", 
+            "You are hard-working", 
+            "Background in computer-science",
+            "Familiar with system design and architecture"
+          ],
+          "prefQuals": [
+            "5+ years of professional Kotlin experience",
+            "3+ years of professional PostgreSQL experience",
+            "Experience with Docker, AWS, and Redis"
+          ],
+          "location": "Remote (US Only)"
+        }]
+      },
+      "prereq": []
+    },
+    "cryptoKeyPair": {
+      "createdAt": "2019-01-24T12:36:40.630-08:00",
+      "updatedAt": "null",
+      "deletedAt": "null",
+      "publicKey": "[B@119733e9"
+    },
+    "distributionFeeReward": {
+      "createdAt": "2019-01-24T12:36:40.631-08:00",
+      "updatedAt": "null",
+      "deletedAt": "null",
+      "type": {
+        "createdAt": "2019-01-24T12:36:40.630-08:00",
+        "updatedAt": "null",
+        "deletedAt": "null",
+        "audience": "PROVIDENCE",
+        "type": "SINGLE"
+      },
+      "pool": {
+        "createdAt": "2019-01-24T12:36:40.630-08:00",
+        "updatedAt": "null",
+        "deletedAt": "null",
+        "cryptoKeyPair": {
+          "createdAt": "2019-01-24T12:36:40.630-08:00",
+          "updatedAt": "null",
+          "deletedAt": "null",
+          "publicKey": "[B@15185f88"
+        },
+        "transactions": []
+      },
+      "metadatas": []
+    }
+  },
+  "headers": {
+    "X-Powered-By": "AWS Lambda & Serverless"
+  },
+  "base64Encoded": false
+}

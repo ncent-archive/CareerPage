@@ -221,3 +221,40 @@ body {
 .positionItemTitle:hover {
   text-decoration: underline;
 }
+
+.spinner {
+  /* z-index: 100000; */
+  height: 100px;
+  width: 100px;
+  border: 6px solid;
+  border-color: transparent black black black;
+  border-radius: 75px;
+  animation: rotate 1.2s infinite linear, fadeIn 2.5s 1 linear;
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 45%;
+}
+
+.spinnerContainer {
+  width: 100vw;
+  height: calc(100vh - 110px);
+  position: relative;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
