@@ -8,14 +8,26 @@ class App extends React.Component {
       positions: {
         Engineering: [{
           jobTitle: "Senior Back-end Engineer",
-          location: "Redwood City, CA"
+          location: "Redwood City, CA",
+          link: "/detail?jobId=1&referralCode=86239304"
         }, {
           jobTitle: "Senior Kotlin Engineer",
-          location: "Remote"
+          location: "Remote",
+          link: "/detail?jobId=2&referralCode=86239304"
+        }, {
+          jobTitle: "Senior Front-end Engineer",
+          location: "Remote",
+          link: "/detail?jobId=3&referralCode=86239304"
         }],
         Finance: [{
-          jobTitle: "Marketing Assistant",
-          location: "Remote"
+          jobTitle: "Accounting Assistant",
+          location: "Remote",
+          link: "/detail?jobId=4&referralCode=86239304"
+        }], 
+        Marketing: [{
+          jobTitle: "Marketing Manager",
+          location: "Remote (US)",
+          link: "/detail?jobId=5&referralCode=86239304"
         }]
       }
     }

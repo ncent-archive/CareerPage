@@ -201,3 +201,23 @@ body {
   flex-direction: column;
   width: 100%;
 }
+
+.positionItemContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.positionItemTitleContainer {
+  margin-bottom: 4px;
+}
+
+.positionItemTitle {
+  text-decoration: none;
+  width: min-content;
+}
+
+.positionItemTitle:hover {
+  text-decoration: underline;
+}

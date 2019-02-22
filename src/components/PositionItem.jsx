@@ -13,8 +13,15 @@ class PositionItem extends React.Component {
 
   render() {
     return (
-      <div>
-        position item
+      <div className="positionItemContainer">
+        <span className="positionItemTitleContainer">
+          <a className="positionItemTitle" href={this.props.link}>
+            {this.props.jobTitle}
+          </a>
+        </span>
+        <span className="positionItemLocation">
+          <span>{this.props.location}</span>
+        </span>
       </div>
     )
   }

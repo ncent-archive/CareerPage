@@ -42,7 +42,7 @@ class Positions extends React.Component {
     if (this.state.renderListing) {
       return this.props.data.map((el, i) => {
         return (
-          <PositionItem jobTitle={el.jobTitle} location={el.location} key={i} />
+          <PositionItem jobTitle={el.jobTitle} location={el.location} link={el.link} key={i} />
         )
       })
     }
