@@ -5,13 +5,18 @@ class JobDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spinner: true
+      spinner: true,
+      name: "",
+      description: "",
+      sponsor: "",
+      minQuals: [],
+      prefQuals: [],
+      location: ""
     }
     //bindings
     this.parseParams = this.parseParams.bind(this);
     this.dummyAPICall = this.dummyAPICall.bind(this);
-    this.referralScroll = this.referralScroll.bind(this);
-    
+
   }
   //functions
 
@@ -33,18 +38,16 @@ class JobDetails extends React.Component {
 
   dummyAPICall() {
     //simulating load time
-    setTimeout(this.setState.bind(this), 2500, {
+    setTimeout(this.setState.bind(this), 10, {
       spinner: false,
       name: dummyData.body.challengeSettings.name,
       description: dummyData.body.challengeSettings.description,
+      sponsor: dummyData.body.challengeSettings.sponsorName,
       minQuals: dummyData.body.completionCriteria.reward.metadatas[0].minQuals,
       prefQuals: dummyData.body.completionCriteria.reward.metadatas[0].prefQuals,
-      location: dummyData.body.completionCriteria.reward.metadatas[0].location
-    })
-  }
-
-  referralScroll(e) {
-    console.log("scrolling");
+      location: dummyData.body.completionCriteria.reward.metadatas[0].location,
+      extraParas: dummyData.body.completionCriteria.reward.metadatas[0].extraParas
+    });
   }
 
   render() {
@@ -58,10 +61,80 @@ class JobDetails extends React.Component {
     } else {
       return (
         <div className="jobDetailContainer">
-          <div className="logoAndApplyBtn">
-            <div className="logo"></div>
-            <button onClick={this.referralScroll}>Refer Now</button>
+
+          <div className="logoAndReferBtn">
+            <div className="logo">
+              {/* Placeholder for icon */}
+            </div>
+            <a className="referA" href="#refer">Refer Now</a>
           </div>
+
+          <div className="jobDetailContentContainer">
+            <div className="jobTitle">
+              {this.state.name}
+            </div>
+            <div className="jobSponsor">
+              at {this.state.sponsor}
+            </div>
+            <div className="jobLocation">
+              {this.state.location}
+            </div>
+            <div className="jobDescription">
+              {this.state.description.replace(/\\n/g, <br />)}
+            </div>
+          </div>
+
+          <div className="qualificationsContainer">
+
+            <div className="qualContainer">
+              <div className="qualsHeader">
+                Minimum Qualifications:
+              </div>
+              <div className="qualsListing">
+                {this.state.minQuals.map(str => {
+                  return (
+                    <div className="qualText">
+                      • <span className="qualTextStr">{str}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            <div className="qualContainer">
+              <div className="qualsHeader">
+                Preferred Qualifications:
+              </div>
+              <div className="qualsListing">
+                {this.state.prefQuals.map(str => {
+                  return (
+                    <div className="qualText">
+                      • <span className="qualTextStr">{str}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          
+          </div>
+
+          <div className="moreInfoPs">
+            {this.state.extraParas.map(el => {
+              return (
+                <div className="moreInfoP">
+                  <div className="moreInfoPHeader">
+                    {el.header}
+                  </div>
+                  <div className="moreInfoPBody">
+                    {el.body}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          <iframe id="refer"></iframe>
+
         </div>
       )
     }

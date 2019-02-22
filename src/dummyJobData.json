@@ -65,7 +65,16 @@
             "3+ years of professional PostgreSQL experience",
             "Experience with Docker, AWS, and Redis"
           ],
-          "location": "Remote (US Only)"
+          "location": "Remote (US Only)",
+          "extraParas": [
+            {
+              "header": "Who We Are:",
+              "body": "GitHub is the developer company. Over 31 million people use GitHub to build amazing things together across 100 million repositories. We make it easier for developers to be developers: to work together, to solve challenging problems, to create the world’s most important technologies. We foster a collaborative community that can come together—as individuals and in teams—to create the future of software and make a difference in the world."
+            }, {
+              "header": "Why You Should Join:",
+              "body": "At GitHub, we constantly strive to create an environment that allows our employees (Hubbers) to do the best work of their lives. We've designed one of the coolest workspaces in San Francisco (HQ), where over half of our Hubbers work, snack, and create daily. The other half of our Hubbers work remotely in 18 countries across the globe.\n\nWe are also committed to keeping Hubbers healthy, motivated, focused and creative. We've designed our top-notch benefits program with these goals in mind. In a nutshell, we've built a place where we truly love working, we think you will too.\n\nGitHub is made up of people from a wide variety of backgrounds and lifestyles. We embrace diversity and invite applications from people of all walks of life. We don't discriminate against employees or applicants based on gender identity or expression, sexual orientation, race, religion, age, national origin, citizenship, disability, pregnancy status, veteran status, or any other differences. Also, if you have a disability, please let us know if there's any way we can make the interview process better for you; we're happy to accommodate!"
+            }
+          ]
         }]
       },
       "prereq": []
