@@ -5,7 +5,9 @@ import defaultState from "./../reducers/defaultState.json";
 import {logger} from "redux-logger";
 
 function initializeStore() {
-  return createStore(reducer, defaultState, applyMiddleware(logger));
+  return createStore(reducer, defaultState || {}, applyMiddleware(logger));
 }
 
-export default initializeStore;
+// export default initializeStore;
+export default createStore(reducer, defaultState || {}, applyMiddleware(logger));
+// export default createStore(reducer);

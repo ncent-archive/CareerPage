@@ -2,6 +2,9 @@
 
 export const FETCH_JOB_DATA = "FETCH_JOB_DATA";
 
-function fetchJobAction(obj) {
-  
+export function fetchJobAction(obj) {
+  return {
+    type: FETCH_JOB_DATA,
+    data: obj
+  };
 }
