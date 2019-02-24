@@ -153,10 +153,20 @@ body {
 }
 
 .positionContainer {
+  width: 100%;
+  border-bottom: 1px solid #e1e3e8;
+}
+
+.positionDefaultContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  padding: 24px 0px;
+}
+
+.positionDefaultContainer:hover {
+  color: #0366d6;
 }
 
 .positionOpenings {
@@ -164,8 +174,7 @@ body {
   flex-direction: row;
 }
 
-.positionName,
-.positionOpeningsText {
+.positionName, .positionOpeningsText {
   font-size: 19px;
   font-weight: 400;
   color: #586069;
@@ -185,4 +194,176 @@ body {
 
 .positionArrowHidden {
   display: none;
+}
+
+.positionsList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.positionItemContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.positionItemTitleContainer {
+  margin-bottom: 4px;
+}
+
+.positionItemTitle {
+  text-decoration: none;
+  width: min-content;
+}
+
+.positionItemTitle:hover {
+  text-decoration: underline;
+}
+
+.spinner {
+  /* z-index: 100000; */
+  height: 100px;
+  width: 100px;
+  border: 6px solid;
+  border-color: transparent black black black;
+  border-radius: 75px;
+  animation: rotate 1.2s infinite linear, fadeIn 2.5s 1 linear;
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 45%;
+}
+
+.spinnerContainer {
+  width: 100vw;
+  height: calc(100vh - 110px);
+  position: relative;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.jobDetailContainer {
+  padding: 20px 10px 100px 10px;
+  font-family: "Helvetica Neue", Helvetica, Arial, Helvetica, sans-serif;
+  max-width: 700px;
+  margin: auto;
+}
+
+.logoAndReferBtn {
+  height: 78px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.logo {
+  height: 75px;
+  width: 75px;
+  background-color: black;
+  border-radius: 50px;
+}
+
+.referA {
+  background: #2975CA;
+  font-weight: normal;
+  padding: 12px 20px 14px 20px;
+  font-size: 14px;
+  line-height: 17px;
+  border-radius: 3px;
+  color: white;
+  text-decoration: unset;
+}
+
+.referA:hover {
+  background-color: #0000bf;
+}
+
+.jobTitle {
+  margin: 10px 0px 0px 0px;
+  font-size: 28px;
+  font-weight: bolder;
+}
+
+.jobSponsor {
+  font-size: 16px;
+}
+
+.jobLocation {
+  font-size: 13px;
+  margin: 8px 0px;
+  color: #757575;
+}
+
+.jobDescription {
+  white-space: pre-line;
+  margin: 14px 0px;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.qualificationsContainer {
+
+}
+
+.qualContainer {
+
+}
+
+.qualsHeader {
+  font-size: 17px;
+  font-weight: bolder;
+  margin-bottom: 8px;
+}
+
+.qualsListing {
+  margin: 8px 0px;
+}
+
+.qualText {
+  margin-left: 20px;
+  line-height: 18px;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.qualTextStr {
+  margin-left: 6px;
+}
+
+.moreInfoPs {
+  margin-bottom: 60px;
+}
+
+.moreInfoP {
+  margin: 18px 0px;
+}
+
+.moreInfoPHeader {
+  font-size: 16px;
+  font-weight: bolder;
+  margin-bottom: 25px;
+}
+
+.moreInfoPBody {
+  font-size: 14px;
+  white-space: pre-line;
 }
