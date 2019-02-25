@@ -1,7 +1,8 @@
-//combining all reducers for export
-import { combineReducers } from "redux";
-import jobReducer from "./jobReducer.js";
+import {combineReducers} from "redux";
+import userReducer from "./userReducer.js";
+import challengeReducer from "./challengeReducer.js";
 
 export default combineReducers({
-  jobData: jobReducer
+    user: userReducer,
+    challenge: challengeReducer
 });
