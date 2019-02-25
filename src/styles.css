@@ -295,7 +295,7 @@ body {
 }
 
 .referA:hover {
-  background-color: #0000bf;
+  /* background-color: #0000bf; */
 }
 
 .jobTitle {
@@ -367,4 +367,70 @@ body {
 .moreInfoPBody {
   font-size: 14px;
   white-space: pre-line;
+}
+
+.referralModalContainer {
+  z-index: 5;
+  position: fixed;
+  display: flex;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(0, 0, 0, 0.28);
+}
+
+.referralModal {
+  z-index: 6;
+  height: calc(100% - 260px);
+  width: calc(100% - 125px);
+  max-height: 620px;
+  max-width: 450px;
+  padding: 45px 25px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: white;
+  text-align: center;
+  font-size: 22px;
+}
+
+.referralModalInputBtnWrapper {
+  margin-top: 15px;
+  position: relative;
+  top: 25px;
+}
+
+.referralModalInput {
+  height: 26px;
+  width: calc(100% - 26px);
+  border: 1px solid #00000061;
+  border-radius: 6px;
+  padding: 4px 12px;
+  color: black;
+  background-color: rgba(240, 248, 255, 0.23);
+  font-size: 17px;
+  margin: 15px 0px;
+}
+
+.referralModalInput::placeholder {
+  text-align: center;
+}
+
+.referralModalSendBtn {
+  width: 100%;
+  background-color: #3d3dff;
+  height: 35px;
+  color: white;
+  border-radius: 6px;
+  font-size: 17px;
+  border: 2px solid #00000057;
+  font-weight: 450;
+  letter-spacing: 1px;
+  margin: 15px 0px;
+}
+
+.referralModalSendBtn:hover {
+  background-color: #6060ff;
 }

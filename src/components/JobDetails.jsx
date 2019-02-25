@@ -2,12 +2,14 @@ import React from "react";
 import dummyData from "./../dummyJobData.json";
 import state from "./../store/initializeStore.js"
 import routes from "./../axiosRoutes.js";
+import ReferralModal from "./ReferralModal.jsx";
 
 class JobDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       spinner: true,
+      renderModal: false,
       name: "",
       description: "",
       sponsor: "",
@@ -18,6 +20,9 @@ class JobDetails extends React.Component {
     //bindings
     this.parseParams = this.parseParams.bind(this);
     this.dummyAPICall = this.dummyAPICall.bind(this);
+    this.renderModal = this.renderModal.bind(this);
+    this.triggerModalOn = this.triggerModalOn.bind(this);
+    this.triggerModalOff = this.triggerModalOff.bind(this);
 
   }
   //functions
@@ -58,6 +63,23 @@ class JobDetails extends React.Component {
     });
   }
 
+  triggerModalOn(e) {
+    this.setState({ renderModal: true });
+  }
+
+  triggerModalOff(e) {
+    e.stopPropagation();
+    if (this.state.renderModal) {
+      this.setState({ renderModal: false });
+    }
+  }
+
+  renderModal() {
+    if (this.state.renderModal) {
+      return <ReferralModal closeModal={this.triggerModalOff} />;
+    }
+  }
+
   render() {
     if (this.state.spinner) {
       return (
@@ -80,11 +102,13 @@ class JobDetails extends React.Component {
       return (
         <div className="jobDetailContainer">
 
+          {this.renderModal()}
+
           <div className="logoAndReferBtn">
             <div className="logo">
               {/* Placeholder for icon */}
             </div>
-            <a className="referA" href="#refer">Refer Now</a>
+            <a className="referA" onClick={this.triggerModalOn}>Refer Now</a>
           </div>
 
           <div className="jobDetailContentContainer">
