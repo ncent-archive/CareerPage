@@ -1,5 +1,7 @@
 import React from "react";
 import dummyData from "./../dummyJobData.json";
+import state from "./../store/initializeStore.js"
+import routes from "./../axiosRoutes.js";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -23,13 +25,18 @@ class JobDetails extends React.Component {
   componentWillMount() {
     let paramsObj = this.parseParams();
     this.setState(paramsObj);
-    this.dummyAPICall();
+
+    // this.dummyAPICall();
+    routes.getJob("dummyId").then(res => {
+      console.log("dummyCallReturned");
+      console.log("new state", state.getState());
+      this.setState({ spinner: false });
+    });
   }
 
   parseParams() {
     let obj = {};
-    let paramStr = window.location.href.split("?")[1].split(
-      "#")[0];
+    let paramStr = window.location.href.split("?")[1].split("#")[0];
     paramStr.split("&").forEach(pair => {
       let split = pair.split("=");
       obj[split[0]] = split[1];
@@ -60,6 +67,16 @@ class JobDetails extends React.Component {
         </div>
       )
     } else {
+      const jobState = state.getState();
+      const job = {
+        name: jobState.jobData.currentJob.challengeSettings.name,
+        description: jobState.jobData.currentJob.challengeSettings.description,
+        sponsor: jobState.jobData.currentJob.challengeSettings.sponsorName,
+        minQuals: jobState.jobData.currentJob.completionCriteria.reward.metadatas[0].minQuals,
+        prefQuals: jobState.jobData.currentJob.completionCriteria.reward.metadatas[0].prefQuals,
+        location: jobState.jobData.currentJob.completionCriteria.reward.metadatas[0].location,
+        extraParas: jobState.jobData.currentJob.completionCriteria.reward.metadatas[0].extraParas
+      }
       return (
         <div className="jobDetailContainer">
 
@@ -72,16 +89,16 @@ class JobDetails extends React.Component {
 
           <div className="jobDetailContentContainer">
             <div className="jobTitle">
-              {this.state.name}
+              {job.name}
             </div>
             <div className="jobSponsor">
-              at {this.state.sponsor}
+              at {job.sponsor}
             </div>
             <div className="jobLocation">
-              {this.state.location}
+              {job.location}
             </div>
             <div className="jobDescription">
-              {this.state.description.replace(/\\n/g, <br />)}
+              {job.description.replace(/\\n/g, <br />)}
             </div>
           </div>
 
@@ -92,9 +109,9 @@ class JobDetails extends React.Component {
                 Minimum Qualifications:
               </div>
               <div className="qualsListing">
-                {this.state.minQuals.map(str => {
+                {job.minQuals.map((str, i) => {
                   return (
-                    <div className="qualText">
+                    <div className="qualText" key={i}>
                       • <span className="qualTextStr">{str}</span>
                     </div>
                   )
@@ -107,9 +124,9 @@ class JobDetails extends React.Component {
                 Preferred Qualifications:
               </div>
               <div className="qualsListing">
-                {this.state.prefQuals.map(str => {
+                {job.prefQuals.map((str, i) => {
                   return (
-                    <div className="qualText">
+                    <div className="qualText" key={i}>
                       • <span className="qualTextStr">{str}</span>
                     </div>
                   )
@@ -120,7 +137,7 @@ class JobDetails extends React.Component {
           </div>
 
           <div className="moreInfoPs">
-            {this.state.extraParas.map((el, i) => {
+            {job.extraParas.map((el, i) => {
               return (
                 <div className="moreInfoP" key={i}>
                   <div className="moreInfoPHeader">
