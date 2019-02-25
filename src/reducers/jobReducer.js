@@ -12,7 +12,7 @@ export default function(state = defaultState, actionObj) {
     case jobActions.FETCH_JOB_DATA:
       return {
         ...state,
-        jobs: state.jobs.concat(actionObj.data)
+        currentJob: actionObj.data
       };
     default:
       return state;
