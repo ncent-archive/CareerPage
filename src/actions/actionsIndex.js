@@ -1,6 +1,7 @@
-//index of all actions for export
-const jobActions = require("./jobActions.js");
+const userActions = require("./userActions.js");
+const challengeActions = require("./challengeActions.js");
 
 module.exports = {
-  jobActions
+    userActions,
+    challengeActions
 };
