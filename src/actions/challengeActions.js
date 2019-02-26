@@ -31,7 +31,7 @@ export const createReferralCode = challengeId => ({
     challengeId
 });
 
-export const fetchReferralCdoe = challengeId => ({
+export const fetchReferralCode = challengeId => ({
     type: FETCH_REFERRAL_CODE,
     challengeId
 });
