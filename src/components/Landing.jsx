@@ -1,6 +1,7 @@
 import React from "react";
 import Positions from "./Positions.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+const apiUtil = require("./../util/apiUtil.js");
 
 class Landing extends React.Component {
   constructor(props) {
@@ -37,6 +38,10 @@ class Landing extends React.Component {
   }
   //functions
 
+  async componentWillMount() {
+    let challenges = await apiUtil.findAllChallenges();
+    console.log(challenges.body);
+  }
 
   render() {
     return (
