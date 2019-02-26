@@ -1,7 +1,7 @@
 {
   "company": {
     "name": "nCent Labs",
-    "iconUrl": "https://ncent.io/Applications/landingPage/img/ncent_header_300px_white.png",
+    "iconUrl": "https://ncent.io/Applications/landingPage/img/ncent_header_300px_black.png",
     "shareText": "SHARE this job, get upto $4k reward if ANYONE in your network (or network's network(s)) finds the hire!",
     "applyText": "",
     "totalUsdReward": 8000.00,

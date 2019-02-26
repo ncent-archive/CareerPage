@@ -508,11 +508,11 @@ body {
 
 .referralModalLoading {
   z-index: 6;
-  height: calc(100% - 380px);
+  height: calc(100% - 280px);
   width: calc(100% - 125px);
   max-height: 620px;
   max-width: 450px;
-  padding: 95px 25px;
+  padding: 45px 25px;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -523,6 +523,7 @@ body {
 
 .referralModalLoadingInformation {
   font-size: 26px;
+  margin-top: 20%;
 }
 
 .copyReferralLink {
