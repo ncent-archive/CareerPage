@@ -148,24 +148,10 @@ class JobDetails extends React.Component {
             <a className="referA" onClick={this.triggerModalOn}>Refer Now</a>
           </div>
 
-          <div className="jobTabs" ref={el => this.jobTabs = el}>
-            {jobState.subJobs.map((el, i) => {
-              const containerClass = i % 2 === 0 ? 
-              "jobTabContainer jobTabContainerRight" : 
-              "jobTabContainer jobTabContainerLeft";
-              return (
-                <div className={containerClass} key={i} style={{}}>
-                  <div className="jobTabLeftInactive"></div>
-                  <div className="jobTabInactive" key={i} onClick={(e) => {this.tabSwitch(e, i)}}>{el.title}</div>
-                  <div className="jobTabRightInactive"></div>
-                </div>
-              )
-            })}
-          </div>
-
           <div className="jobDetailContentContainer">
             <div className="jobTitle">
-              {jobState.company.jobTitle} - {jobState.subJobs[idx].title}
+              {jobState.company.jobTitle} 
+              {/* - {jobState.subJobs[idx].title} */}
             </div>
             <div className="jobSponsor">
               at {jobState.company.name}
@@ -180,6 +166,21 @@ class JobDetails extends React.Component {
                 )
               })}
             </div>
+          </div>
+
+          <div className="jobTabs" ref={el => this.jobTabs = el}>
+            {jobState.subJobs.map((el, i) => {
+              const containerClass = i % 2 === 0 ? 
+              "jobTabContainer jobTabContainerRight" : 
+              "jobTabContainer jobTabContainerLeft";
+              return (
+                <div className={containerClass} key={i} style={{}}>
+                  <div className="jobTabLeftInactive"></div>
+                  <div className="jobTabInactive" key={i} onClick={(e) => {this.tabSwitch(e, i)}}>{el.title}</div>
+                  <div className="jobTabRightInactive"></div>
+                </div>
+              )
+            })}
           </div>
 
           <div className="qualificationsContainer">
