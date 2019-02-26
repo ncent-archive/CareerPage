@@ -40,7 +40,7 @@ class Landing extends React.Component {
 
   async componentWillMount() {
     let challenges = await apiUtil.findAllChallenges();
-    console.log(challenges.body);
+    console.log(challenges);
   }
 
   render() {

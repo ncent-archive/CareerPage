@@ -2,12 +2,10 @@
 import {createStore, applyMiddleware} from "redux";
 import reducer from "./../reducers/combinedReducer.js";
 import defaultState from "./../reducers/defaultState.json";
-import {logger} from "redux-logger";
+import RootMiddleware from "./../middleware/root_middleware.js";
 
 function initializeStore() {
-  return createStore(reducer, defaultState || {}, applyMiddleware(logger));
+  return createStore(reducer, defaultState || {}, RootMiddleware);
 }
 
-// export default initializeStore;
-export default createStore(reducer, defaultState || {}, applyMiddleware(logger));
-// export default createStore(reducer);
+export default createStore(reducer, defaultState || {}, RootMiddleware);

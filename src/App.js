@@ -16,7 +16,6 @@ class App extends React.Component {
   //functions
 
   componentDidMount() {
-    console.log("<App /> mounted", this.props.store, this.props, store, JSON.stringify(store.getState()));
     store.dispatch({
       type: "FETCH_JOB_DATA",
       data: "dummyData"
