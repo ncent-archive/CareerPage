@@ -50,9 +50,9 @@ class Positions extends React.Component {
 
   render() {
     return (
-      <div className="positionContainer" onClick={this.handleExpansion}>
+      <div className="positionContainer">
 
-        <div className="positionDefaultContainer">
+        <div className="positionDefaultContainer" onClick={this.handleExpansion}>
           <div className="positionName">
             {this.props.jobType}
           </div>
