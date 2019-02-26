@@ -152,7 +152,7 @@ class ReferralModal extends React.Component {
 
   delay() {
     return new Promise((resolve, reject) => {
-      setTimeout(resolve, 2000);
+      setTimeout(resolve, 2200);
     })
   }
 
