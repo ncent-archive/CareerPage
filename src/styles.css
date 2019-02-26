@@ -382,7 +382,7 @@ body {
 
 .referralModal {
   z-index: 6;
-  height: calc(100% - 260px);
+  height: calc(100% - 280px);
   width: calc(100% - 125px);
   max-height: 620px;
   max-width: 450px;
@@ -399,7 +399,7 @@ body {
 .referralModalInputBtnWrapper {
   margin-top: 15px;
   position: relative;
-  top: 25px;
+  top: 20px;
 }
 
 .referralModalInput {
@@ -433,4 +433,56 @@ body {
 
 .referralModalSendBtn:hover {
   background-color: #6060ff;
+}
+
+.referralModalLinkAnchor {
+  font-size: 14px;
+  text-overflow: ellipsis;
+}
+
+.referralModalLoading {
+  z-index: 6;
+  height: calc(100% - 380px);
+  width: calc(100% - 125px);
+  max-height: 620px;
+  max-width: 450px;
+  padding: 95px 25px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: white;
+  text-align: center;
+}
+
+.referralModalLoadingInformation {
+  font-size: 26px;
+}
+
+.copyReferralLink {
+  width: 165px;
+  background-color: #3d3dff;
+  height: 35px;
+  color: white;
+  border-radius: 6px;
+  font-size: 17px;
+  border: 2px solid #00000057;
+  font-weight: 450;
+  letter-spacing: 1px;
+  margin: 15px 0px;
+  align-self: center;
+}
+
+.spinnerCode {
+  /* z-index: 100000; */
+  height: 100px;
+  width: 100px;
+  border: 6px solid;
+  border-color: transparent black black black;
+  border-radius: 75px;
+  animation: rotate 1.2s infinite linear, fadeIn 1.5s 1 linear;
+  margin: auto;
+  /* position: absolute;
+  left: calc(50% - 50px);
+  top: calc(50% - 150px); */
 }

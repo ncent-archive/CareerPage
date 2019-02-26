@@ -76,7 +76,7 @@ class JobDetails extends React.Component {
 
   renderModal() {
     if (this.state.renderModal) {
-      return <ReferralModal closeModal={this.triggerModalOff} />;
+      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} />;
     }
   }
 
