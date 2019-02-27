@@ -3,13 +3,14 @@ export const CREATE_USER = "CREATE_USER";
 export const SEND_OTP = "SEND_OTP";
 export const LOGIN_USER = "LOGIN_USER";
 export const RECEIVE_USER = "RECEIVE_USER";
+export const LOGGED_IN_USER = "LOGGED_IN_USER";
 
 export const fetchUser = userId => ({
     type: FETCH_USER,
     userId
 });
 
-export const createUser = (email, firstname, lastname) => ({
+export const createUser = (email, firstname="firstName", lastname="lastName") => ({
     type: CREATE_USER,
     email,
     firstname,
@@ -31,3 +32,7 @@ export const receiveUser = userData => ({
     type: RECEIVE_USER,
     userData
 });
+
+export const loggedInUser = () => ({
+    type: LOGGED_IN_USER
+})

@@ -1,8 +1,9 @@
 import React from "react";
 import dummyData from "./../dummyJobData.json";
-import state from "./../store/initializeStore.js"
 import routes from "./../axiosRoutes.js";
 import ReferralModal from "./ReferralModal.jsx";
+import store from "./../store/initializeStore.js";
+import { fetchChallenge } from "./../actions/challengeActions.js";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -27,23 +28,43 @@ class JobDetails extends React.Component {
     this.tabSwitch = this.tabSwitch.bind(this);
     this.imgError = this.imgError.bind(this);
     this.setTabs = this.setTabs.bind(this);
+    this.getChallenge = this.getChallenge.bind(this);
+    this.handleGetChallenge = this.handleGetChallenge.bind(this);
 
   }
   //functions
 
   componentWillMount() {
     let paramsObj = this.parseParams();
-    this.setState(paramsObj);
+    this.setState(paramsObj, this.handleGetChallenge);
 
     // this.dummyAPICall();
-    routes.getJob("dummyId").then(res => {
-      this.setState({ spinner: false });
-      this.setTabs();
-    });
+    // routes.getJob("dummyId").then(res => {
+    //   this.setState({ spinner: false });
+    //   this.setTabs();
+    // });
 
     // setTimeout(function() {
     //   this.setState({ spinner: false });
     // }.bind(this), 2000);
+
+    // let obj = await this.getChallenge(); 
+    // store.dispatch(fetchChallenge(this.state.jobId));
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.received && this.props.received) this.setTabs();
+  }
+
+  getChallenge() {
+    return new Promise((resolve, reject) => {
+      resolve(fetchChallenge(this.state.jobId));
+    })
+  }
+
+  async handleGetChallenge() {
+    let obj = await this.getChallenge();
+    store.dispatch(obj);
   }
 
   setTabs() {
@@ -97,7 +118,7 @@ class JobDetails extends React.Component {
 
   renderModal() {
     if (this.state.renderModal) {
-      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} />;
+      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} user={this.props.user }/>;
     }
   }
 
@@ -125,7 +146,11 @@ class JobDetails extends React.Component {
   }
 
   render() {
-    if (this.state.spinner) {
+    const jobState = this.props.challengeData;
+    const idx = this.state.subIdx;
+
+    if (!this.props.received) {
+      console.log("spinner condition", this.props.challengeData);
       return (
         <div className="spinnerContainer">
           <div className="spinner">
@@ -133,8 +158,6 @@ class JobDetails extends React.Component {
         </div>
       )
     } else {
-      const jobState = state.getState().challenge.challengeData;
-      const idx = this.state.subIdx;
 
       return (
         <div className="jobDetailContainer">

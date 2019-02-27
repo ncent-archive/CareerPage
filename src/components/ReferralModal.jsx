@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  createUser,
+  sendOTP,
+  loginUser 
+} from "./../actions/userActions.js";
+import store from "./../store/initializeStore.js";
+
+const apiUtil = require("./../util/apiUtil.js");
 
 class ReferralModal extends React.Component {
   constructor(props) {
@@ -25,6 +33,25 @@ class ReferralModal extends React.Component {
 
   }
   //functions
+
+  async componentDidUpdate(prevProps, prevState) {
+
+    //user upserted, now id is accessible
+    if (!prevProps.user.userData.userCreated && this.props.user.userData.userCreated) {
+      store.dispatch(sendOTP(this.props.user.userData.Id)) //ID finish
+    }
+
+    //code has been verified
+    if (!prevProps.user.userData.loggedIn && this.props.user.userData.loggedIn) {
+      let referralNum = await apiUtil.createReferralCode(this.props.jobId);
+      this.setState({ referralNum: referralNum }, function () {
+        this.setState({ referralLink: this.generateReferralLink() }, function () {
+          this.setState({ modalStage: "displayLink" })
+        })
+      })
+    }
+
+  }
 
   renderModalContent() {
     switch(this.state.modalStage) {
@@ -107,13 +134,20 @@ class ReferralModal extends React.Component {
   }
 
   sendMail() {
-    //send mail api call
-    //apiCall(this.state.email)
+    //creating user
+    store.dispatch(createUser(this.state.email));
+
+    //mail is sent through updates
+
     this.setState({ modalStage: "sendCode" });
+
     this.emailInput.value = "";
   }
 
   async sendCode() {
+
+    store.dispatch(loginUser(this.props.user.userData.Id, this.state.code));
+
     this.setState({ modalStage: "evaluatingCode" });
 
     //send code api call
@@ -123,11 +157,11 @@ class ReferralModal extends React.Component {
 
     await this.delay();
 
-    this.setState({ referralNum: referralNum }, function() {
-      this.setState({ referralLink: this.generateReferralLink() }, function() {
-        this.setState({ modalStage: "displayLink" })
-      })
-    })
+    // this.setState({ referralNum: referralNum }, function() {
+    //   this.setState({ referralLink: this.generateReferralLink() }, function() {
+    //     this.setState({ modalStage: "displayLink" })
+    //   })
+    // })
   }
 
   generateReferralLink() {

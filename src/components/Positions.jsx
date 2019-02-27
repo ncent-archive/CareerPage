@@ -40,9 +40,11 @@ class Positions extends React.Component {
 
   renderPositionList() {
     if (this.state.renderListing) {
-      return this.props.data.map((el, i) => {
+      return [this.props.data].map((el, i) => {
         return (
-          <PositionItem jobTitle={el.jobTitle} location={el.location} link={el.link} key={i} />
+          <PositionItem jobTitle={el.company.jobTitle} location={el.company.location} 
+            link={el.company.jobsUrl || "http://localhost:3000/detail?jobId=1&referralCode=86239304"} key={i} 
+          />
         )
       })
     }
@@ -58,7 +60,8 @@ class Positions extends React.Component {
           </div>
           <div className="positionOpenings">
             <span className="positionOpeningsText">
-              {`${this.props.data.length} opening${this.props.data.length > 0 ? 's' : ''}`}
+              {/* {`${this.props.data.length} opening${this.props.data.length > 1 ? 's' : ''}`} */}
+              1 Opening
             </span>
             {this.renderArrow()}
           </div>

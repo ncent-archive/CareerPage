@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 // import {  } from './../actions/challengeActions.js';
-import Landing from './Landing.jsx';
+import JobDetails from './JobDetails.jsx';
 
 const mapStateToProps = state => ({
-  challengesData: state.challenge.challengesData,
-  testing: "testing"
+  challengeData: state.challenge.challengeData,
+  received: state.challenge.challengeReceived,
+  user: state.user
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -13,4 +14,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Landing);
+)(JobDetails);
