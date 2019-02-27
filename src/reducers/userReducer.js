@@ -15,13 +15,16 @@ export default (state = {
 
     switch (action.type) {
         case RECEIVE_USER:
+            console.log("userReducer, case RECEIVE_USER", action);
             const userData = action.userData;
             newState = merge({}, state, {userData});
             newState.userData.userCreated = true;
             return newState;
         case LOGGED_IN_USER:
+            console.log("userReducer, case LOGGED_IN_USER", action);
             newState = merge({}, state);
             newState.userData.loggedIn = true;
+            return newState;
         default:
             return state;
     }

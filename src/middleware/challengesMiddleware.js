@@ -38,6 +38,7 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
       return next(action);
     case FETCH_CHALLENGE:
       findOneChallenge(action.challengeId, receiveChallengeSuccess, error);
+      return next(action);
     default:
       return next(action);
   }

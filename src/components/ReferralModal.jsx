@@ -15,8 +15,7 @@ class ReferralModal extends React.Component {
       modalStage: "sendMail",
       referralLink: "",
       email: "",
-      code: "",
-      referralNum: null
+      code: ""
     };
     //bindings
     this.renderModalContent = this.renderModalContent.bind(this);
@@ -37,14 +36,20 @@ class ReferralModal extends React.Component {
   async componentDidUpdate(prevProps, prevState) {
 
     //user upserted, now id is accessible
-    if (!prevProps.user.userData.userCreated && this.props.user.userData.userCreated) {
-      store.dispatch(sendOTP(this.props.user.userData.Id)) //ID finish
-    }
+    // if (!prevProps.user.userData.userCreated && this.props.user.userData.userCreated) {
+    //   console.log("\n\ncompDidUpdate in referralModal, user created, before and after", 
+    //     prevProps.user.userData.userCreated, this.props.user.userData.userCreated);
+    //   store.dispatch(sendOTP(this.props.user.userData.Id)) //ID finish
+    // }
 
     //code has been verified
     if (!prevProps.user.userData.loggedIn && this.props.user.userData.loggedIn) {
-      let referralNum = await apiUtil.createReferralCode(this.props.jobId);
-      this.setState({ referralNum: referralNum }, function () {
+      console.log("\n\ncompDidUpdate in referralModal, user loggedIn, before and after",
+        prevProps.user.userData.loggedIn, this.props.user.userData.loggedIn);
+      let referralRes = await apiUtil.createReferralCode(this.props.jobId);
+      console.log("referralRes", referralRes);
+      let referralCode = referralRes.data.challengeParticipant.referralCode;
+      this.setState({ referralCode }, function () {
         this.setState({ referralLink: this.generateReferralLink() }, function () {
           this.setState({ modalStage: "displayLink" })
         })
@@ -135,6 +140,7 @@ class ReferralModal extends React.Component {
 
   sendMail() {
     //creating user
+    console.log('sending mail', this.state.email);
     store.dispatch(createUser(this.state.email));
 
     //mail is sent through updates
@@ -145,8 +151,8 @@ class ReferralModal extends React.Component {
   }
 
   async sendCode() {
-
-    store.dispatch(loginUser(this.props.user.userData.Id, this.state.code));
+    console.log('sending code', this.state.code);
+    store.dispatch(loginUser(this.props.user.userData.apiId, this.state.code));
 
     this.setState({ modalStage: "evaluatingCode" });
 
@@ -157,15 +163,10 @@ class ReferralModal extends React.Component {
 
     await this.delay();
 
-    // this.setState({ referralNum: referralNum }, function() {
-    //   this.setState({ referralLink: this.generateReferralLink() }, function() {
-    //     this.setState({ modalStage: "displayLink" })
-    //   })
-    // })
   }
 
   generateReferralLink() {
-    return `${window.location.origin}/detail?jobId=${this.props.jobId}&referralCode=${this.state.referralNum}`;
+    return `${window.location.origin}/detail?jobId=${this.props.jobId}&referralCode=${this.state.referralCode}`;
   }
 
   copyReferralLink(e) {

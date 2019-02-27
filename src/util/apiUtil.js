@@ -9,6 +9,7 @@ export const registerUser = async (email, firstname, lastname) => {
 };
 
 export const upsertVerifyUser = async (email, dispatch) => {
+    console.log("\n\nupsertVerifyUser in apiUtil", email);
     const res = await axios.post("api/users/verify", {
         email,
         firstname: "firstName",
@@ -22,14 +23,17 @@ export const findOneUser = async (userId) => {
 };
 
 export const sendOTP = async (userId) => {
+    console.log("\n\nsendOTP in apiUtil, userId", userId)
     return await axios.post(`api/users/${userId}`);
 };
 
 export const loginUser = async (userId, code, dispatch) => {
+    console.log("\n\nloginUser in apiUtil, userId", userId, "code", code)
     const user = await axios.post('api/users/login', {
         userId,
         code
     });
+    console.log("loginUser returned in apiUtil");
     return dispatch(user);
 };
 
@@ -38,14 +42,13 @@ export const logoutUser = async () => {
 };
 
 export const findOneChallenge = async (challengeId, dispatch, err) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const res = await axios.get(`api/challenges/${challengeId}`);
-            resolve(dispatch(res));
-        } catch(e) {
-            resolve(err(e));
-        }
-    });
+    try {
+        const res = await axios.get(`api/challenges/${challengeId}`);
+        return dispatch(res);
+    } catch(e) {
+        console.log("error in findOneChallenge in apiUtil");
+        return err(e);
+    }
 };
 
 export const findAllChallenges = async (data, dispatch, err) => {
