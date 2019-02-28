@@ -553,3 +553,32 @@ body {
   left: calc(50% - 50px);
   top: calc(50% - 150px); */
 }
+
+.embedForm {
+  display: flex;
+  margin: auto;
+  position: relative;
+  bottom: 110px;
+  width: 95vw;
+  max-width: 650px;
+}
+
+.formSpinner {
+  height: 100px;
+  width: 100px;
+  border: 6px solid;
+  border-color: transparent black black black;
+  border-radius: 75px;
+  animation: rotate 1.2s infinite linear,
+  fadeIn 2.5s 1 linear;
+  position: relative;
+  left: calc(50% - 50px);
+  top: 45%;
+  /* margin: auto; */
+  top: 165px;
+}
+
+.emptySpinner {
+  height: 112px;
+  width: 112px;
+}

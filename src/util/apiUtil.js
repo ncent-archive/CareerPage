@@ -79,3 +79,13 @@ export const createReferralCode = async (challengeId) => {
 export const retrieveReferralCode = async (challengeId) => {
     return await axios.get(`api/challenges/referralCode/${challengeId}`);
 };
+
+export const shareChallenge = async(challengeId, shares, expiration, referralCode) => {
+    console.log("\n\nshareChallenge in apiUtil", challengeId, shares, expiration, referralCode);
+    return axios.patch('/api/challenges/share', {
+        challengeId,
+        shares,
+        expiration,
+        referralCode
+    });
+}

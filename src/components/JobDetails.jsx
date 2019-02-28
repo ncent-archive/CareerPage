@@ -5,6 +5,10 @@ import ReferralModal from "./ReferralModal.jsx";
 import store from "./../store/initializeStore.js";
 import { fetchChallenge } from "./../actions/challengeActions.js";
 import { verifyingSession } from "./../actions/userActions.js";
+import formLink from "./../formLink.js";
+
+// let formHTML = require("./../testForm.html");
+// import testForm from "./../testForm.js";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -18,8 +22,10 @@ class JobDetails extends React.Component {
       minQuals: [],
       prefQuals: [],
       location: "",
-      subIdx: 0
+      subIdx: 0,
+      formLoaded: false
     }
+
     //bindings
     this.parseParams = this.parseParams.bind(this);
     this.dummyAPICall = this.dummyAPICall.bind(this);
@@ -31,6 +37,7 @@ class JobDetails extends React.Component {
     this.setTabs = this.setTabs.bind(this);
     this.getChallenge = this.getChallenge.bind(this);
     this.handleGetChallenge = this.handleGetChallenge.bind(this);
+    this.formLoad = this.formLoad.bind(this);
 
   }
   //functions
@@ -109,7 +116,9 @@ class JobDetails extends React.Component {
 
   renderModal() {
     if (this.state.renderModal) {
-      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} user={this.props.user}/>;
+      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} 
+        user={this.props.user} challenge={this.props.challengeData} referralCode={this.state.referralCode}
+        />;
     }
   }
 
@@ -136,9 +145,23 @@ class JobDetails extends React.Component {
     })
   }
 
+  formLoad() {
+    console.log("iframe from google loaded");
+    this.setState({ formLoaded: true });
+  }
+
+  formSpinner() {
+    if (this.state.formLoaded) {
+      return <div className="emptySpinner"></div>;
+    } else {
+      return (
+        <div className="formSpinner">
+        </div>
+      )
+    }
+  }
+
   render() {
-    const jobState = this.props.challengeData;
-    const idx = this.state.subIdx;
 
     if (!this.props.received) {
       console.log("spinner condition", this.props.challengeData);
@@ -149,6 +172,10 @@ class JobDetails extends React.Component {
         </div>
       )
     } else {
+
+      // console.log(this.props);
+      const jobState = this.props.challengeData.challengeSettings.metadatas[0].value;
+      const idx = this.state.subIdx;
 
       return (
         <div className="jobDetailContainer">
@@ -257,7 +284,23 @@ class JobDetails extends React.Component {
             </div>
           </div>
 
-          <iframe id="refer"></iframe>
+          {this.formSpinner()}
+
+          <iframe
+            src={formLink + "&" + "entry.1375986053=" + this.state.referralCode}
+            // srcDoc={testForm.replace("$%##%$", this.state.referralCode)}
+            width="640" 
+            height="1998" 
+            frameBorder="0" 
+            marginHeight="0" 
+            marginWidth="0" 
+            id="refer"
+            className="embedForm"
+            onLoad={this.formLoad}
+          >
+            Loading...
+          </iframe>
+          
 
         </div>
       )

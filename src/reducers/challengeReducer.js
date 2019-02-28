@@ -18,6 +18,7 @@ export default(state = {
 
     switch (action.type) {
         case RECEIVE_CHALLENGE:
+            console.log("challengeReducer, case RECEIVE_CHALLENGE", action);
             const challengeData = action.challengeData;
             newState = merge({}, state, {challengeData});
             newState.challengeReceived = true;

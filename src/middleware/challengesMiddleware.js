@@ -25,23 +25,28 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
 
   let receiveChallengeSuccess = (challenge) => {
     // console.log("challengesmiddleware receive one challenge", challenge.data.challengeSettings.metadatas[0].value);
+    console.log("challengesMiddleware receive single challenge", challenge.data);
 
     let newStr = challenge.data.challengeSettings.metadatas[0].value
     .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
     .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
+
+    challenge.data.challengeSettings.metadatas[0].value = JSON.parse(newStr);
     
 
     // console.log("JSON.parse", JSON.parse(newStr));
-    dispatch(receiveChallenge(JSON.parse(newStr)));
+    dispatch(receiveChallenge(challenge.data));
   }
 
   let error = e => console.log("Error in Challenges Middleware!", e);
 
   switch (action.type) {
     case FETCH_ALL_CHALLENGES:
+      console.log("challengesMiddleware.js, case FETCH_ALL_CHALLENGES", action);
       findAllChallenges(null, receiveChallengesSuccess, error);
       return next(action);
     case FETCH_CHALLENGE:
+      console.log("challengesMiddleware.js, case FETCH_CHALLENGE", action);
       findOneChallenge(action.challengeId, receiveChallengeSuccess, error);
       return next(action);
     default:
