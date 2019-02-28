@@ -33,6 +33,19 @@ class ReferralModal extends React.Component {
   }
   //functions
 
+  async componentWillMount() {
+    if (this.props.user.userData.active) {
+      let referralRes = await apiUtil.createReferralCode(this.props.jobId);
+      console.log("\nreferralRes on compWillMount\n", referralRes);
+      let referralCode = referralRes.data.challengeParticipant.referralCode;
+      this.setState({ referralCode }, function () {
+        this.setState({ referralLink: this.generateReferralLink() }, function () {
+          this.setState({ modalStage: "displayLink" })
+        })
+      })
+    }
+  }
+
   async componentDidUpdate(prevProps, prevState) {
 
     //user upserted, now id is accessible
@@ -43,7 +56,7 @@ class ReferralModal extends React.Component {
     // }
 
     //code has been verified
-    if (!prevProps.user.userData.loggedIn && this.props.user.userData.loggedIn) {
+    if (!prevProps.user.userData.active && this.props.user.userData.active) {
       console.log("\n\ncompDidUpdate in referralModal, user loggedIn, before and after",
         prevProps.user.userData.loggedIn, this.props.user.userData.loggedIn);
       let referralRes = await apiUtil.createReferralCode(this.props.jobId);

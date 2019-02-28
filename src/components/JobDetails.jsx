@@ -4,6 +4,7 @@ import routes from "./../axiosRoutes.js";
 import ReferralModal from "./ReferralModal.jsx";
 import store from "./../store/initializeStore.js";
 import { fetchChallenge } from "./../actions/challengeActions.js";
+import { verifyingSession } from "./../actions/userActions.js";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -38,18 +39,8 @@ class JobDetails extends React.Component {
     let paramsObj = this.parseParams();
     this.setState(paramsObj, this.handleGetChallenge);
 
-    // this.dummyAPICall();
-    // routes.getJob("dummyId").then(res => {
-    //   this.setState({ spinner: false });
-    //   this.setTabs();
-    // });
-
-    // setTimeout(function() {
-    //   this.setState({ spinner: false });
-    // }.bind(this), 2000);
-
-    // let obj = await this.getChallenge(); 
-    // store.dispatch(fetchChallenge(this.state.jobId));
+    //session verification
+    store.dispatch(verifyingSession());
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -118,7 +109,7 @@ class JobDetails extends React.Component {
 
   renderModal() {
     if (this.state.renderModal) {
-      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} user={this.props.user }/>;
+      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} user={this.props.user}/>;
     }
   }
 

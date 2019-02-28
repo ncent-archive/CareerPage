@@ -14,19 +14,24 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
 
   let receiveChallengesSuccess = (challenges) => {
     // console.log("challengesmiddleware", challenges.data[0].challengeSettings.metadatas[0].value);
-    let newStr = challenges.data[0].challengeSettings.metadatas[0].value.replace("challengesmiddleware {", '{"challengesmiddleware": {')
-      .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
-      .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
+    let newStr = challenges.data[0].challengeSettings.metadatas[0].value
+      // .replace("challengesmiddleware {", '{"challengesmiddleware": {')
+      // .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
+      // .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
     // newStr += "}";
     // console.log("newStr", newStr);
     dispatch(receiveChallenges(JSON.parse(newStr)));
   };
 
   let receiveChallengeSuccess = (challenge) => {
-    // console.log("challengesmiddleware", challenge.data.challengeSettings.metadatas[0].value);
-    let newStr = challenge.data.challengeSettings.metadatas[0].value.replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
-    .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
+    // console.log("challengesmiddleware receive one challenge", challenge.data.challengeSettings.metadatas[0].value);
 
+    let newStr = challenge.data.challengeSettings.metadatas[0].value
+    .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
+    .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
+    
+
+    // console.log("JSON.parse", JSON.parse(newStr));
     dispatch(receiveChallenge(JSON.parse(newStr)));
   }
 

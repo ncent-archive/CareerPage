@@ -41,6 +41,17 @@ export const logoutUser = async () => {
     return await axios.post('api/users/logout');
 };
 
+export const verifySession = async (dispatch, err) => {
+    console.log("\n\n verifySession apiUtil");
+    try {
+        const res = await axios.get('/api/users/session/verify');
+        return dispatch(res);
+    } catch(e) {
+        console.log("error in verifySession");
+        return err(e);
+    }
+}
+
 export const findOneChallenge = async (challengeId, dispatch, err) => {
     try {
         const res = await axios.get(`api/challenges/${challengeId}`);

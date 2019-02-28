@@ -3,16 +3,20 @@ import {
   RECEIVE_USER,
   SEND_OTP,
   LOGIN_USER,
+  VERIFYING_SESSION,
   createUser,
   receiveUser,
-  loggedInUser
+  loggedInUser, 
+  verifiedSession,
+  unverifiedSession
 } from "./../actions/userActions.js";
 
 import {
   registerUser,
   upsertVerifyUser,
   sendOTP,
-  loginUser
+  loginUser,
+  verifySession
 } from "./../util/apiUtil.js";
 
 const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
@@ -24,7 +28,17 @@ const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
 
   let loginUserSuccess = (user) => {
     console.log("loginUserSuccess", user);
-    dispatch(loggedInUser());
+    dispatch(loggedInUser(user.data));
+  }
+
+  let verifySessionSuccess = (res) => {
+    console.log("verifySessionSuccess", res);
+    dispatch(verifiedSession(res.data));
+  }
+
+  let verifySessionError = (res) => {
+    console.log("verifySessionError", res);
+    dispatch(unverifiedSession(res.data));
   }
 
   switch(action.type) {
@@ -39,6 +53,10 @@ const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
     case LOGIN_USER:
       console.log("\n\nuserAccountMiddleware reducer case LOGIN_USER", action);
       loginUser(action.userId, action.confirmationCode, loginUserSuccess);
+      return next(action);
+    case VERIFYING_SESSION:
+      console.log("verifying session in userAccountMiddleware reducer");
+      verifySession(verifySessionSuccess, verifySessionError);
       return next(action);
     default:
       return next(action);
