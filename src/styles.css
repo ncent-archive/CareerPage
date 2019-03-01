@@ -590,6 +590,33 @@ body {
   background-color: #f3f3f3;
   max-width: 550px;
   width: 95vw;
+  margin: auto;
+}
+
+.applicationFormHeaderRow {
+  /* display: flex; */
+  /* flex-direction: row; */
+  width: 100%;
+}
+
+.applicationFormHeaderRowHeader {
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.applicationFormHeaderRowRequired {
+  float: right;
+  font-size: 12px;
+  position: relative;
+  bottom: 50px;
+  color: #737373;
+}
+
+.asteriskSmall {
+  color: red;
+  font-size: 12px;
 }
 
 .applicationFormPersonalContainer {
@@ -600,16 +627,20 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 15px;
+  line-height: 30px;
 }
 
 .applicationFormInputRowText {
-  width: 100px;
+  width: 110px;
   text-align: right;
   margin-right: 10px;
+  font-size: 12px;
 }
 
-.redText {
+.asterisk {
   color: red;
+  font-size: 18px;
 }
 
 .applicationFormInputRowInput {
@@ -617,5 +648,60 @@ body {
 }
 
 .applicationFormInputRowInputEl {
-  width: calc(100% - 15px);
+  width: calc(100% - 10px);
+  max-width: 410px;
+  margin: 0;
+  padding: 5px;
+  border: solid 1px #DDD;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.applicationFormDivider {
+  height: 1px;
+  background-color: #DADADA;
+  margin: 25px 0;
+  border: none;
+}
+
+.applicationFormLinksContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.applicationFormLinkContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  line-height: 18px;
+  margin-bottom: 16px;
+}
+
+.applicationFormLinkText {
+  text-align: left;
+  align-self: left;
+  font-size: 12px;
+}
+
+.applicationFormLinkInput {
+  width: calc(100% - 10px);
+  margin: 0;
+  padding: 5px;
+  border: solid 1px #DDD;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.submitButton {
+  background: #2975CA;
+  font-weight: normal;
+  padding: 12px 20px 14px 20px;
+  font-size: 14px;
+  line-height: 17px;
+  border-radius: 5px;
+  color: white;
+  width: 170px;
+  align-self: flex-end;
+  margin-top: 10px;
 }

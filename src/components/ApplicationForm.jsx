@@ -14,12 +14,21 @@ class ApplicationForm extends React.Component {
   render() {
     return (
       <div className="applicationFormContainer">
+        <div className="applicationFormHeaderRow">
+          <div className="applicationFormHeaderRowHeader">
+            Apply for this job
+          </div>
+          <div className="applicationFormHeaderRowRequired">
+            <span className="asteriskSmall">*</span> Required
+          </div>
+        </div>
 
         <div className="applicationFormPersonalContainer">
 
+
           <div className="applicationFormInputRow">
             <div className="applicationFormInputRowText">
-              First Name <span className="redText">*</span>
+              First Name <span className="asterisk">*</span>
             </div>
             <div className="applicationFormInputRowInput">
               <input className="applicationFormInputRowInputEl" />
@@ -28,22 +37,72 @@ class ApplicationForm extends React.Component {
 
           <div className="applicationFormInputRow">
             <div className="applicationFormInputRowText">
-              First Name <span className="redText">*</span>
+              Last Name <span className="asterisk">*</span>
             </div>
             <div className="applicationFormInputRowInput">
               <input className="applicationFormInputRowInputEl" />
             </div>
           </div>
-          
+
           <div className="applicationFormInputRow">
             <div className="applicationFormInputRowText">
-              First Name <span className="redText">*</span>
+              Email <span className="asterisk">*</span>
             </div>
             <div className="applicationFormInputRowInput">
               <input className="applicationFormInputRowInputEl" />
             </div>
           </div>
+
+          <div className="applicationFormInputRow">
+            <div className="applicationFormInputRowText">
+              Phone <span className="asterisk">*</span>
+            </div>
+            <div className="applicationFormInputRowInput">
+              <input className="applicationFormInputRowInputEl" />
+            </div>
+          </div>
+
+          <div className="applicationFormInputRow">
+            <div className="applicationFormInputRowText">
+              Resume URL <span className="asterisk">*</span>
+            </div>
+            <div className="applicationFormInputRowInput">
+              <input className="applicationFormInputRowInputEl" />
+            </div>
+          </div>
+
+          <div className="applicationFormInputRow">
+            <div className="applicationFormInputRowText">
+              Cover Letter URL <span className="asterisk">*</span>
+            </div>
+            <div className="applicationFormInputRowInput">
+              <input className="applicationFormInputRowInputEl" />
+            </div>
+          </div>
+
         </div>
+
+        <hr className="applicationFormDivider" />
+
+        <div className="applicationFormLinksContainer">
+
+          <div className="applicationFormLinkContainer">
+            <div className="applicationFormLinkText">
+              Github URL
+            </div>
+            <input className="applicationFormLinkInput" />
+          </div>
+
+          <div className="applicationFormLinkContainer">
+            <div className="applicationFormLinkText">
+              LinkedIn URL
+            </div>
+            <input className="applicationFormLinkInput" />
+          </div>
+
+        </div>
+
+        <button className="submitButton">Submit Application</button>
 
       </div>
     )

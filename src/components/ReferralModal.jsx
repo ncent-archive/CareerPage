@@ -86,6 +86,7 @@ class ReferralModal extends React.Component {
   //challengeId, shares, expiration, referralCode
 
   async generateShare() {
+    // console.log("generateShare")
     if (this.props.referralCode) {
       let shareChallengeRes = await apiUtil.shareChallenge(
         this.props.jobId,
