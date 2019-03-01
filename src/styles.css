@@ -582,3 +582,40 @@ body {
   height: 112px;
   width: 112px;
 }
+
+.applicationFormContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 30px 30px 30px;
+  background-color: #f3f3f3;
+  max-width: 550px;
+  width: 95vw;
+}
+
+.applicationFormPersonalContainer {
+  width: 100%;
+}
+
+.applicationFormInputRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.applicationFormInputRowText {
+  width: 100px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.redText {
+  color: red;
+}
+
+.applicationFormInputRowInput {
+  width: calc(100% - 100px);
+}
+
+.applicationFormInputRowInputEl {
+  width: calc(100% - 15px);
+}

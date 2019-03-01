@@ -73,7 +73,7 @@ class ReferralModal extends React.Component {
       //send above when a query param is in URL
       //otherwise send where baseUser is sponsor, needs embedded call
 
-      console.log("referralRes", referralRes);
+      console.log("\nReferralModal.jsx, createReferraCode returned referralRes.data\n", referralRes.data);
       let referralCode = referralRes.data.challengeParticipant.referralCode;
       this.setState({ referralCode }, function () {
         this.setState({ referralLink: this.generateReferralLink() }, function () {
@@ -93,7 +93,7 @@ class ReferralModal extends React.Component {
         this.props.challenge.challengeSettings.expiration,
         this.props.referralCode
       );
-      console.log("\nshareChallengeRes returned in login workflow, case referralCodeId\n", shareChallengeRes);
+      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case YES referralCodeId\n", shareChallengeRes);
     } else {
       let sponsor = await apiUtil.findOneUser(this.props.challenge.challengeSettings.admin);
       let sponsorId = sponsor.data.apiId;
@@ -102,7 +102,7 @@ class ReferralModal extends React.Component {
         1,
         this.props.challenge.challengeSettings.expiration
       );
-      console.log("\nshareChallengeRes returned in login workflow, case no referralCodeId\n", shareChallengeRes);
+      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case NO referralCodeId\n", shareChallengeRes);
     }
   }
 

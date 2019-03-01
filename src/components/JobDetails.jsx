@@ -6,6 +6,7 @@ import store from "./../store/initializeStore.js";
 import { fetchChallenge } from "./../actions/challengeActions.js";
 import { verifyingSession } from "./../actions/userActions.js";
 import formLink from "./../formLink.js";
+import ApplicationForm from "./ApplicationForm.jsx";
 
 // let formHTML = require("./../testForm.html");
 // import testForm from "./../testForm.js";
@@ -284,9 +285,9 @@ class JobDetails extends React.Component {
             </div>
           </div>
 
-          {this.formSpinner()}
+          {/* {this.formSpinner()} */}
 
-          <iframe
+          {/* <iframe
             src={formLink + "&" + "entry.1375986053=" + this.state.referralCode}
             // srcDoc={testForm.replace("$%##%$", this.state.referralCode)}
             width="640" 
@@ -299,8 +300,9 @@ class JobDetails extends React.Component {
             onLoad={this.formLoad}
           >
             Loading...
-          </iframe>
-          
+          </iframe> */}
+
+          <ApplicationForm referralCode={this.state.referralCode} />
 
         </div>
       )
