@@ -8,21 +8,29 @@ import {merge} from "lodash";
 
 export default(state = {
     challengeData: {},
-    challengesData: {},
+    challengesData: [],
     referralCodeData: {},
-    shareTransactionData: {}
+    shareTransactionData: {},
+    challengeReceived: false
 }, action) => {
     let newState;
     Object.freeze(state);
 
     switch (action.type) {
         case RECEIVE_CHALLENGE:
+            console.log("challengeReducer, case RECEIVE_CHALLENGE", action);
             const challengeData = action.challengeData;
             newState = merge({}, state, {challengeData});
+            newState.challengeReceived = true;
             return newState;
         case RECEIVE_CHALLENGES:
             const challengesData = action.challengesData;
-            newState = merge({}, state, {challengesData});
+            const newChallenges = action.challengesData;
+            // newState = merge({}, state, {challengesData});
+            newState = {
+                ...state,
+                challengesData: state.challengesData.concat(newChallenges)
+            }
             return newState;
         case RECEIVE_SHARE_TRANSACTION:
             const shareTransactionData = action.shareTransactionData;

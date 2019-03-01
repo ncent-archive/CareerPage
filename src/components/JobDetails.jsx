@@ -1,8 +1,15 @@
 import React from "react";
 import dummyData from "./../dummyJobData.json";
-import state from "./../store/initializeStore.js"
 import routes from "./../axiosRoutes.js";
 import ReferralModal from "./ReferralModal.jsx";
+import store from "./../store/initializeStore.js";
+import { fetchChallenge } from "./../actions/challengeActions.js";
+import { verifyingSession } from "./../actions/userActions.js";
+import formLink from "./../formLink.js";
+import ApplicationForm from "./ApplicationForm.jsx";
+
+// let formHTML = require("./../testForm.html");
+// import testForm from "./../testForm.js";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -16,8 +23,10 @@ class JobDetails extends React.Component {
       minQuals: [],
       prefQuals: [],
       location: "",
-      subIdx: 0
+      subIdx: 0,
+      formLoaded: false
     }
+
     //bindings
     this.parseParams = this.parseParams.bind(this);
     this.dummyAPICall = this.dummyAPICall.bind(this);
@@ -27,23 +36,34 @@ class JobDetails extends React.Component {
     this.tabSwitch = this.tabSwitch.bind(this);
     this.imgError = this.imgError.bind(this);
     this.setTabs = this.setTabs.bind(this);
+    this.getChallenge = this.getChallenge.bind(this);
+    this.handleGetChallenge = this.handleGetChallenge.bind(this);
+    this.formLoad = this.formLoad.bind(this);
 
   }
   //functions
 
   componentWillMount() {
     let paramsObj = this.parseParams();
-    this.setState(paramsObj);
+    this.setState(paramsObj, this.handleGetChallenge);
 
-    // this.dummyAPICall();
-    routes.getJob("dummyId").then(res => {
-      this.setState({ spinner: false });
-      this.setTabs();
-    });
+    //session verification
+    store.dispatch(verifyingSession());
+  }
 
-    // setTimeout(function() {
-    //   this.setState({ spinner: false });
-    // }.bind(this), 2000);
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.received && this.props.received) this.setTabs();
+  }
+
+  getChallenge() {
+    return new Promise((resolve, reject) => {
+      resolve(fetchChallenge(this.state.jobId));
+    })
+  }
+
+  async handleGetChallenge() {
+    let obj = await this.getChallenge();
+    store.dispatch(obj);
   }
 
   setTabs() {
@@ -97,7 +117,9 @@ class JobDetails extends React.Component {
 
   renderModal() {
     if (this.state.renderModal) {
-      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} />;
+      return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} 
+        user={this.props.user} challenge={this.props.challengeData} referralCode={this.state.referralCode}
+        />;
     }
   }
 
@@ -124,8 +146,26 @@ class JobDetails extends React.Component {
     })
   }
 
+  formLoad() {
+    console.log("iframe from google loaded");
+    this.setState({ formLoaded: true });
+  }
+
+  formSpinner() {
+    if (this.state.formLoaded) {
+      return <div className="emptySpinner"></div>;
+    } else {
+      return (
+        <div className="formSpinner">
+        </div>
+      )
+    }
+  }
+
   render() {
-    if (this.state.spinner) {
+
+    if (!this.props.received) {
+      console.log("spinner condition", this.props.challengeData);
       return (
         <div className="spinnerContainer">
           <div className="spinner">
@@ -133,7 +173,9 @@ class JobDetails extends React.Component {
         </div>
       )
     } else {
-      const jobState = state.getState().challenge.challengeData;
+
+      // console.log(this.props);
+      const jobState = this.props.challengeData.challengeSettings.metadatas[0].value;
       const idx = this.state.subIdx;
 
       return (
@@ -243,7 +285,24 @@ class JobDetails extends React.Component {
             </div>
           </div>
 
-          <iframe id="refer"></iframe>
+          {/* {this.formSpinner()} */}
+
+          {/* <iframe
+            src={formLink + "&" + "entry.1375986053=" + this.state.referralCode}
+            // srcDoc={testForm.replace("$%##%$", this.state.referralCode)}
+            width="640" 
+            height="1998" 
+            frameBorder="0" 
+            marginHeight="0" 
+            marginWidth="0" 
+            id="refer"
+            className="embedForm"
+            onLoad={this.formLoad}
+          >
+            Loading...
+          </iframe> */}
+
+          <ApplicationForm referralCode={this.state.referralCode} />
 
         </div>
       )

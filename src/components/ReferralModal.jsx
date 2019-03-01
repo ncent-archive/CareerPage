@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  createUser,
+  sendOTP,
+  loginUser 
+} from "./../actions/userActions.js";
+import store from "./../store/initializeStore.js";
+
+const apiUtil = require("./../util/apiUtil.js");
 
 class ReferralModal extends React.Component {
   constructor(props) {
@@ -7,8 +15,7 @@ class ReferralModal extends React.Component {
       modalStage: "sendMail",
       referralLink: "",
       email: "",
-      code: "",
-      referralNum: null
+      code: ""
     };
     //bindings
     this.renderModalContent = this.renderModalContent.bind(this);
@@ -22,9 +29,83 @@ class ReferralModal extends React.Component {
     this.emailKey = this.emailKey.bind(this);
     this.codeKey = this.codeKey.bind(this);
     this.copyReferralLink = this.copyReferralLink.bind(this);
+    this.generateShare = this.generateShare.bind(this);
 
   }
   //functions
+
+  async componentWillMount() {
+    console.log("compWillMount in referralModal");
+    if (this.props.user.userData && this.props.user.userData.active) {
+      let referralRes = await apiUtil.createReferralCode(this.props.jobId);
+
+      console.log("\nreferralRes on compWillMount createdReferralCode\n", referralRes);
+
+      // let shareChallengeRes = await apiUtil.shareChallenge(this.props.jobId,
+      //   this.props.user.userData.publicKey,
+      //   this.props.challenge.challengeData.shares || 1,
+      //   this.props.challenge.challengeSettings.expiration,
+      //   this.props.user.userData.mail);
+      // console.log("\n\nshareChallengeRes returned in compWillMount\n", shareChallengeRes);
+
+      let referralCode = referralRes.data.challengeParticipant.referralCode;
+      this.setState({ referralCode }, function () {
+        this.setState({ referralLink: this.generateReferralLink() }, function () {
+          this.setState({ modalStage: "displayLink" })
+        })
+      })
+    }
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
+
+    //code has been verified
+    if ((!prevProps.user.userData || !prevProps.user.userData.active) && 
+      (this.props.user.userData && this.props.user.userData.active)) {
+      console.log("\n\ncompDidUpdate in referralModal, user loggedIn, before and after",
+        prevProps.user.userData.loggedIn, this.props.user.userData.loggedIn);
+      let referralRes = await apiUtil.createReferralCode(this.props.jobId);
+
+      if (referralRes.status === 201) {
+        this.generateShare();
+      }
+
+      //send above when a query param is in URL
+      //otherwise send where baseUser is sponsor, needs embedded call
+
+      console.log("\nReferralModal.jsx, createReferraCode returned referralRes.data\n", referralRes.data);
+      let referralCode = referralRes.data.challengeParticipant.referralCode;
+      this.setState({ referralCode }, function () {
+        this.setState({ referralLink: this.generateReferralLink() }, function () {
+          this.setState({ modalStage: "displayLink" })
+        })
+      })
+    }
+
+  }
+  //challengeId, shares, expiration, referralCode
+
+  async generateShare() {
+    // console.log("generateShare")
+    if (this.props.referralCode) {
+      let shareChallengeRes = await apiUtil.shareChallenge(
+        this.props.jobId,
+        1,
+        this.props.challenge.challengeSettings.expiration,
+        this.props.referralCode
+      );
+      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case YES referralCodeId\n", shareChallengeRes);
+    } else {
+      let sponsor = await apiUtil.findOneUser(this.props.challenge.challengeSettings.admin);
+      let sponsorId = sponsor.data.apiId;
+      let shareChallengeRes = await apiUtil.shareChallenge(
+        this.props.jobId,
+        1,
+        this.props.challenge.challengeSettings.expiration
+      );
+      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case NO referralCodeId\n", shareChallengeRes);
+    }
+  }
 
   renderModalContent() {
     switch(this.state.modalStage) {
@@ -107,13 +188,21 @@ class ReferralModal extends React.Component {
   }
 
   sendMail() {
-    //send mail api call
-    //apiCall(this.state.email)
+    //creating user
+    console.log('sending mail', this.state.email);
+    store.dispatch(createUser(this.state.email));
+
+    //mail is sent through updates
+
     this.setState({ modalStage: "sendCode" });
+
     this.emailInput.value = "";
   }
 
   async sendCode() {
+    console.log('sending code', this.state.code);
+    store.dispatch(loginUser(this.props.user.userData.apiId, this.state.code));
+
     this.setState({ modalStage: "evaluatingCode" });
 
     //send code api call
@@ -123,15 +212,10 @@ class ReferralModal extends React.Component {
 
     await this.delay();
 
-    this.setState({ referralNum: referralNum }, function() {
-      this.setState({ referralLink: this.generateReferralLink() }, function() {
-        this.setState({ modalStage: "displayLink" })
-      })
-    })
   }
 
   generateReferralLink() {
-    return `${window.location.origin}/detail?jobId=${this.props.jobId}&referralCode=${this.state.referralNum}`;
+    return `${window.location.origin}/detail?jobId=${this.props.jobId}&referralCode=${this.state.referralCode}`;
   }
 
   copyReferralLink(e) {
@@ -152,7 +236,7 @@ class ReferralModal extends React.Component {
 
   delay() {
     return new Promise((resolve, reject) => {
-      setTimeout(resolve, 2200);
+      setTimeout(resolve, 1200);
     })
   }
 
