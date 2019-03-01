@@ -13,7 +13,7 @@ import {
 const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
 
   let receiveChallengesSuccess = (challenges) => {
-    // console.log("challengesmiddleware", challenges.data[0].challengeSettings.metadatas[0].value);
+    console.log("\n\nchallengesmiddleware, receive all challenges success", challenges.data[0].challengeSettings.metadatas[0].value);
     let newStr = challenges.data[0].challengeSettings.metadatas[0].value
       // .replace("challengesmiddleware {", '{"challengesmiddleware": {')
       // .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
@@ -25,7 +25,7 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
 
   let receiveChallengeSuccess = (challenge) => {
     // console.log("challengesmiddleware receive one challenge", challenge.data.challengeSettings.metadatas[0].value);
-    console.log("challengesMiddleware receive single challenge", challenge.data);
+    console.log("\n\nchallengesMiddleware receive single challenge", challenge.data);
 
     let newStr = challenge.data.challengeSettings.metadatas[0].value
     .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")

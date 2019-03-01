@@ -5,7 +5,8 @@ import JobDetails from './JobDetails.jsx';
 const mapStateToProps = state => ({
   challengeData: state.challenge.challengeData,
   received: state.challenge.challengeReceived,
-  user: state.user
+  user: state.user,
+  jobApplication: state.jobApplication
 });
 
 const mapDispatchToProps = dispatch => ({

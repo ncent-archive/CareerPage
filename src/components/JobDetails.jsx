@@ -302,7 +302,10 @@ class JobDetails extends React.Component {
             Loading...
           </iframe> */}
 
-          <ApplicationForm referralCode={this.state.referralCode} />
+          <ApplicationForm referralCode={this.state.referralCode} 
+            status={this.props.jobApplication.jobApplicationSuccessful}
+            position={jobState.company.jobTitle} subPosition={jobState.subJobs[idx].title}
+          />
 
         </div>
       )
