@@ -187,7 +187,7 @@ class JobDetails extends React.Component {
             <div className="logo">
               <img className="logoImg" src={jobState.company.iconUrl} onError={this.imgError} />
             </div>
-            <a className="referA" onClick={this.triggerModalOn}>Refer Now</a>
+            <a className="referA" onClick={this.triggerModalOn}>Share Now</a>
           </div>
 
           <div className="jobDetailContentContainer">
@@ -302,7 +302,10 @@ class JobDetails extends React.Component {
             Loading...
           </iframe> */}
 
-          <ApplicationForm referralCode={this.state.referralCode} />
+          <ApplicationForm referralCode={this.state.referralCode} 
+            status={this.props.jobApplication.jobApplicationSuccessful}
+            position={jobState.company.jobTitle} subPosition={jobState.subJobs[idx].title}
+          />
 
         </div>
       )

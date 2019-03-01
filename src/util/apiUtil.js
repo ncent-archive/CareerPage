@@ -63,11 +63,13 @@ export const findOneChallenge = async (challengeId, dispatch, err) => {
 };
 
 export const findAllChallenges = async (data, dispatch, err) => {
-    console.log("findAllChallenges apiutil.js");
+    console.log("\n\nfindAllChallenges apiutil.js");
     try {
         const res = await axios.get('api/challenges');
+        console.log("\nfindAllChallenges in apiUtil, response from middleware-api is", res.data);
         return dispatch(res);
     } catch(e) {
+        console.log("\nfindAllChallenges in apiUtil ERROR", e);
         return err(e);
     }
 };
@@ -80,7 +82,7 @@ export const retrieveReferralCode = async (challengeId) => {
     return await axios.get(`api/challenges/referralCode/${challengeId}`);
 };
 
-export const shareChallenge = async(challengeId, shares, expiration, referralCode) => {
+export const shareChallenge = async (challengeId, shares, expiration, referralCode) => {
     console.log("\n\nshareChallenge in apiUtil", challengeId, shares, expiration, referralCode);
     return axios.patch('/api/challenges/share', {
         challengeId,
@@ -88,4 +90,14 @@ export const shareChallenge = async(challengeId, shares, expiration, referralCod
         expiration,
         referralCode
     });
+}
+
+export const sendApplication = async (data, dispatch) => {
+    console.log("\n\apiUtil, sendApplication", data);
+    try {
+        let res = await axios.post('/api/jobApplications', data);
+        return dispatch(res);
+    } catch(e) {
+        console.log("apiUtil, sendApplication ERROR", e);
+    }
 }

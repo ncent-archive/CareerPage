@@ -42,8 +42,11 @@ class Positions extends React.Component {
     if (this.state.renderListing) {
       return [this.props.data].map((el, i) => {
         return (
-          <PositionItem jobTitle={el.company.jobTitle} location={el.company.location} 
-            link={el.company.jobsUrl || "http://localhost:3000/detail?jobId=1&referralCode=86239304"} key={i} 
+          <PositionItem jobTitle={el.challengeSettings.metadatas[0].value.company.jobTitle} 
+            location={el.challengeSettings.metadatas[0].value.company.location} 
+            link={el.challengeSettings.metadatas[0].value.company.jobsUrl || 
+            `${window.location.origin}/detail?jobId=${el.id}`}
+            key={i} 
           />
         )
       })
