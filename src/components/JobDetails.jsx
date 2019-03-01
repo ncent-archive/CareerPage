@@ -187,7 +187,7 @@ class JobDetails extends React.Component {
             <div className="logo">
               <img className="logoImg" src={jobState.company.iconUrl} onError={this.imgError} />
             </div>
-            <a className="referA" onClick={this.triggerModalOn}>Refer Now</a>
+            <a className="referA" onClick={this.triggerModalOn}>Share Now</a>
           </div>
 
           <div className="jobDetailContentContainer">
