@@ -41,13 +41,6 @@ class ReferralModal extends React.Component {
 
       console.log("\nreferralRes on compWillMount createdReferralCode\n", referralRes);
 
-      // let shareChallengeRes = await apiUtil.shareChallenge(this.props.jobId,
-      //   this.props.user.userData.publicKey,
-      //   this.props.challenge.challengeData.shares || 1,
-      //   this.props.challenge.challengeSettings.expiration,
-      //   this.props.user.userData.mail);
-      // console.log("\n\nshareChallengeRes returned in compWillMount\n", shareChallengeRes);
-
       let referralCode = referralRes.data.challengeParticipant.referralCode;
       this.setState({ referralCode }, function () {
         this.setState({ referralLink: this.generateReferralLink() }, function () {
@@ -94,7 +87,7 @@ class ReferralModal extends React.Component {
         this.props.challenge.challengeSettings.expiration,
         this.props.referralCode
       );
-      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case YES referralCodeId\n", shareChallengeRes);
+      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case YES referralCodeId\n", shareChallengeRes.data);
     } else {
       let sponsor = await apiUtil.findOneUser(this.props.challenge.challengeSettings.admin);
       let sponsorId = sponsor.data.apiId;
@@ -103,7 +96,7 @@ class ReferralModal extends React.Component {
         1,
         this.props.challenge.challengeSettings.expiration
       );
-      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case NO referralCodeId\n", shareChallengeRes);
+      console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case NO referralCodeId\n", shareChallengeRes.data);
     }
   }
 

@@ -22,22 +22,22 @@ import {
 const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
 
   let receiveUserSuccess = (user) => {
-    console.log("receiveUserSuccess", user);
+    console.log("\nreceiveUserSuccess in userAccountMiddleware", user.data);
     dispatch(receiveUser(user.data));
   }
 
   let loginUserSuccess = (user) => {
-    console.log("loginUserSuccess", user);
+    console.log("\nloginUserSuccess in userAccountMiddleware", user.data);
     dispatch(loggedInUser(user.data));
   }
 
   let verifySessionSuccess = (res) => {
-    console.log("verifySessionSuccess", res);
+    console.log("\nverifySessionSuccess in userAccountMiddleware", res.data);
     dispatch(verifiedSession(res.data));
   }
 
   let verifySessionError = (res) => {
-    console.log("verifySessionError", res);
+    console.log("\nverifySessionError in userAccountMiddleware", res);
     dispatch(unverifiedSession(res.data));
   }
 
@@ -55,7 +55,7 @@ const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
       loginUser(action.userId, action.confirmationCode, loginUserSuccess);
       return next(action);
     case VERIFYING_SESSION:
-      console.log("verifying session in userAccountMiddleware reducer");
+      console.log("verifying session in userAccountMiddleware reducer", action);
       verifySession(verifySessionSuccess, verifySessionError);
       return next(action);
     default:
