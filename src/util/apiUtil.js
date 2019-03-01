@@ -66,7 +66,7 @@ export const findAllChallenges = async (data, dispatch, err) => {
     console.log("\n\nfindAllChallenges apiutil.js");
     try {
         const res = await axios.get('api/challenges');
-        console.log("\nfindAllChallenges in apiUtil, response from middleware-api is", res);
+        console.log("\nfindAllChallenges in apiUtil, response from middleware-api is", res.data);
         return dispatch(res);
     } catch(e) {
         console.log("\nfindAllChallenges in apiUtil ERROR", e);
