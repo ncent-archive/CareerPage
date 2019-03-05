@@ -1,11 +1,9 @@
 import React from "react";
 import dummyData from "./../dummyJobData.json";
-import routes from "./../axiosRoutes.js";
 import ReferralModal from "./ReferralModal.jsx";
 import store from "./../store/initializeStore.js";
 import { fetchChallenge } from "./../actions/challengeActions.js";
 import { verifyingSession } from "./../actions/userActions.js";
-import formLink from "./../formLink.js";
 import ApplicationForm from "./ApplicationForm.jsx";
 
 // let formHTML = require("./../testForm.html");
@@ -25,7 +23,7 @@ class JobDetails extends React.Component {
       location: "",
       subIdx: 0,
       formLoaded: false
-    }
+    };
 
     //bindings
     this.parseParams = this.parseParams.bind(this);
@@ -173,8 +171,6 @@ class JobDetails extends React.Component {
         </div>
       )
     } else {
-
-      // console.log(this.props);
       const jobState = this.props.challengeData.challengeSettings.metadatas[0].value;
       const idx = this.state.subIdx;
 
@@ -191,6 +187,7 @@ class JobDetails extends React.Component {
           </div>
 
           <div className="jobDetailContentContainer">
+              <div>Some informational sharing text</div>
             <div className="jobTitle">
               {jobState.company.jobTitle} 
               {/* - {jobState.subJobs[idx].title} */}
