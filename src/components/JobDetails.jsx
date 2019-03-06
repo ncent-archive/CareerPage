@@ -5,9 +5,18 @@ import store from "./../store/initializeStore.js";
 import {fetchChallenge} from "./../actions/challengeActions.js";
 import {verifyingSession} from "./../actions/userActions.js";
 import ApplicationForm from "./ApplicationForm.jsx";
+import $ from "jquery";
+import downArrow from "../img/Scroll Down-595b40b75ba036ed117d58fa.svg";
 
 // let formHTML = require("./../testForm.html");
 // import testForm from "./../testForm.js";
+
+$(function() {
+    $('a').on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
+    });
+});
 
 class JobDetails extends React.Component {
     constructor(props) {
@@ -180,16 +189,37 @@ class JobDetails extends React.Component {
                 <div className="jobDetailContainer">
 
                     {this.renderModal()}
-
-                    <div className="logoAndReferBtn">
+                    <section id="section03" className="demo">
+                        <h1>Help Us Fill This Job</h1>
+                        <div className="infoContainer">
+                            <span className="infoSpan">Step 1: SHARE this job with your network</span>
+                            <span className="infoSpan">Step 2: If anyone in your sharing network finds the person we hire... YOU will share the rewards!</span>
+                            <div className="exampleContainer">
+                                <span className="infoSpan">EXAMPLE</span>
+                                <span className="infoSpan">Person 0: Gets hired by nCent Labs</span>
+                                <span className="infoSpan">Person 1: Shares this listing with Person 0 and earns a $4,000 reward.</span>
+                                <span className="infoSpan">Person 2: Shares this listing with Person 1 and earns a $2K reward.</span>
+                                <span className="infoSpan">Person 3: Shares this listing with Person 2 and earns a $1K reward.</span>
+                                <span className="infoSpan">... and so on...</span>
+                            </div>
+                        </div>
+                        <a href="#jobDetails">
+                            <div className="scrollBtnContainer">
+                                <img className="downArrow" src={downArrow}/>
+                                <span>Share Now</span>
+                            </div>
+                        </a>
+                    </section>
+                    <div id="jobDetails" className="logoAndReferBtn">
                         <div className="logo">
                             <img className="logoImg" src={jobState.company.iconUrl} onError={this.imgError}/>
                         </div>
-                        <a className="referA" onClick={this.triggerModalOn}>Share Now</a>
+                        <a className="referA" onClick={this.triggerModalOn}>Share Now
+                            <img className="shareIcon" src="https://cdn1.iconfinder.com/data/icons/media-icons-23/100/share-512.png"/>
+                        </a>
                     </div>
 
                     <div className="jobDetailContentContainer">
-                        <div>Some informational sharing text</div>
                         <div className="jobTitle">
                             {jobState.company.jobTitle}
                             {/* - {jobState.subJobs[idx].title} */}
@@ -285,23 +315,6 @@ class JobDetails extends React.Component {
                             </div>
                         </div>
                     </div>
-
-                    {/* {this.formSpinner()} */}
-
-                    {/* <iframe
-            src={formLink + "&" + "entry.1375986053=" + this.state.referralCode}
-            // srcDoc={testForm.replace("$%##%$", this.state.referralCode)}
-            width="640" 
-            height="1998" 
-            frameBorder="0" 
-            marginHeight="0" 
-            marginWidth="0" 
-            id="refer"
-            className="embedForm"
-            onLoad={this.formLoad}
-          >
-            Loading...
-          </iframe> */}
 
                     <ApplicationForm referralCode={this.state.referralCode}
                                      status={this.props.jobApplication.jobApplicationSuccessful}
