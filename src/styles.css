@@ -985,7 +985,11 @@ a:hover {
 /*scroll button css*/
 
 @import url(https://fonts.googleapis.com/css?family=Josefin+Sans:300,400);
-
+section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 .previewTitle {
   z-index: 2;
   color: black;
@@ -1000,7 +1004,7 @@ a:hover {
   padding-bottom: 10px;
 }
 .demo a {
-  z-index: 2;
+  z-index: 10;
   display: inline-block;
   color: black;
   font : normal 400 20px/1 'Josefin Sans', sans-serif;

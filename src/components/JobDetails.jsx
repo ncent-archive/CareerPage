@@ -13,10 +13,16 @@ import downArrow from "../img/Scroll Down-595b40b75ba036ed117d58fa.svg";
 
 $(function() {
     $('a').on('click', function(e) {
+        console.log('link clicked');
         e.preventDefault();
         $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
     });
 });
+
+function scrollToDetails(e) {
+    e.preventDefault();
+    $('html, body').animate({ scrollTop: $('#jobDetails').offset().top}, 500, 'linear');
+}
 
 class JobDetails extends React.Component {
     constructor(props) {
@@ -203,7 +209,7 @@ class JobDetails extends React.Component {
                                 <span className="infoSpan">... and so on...</span>
                             </div>
                         </div>
-                        <a href="#jobDetails">
+                        <a href="#jobDetails" onClick={scrollToDetails}>
                             <div className="scrollBtnContainer">
                                 <img className="downArrow" src={downArrow}/>
                                 <span className="shareNow">Share Now</span>
