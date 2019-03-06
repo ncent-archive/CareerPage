@@ -227,6 +227,11 @@ class JobDetails extends React.Component {
 
           <div className="qualificationsContainer">
 
+            {/* {change way data is in subJobs - have title and array of other data} 
+            
+            
+            */}
+
             <div className="qualContainer">
               <div className="qualsHeader">
                 Responsibilities:
@@ -284,23 +289,6 @@ class JobDetails extends React.Component {
               </div>
             </div>
           </div>
-
-          {/* {this.formSpinner()} */}
-
-          {/* <iframe
-            src={formLink + "&" + "entry.1375986053=" + this.state.referralCode}
-            // srcDoc={testForm.replace("$%##%$", this.state.referralCode)}
-            width="640" 
-            height="1998" 
-            frameBorder="0" 
-            marginHeight="0" 
-            marginWidth="0" 
-            id="refer"
-            className="embedForm"
-            onLoad={this.formLoad}
-          >
-            Loading...
-          </iframe> */}
 
           <ApplicationForm referralCode={this.state.referralCode} 
             status={this.props.jobApplication.jobApplicationSuccessful}

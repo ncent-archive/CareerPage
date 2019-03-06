@@ -15,17 +15,16 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
   let receiveChallengesSuccess = (challenges) => {
     console.log("\n\nchallengesmiddleware, receive all challenges success", challenges.data[0]);
     // .challengeSettings.metadatas[0].value);
-
-    //running idiosyncratic regex
-    let newStr = challenges.data[0].challengeSettings.metadatas[0].value
-      // .replace("challengesmiddleware {", '{"challengesmiddleware": {')
-      .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
-      .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
-    // newStr += "}";
-    // console.log("newStr", newStr);
-
-    //changing idiosyncratic data on challenges object before dispatching
-    challenges.data[0].challengeSettings.metadatas[0].value = JSON.parse(newStr);
+    if (challenges.data[0].id === 1 && 
+        typeof challenges.data[0].challengeSettings.metadatas[0].value === "string") {
+      //running idiosyncratic regex
+      let newStr = challenges.data[0].challengeSettings.metadatas[0].value
+        .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
+        .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
+  
+      //changing idiosyncratic data on challenges object before dispatching
+      challenges.data[0].challengeSettings.metadatas[0].value = JSON.parse(newStr);
+    }
 
     dispatch(receiveChallenges(challenges.data[0]));
   };
@@ -34,12 +33,16 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
     // console.log("challengesmiddleware receive one challenge", challenge.data.challengeSettings.metadatas[0].value);
     console.log("\n\nchallengesMiddleware receive single challenge", challenge.data);
 
-    let newStr = challenge.data.challengeSettings.metadatas[0].value
-    .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
-    .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
-
-    challenge.data.challengeSettings.metadatas[0].value = JSON.parse(newStr);
-    
+    if (challenge.data.id === 1 && 
+        typeof challenge.data.challengeSettings.metadatas[0].value === "string") {
+      //running idiosyncratic regex
+      let newStr = challenge.data.challengeSettings.metadatas[0].value
+      .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
+      .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
+  
+      //changing idiosyncratic data on challenges object before dispatching
+      challenge.data.challengeSettings.metadatas[0].value = JSON.parse(newStr);
+    }
 
     // console.log("JSON.parse", JSON.parse(newStr));
     dispatch(receiveChallenge(challenge.data));

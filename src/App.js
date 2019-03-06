@@ -3,6 +3,7 @@ import Landing from "./components/Landing.jsx";
 import LandingContainer from "./components/LandingPageContainer.jsx";
 import JobDetails from "./components/JobDetails.jsx";
 import JobDetailsContainer from "./components/JobDetailsContainer.jsx";
+import CreateChallenge from "./components/CreateChallenge.jsx";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import store from "./store/initializeStore.js";
 import { fetchAllChallenges } from "./actions/challengeActions.js";
@@ -32,6 +33,7 @@ class App extends React.Component {
         <div>
           <Route exact path="/" component={LandingContainer} onEnter={() => {}} />
           <Route path="/detail" component={JobDetailsContainer} />
+          <Route path="/createChallenge" component={CreateChallenge} />
         </div>
       </Router>
     )
