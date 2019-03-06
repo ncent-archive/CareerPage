@@ -206,7 +206,7 @@ class JobDetails extends React.Component {
                         <a href="#jobDetails">
                             <div className="scrollBtnContainer">
                                 <img className="downArrow" src={downArrow}/>
-                                <span>Share Now</span>
+                                <span className="shareNow">Share Now</span>
                             </div>
                         </a>
                     </section>
