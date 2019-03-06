@@ -3,6 +3,7 @@ import Positions from "./Positions.jsx";
 import store from "./../store/initializeStore.js";
 import {fetchAllChallenges} from "./../actions/challengeActions.js";
 import logo from "../img/ncent_NOsubline_500px_white.png";
+import impact from "../img/impact-icon-15.jpg";
 
 class Landing extends React.Component {
     constructor(props) {
@@ -73,7 +74,7 @@ class Landing extends React.Component {
 
                             <div className="infoItem">
                                 <div className="infoIcon">
-                                    <img className="landingImage" src="http://chittagongit.com//images/impact-icon/impact-icon-15.jpg"/>
+                                    <img className="landingImage" src={impact}/>
                                 </div>
                                 <div className="infoHeader">
                                     High empathy, high impact
