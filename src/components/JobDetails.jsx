@@ -190,7 +190,7 @@ class JobDetails extends React.Component {
 
                     {this.renderModal()}
                     <section id="section03" className="demo">
-                        <h1>Help Us Fill This Job</h1>
+                        <span className="previewTitle">Help Us Fill This Job</span>
                         <div className="infoContainer">
                             <span className="infoSpan">Step 1: SHARE this job with your network</span>
                             <span className="infoSpan">Step 2: If anyone in your sharing network finds the person we hire... YOU will share the rewards!</span>
