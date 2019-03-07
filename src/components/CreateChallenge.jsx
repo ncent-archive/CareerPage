@@ -61,18 +61,7 @@ class CreateChallenge extends React.Component {
                   "shareText": this.state.shareText,
                   "totalUsdReward": this.state.totalReward || "1000.00"
                 },
-                // "subJobs": [{
-                //   "title": "Full Stack",
-                //   data: [{
-                //     "title": "Minimum Requirements",
-                //     "list": ["sentence 1", "sentence 2"]
-                //   }, {
-                //     "title": "Preferred Qualifications",
-                //     "list": ["sentence 1", "sentence 2"]
-                //   }]
-                // }, {
-                //   "title": "Back End"
-                // }]
+                "subJobs": [this.state.subJobs]
               }
             }
           ],
@@ -97,7 +86,7 @@ class CreateChallenge extends React.Component {
         //     "type": "SINGLE"
         //   }
         // },
-        // "subChallenges": []
+        "subChallenges": []
       }
     }
     console.log("\nchallenge about to be dispatched from CreateChallenge.jsx", obj);
@@ -112,24 +101,39 @@ class CreateChallenge extends React.Component {
   addSubJob(e) {
     console.log("adding subjob...");
     let container = this.subJobsContainer;
+
     let newSubJob = document.createElement("div");
     newSubJob.classList.add("addSubJobContainer");
     newSubJob.dataset.num = this.state.subJobs.length;
-    newSubJob.innerHTML = `
-        <span class="addSubJob">Sub-Job Title</span>
-        <input class="addSubJobInput" type="text" placeholder="Name for sub-job" 
-          onchange="${this.subJobTitleChange}()" 
-        />
-        <button class="addDataCollectionButton" onclick="${this.addDataCollection}()">Add Data Collection</button>
-    `;
+
+    let newSpan = document.createElement("span");
+    newSpan.classList.add("addSubJob");
+    newSpan.innerText = "Sub-Job Title";
+    newSubJob.appendChild(newSpan);
+
+    let newInput = document.createElement("input");
+    newInput.classList.add("addSubJobInput");
+    newInput.type = "text";
+    newInput.placeholder = "Name for this sub-job";
+    newInput.addEventListener("change", this.subJobTitleChange);
+    newSubJob.appendChild(newInput);
+
+    let newButton = document.createElement("button");
+    newButton.classList.add("addDataCollectionButton");
+    newButton.innerText = "Add Data Collection";
+    newButton.addEventListener("click", this.addDataCollection);
+    newSubJob.appendChild(newButton);
+
+    // newSubJob.innerHTML = `
+    //     <span class="addSubJob">Sub-Job Title</span>
+    //     <input class="addSubJobInput" type="text" placeholder="Name for sub-job" 
+    //       onchange="subJobTitleChange()" 
+    //     />
+    //     <button class="addDataCollectionButton" onclick="addDataCollection()">Add Data Collection</button>
+    // `;
     let newSubJobsState = this.state.subJobs.concat({
       title: "",
-      data: [
-        {
-          title: "",
-          list: []
-        }
-      ]
+      data: []
     });
     this.setState({ subJobs: newSubJobsState });
     console.log("\naddSubJob in CreateChallenge.jsx, newSubJob before adding is", newSubJob);
@@ -145,15 +149,47 @@ class CreateChallenge extends React.Component {
 
   addDataCollection(e) {
     let container = e.target.parentNode;
-    let idx = this.state.subJobs[e.target.parentNode.dataset.num].data.length;
-    let newDataCollection = (
-      <div className="addSubJobDataCollectionContainer" data-num={idx}>
-        <span className="addSubJobDataCollectionTitle">Data Collection Title</span>
-        <input className="addSubJobDataCollectionInput" onChange={this.subJobDataCollectionTitleChange} />
-        <button className="addSubJobDataPointButton" onClick={this.addDataPoint}>Add Data Point</button>
-      </div>
-    )
-    container.appendChild(newDataCollection);
+    let majorIdx = container.dataset.num;
+    let minorIdx = this.state.subJobs[container.dataset.num].data.length;
+
+    let newContainer = document.createElement("div");
+    newContainer.classList.add("addSubJobDataCollectionContainer");
+    newContainer.dataset.num = minorIdx;
+
+    let newSpan = document.createElement("span");
+    newSpan.classList.add("addSubJobDataCollectionTitle");
+    newSpan.innerText = "Data Collection Title";
+    newContainer.appendChild(newSpan);
+
+    let newInput = document.createElement("input");
+    newInput.classList.add("addSubJobDataCollectionInput");
+    newInput.addEventListener("change", this.subJobDataCollectionTitleChange);
+    newContainer.appendChild(newInput);
+    newInput.placeholder = "";
+
+    let newButton = document.createElement("button");
+    newButton.classList.add("addSubJobDataPointButton");
+    newButton.innerText = "Add Data Point";
+    newButton.addEventListener("click", this.addDataPoint);
+    newContainer.appendChild(newButton);
+
+    // let newDataCollection = (
+    //   <div className="addSubJobDataCollectionContainer" data-num={idx}>
+    //     <span className="addSubJobDataCollectionTitle">Data Collection Title</span>
+    //     <input className="addSubJobDataCollectionInput" onChange={this.subJobDataCollectionTitleChange} />
+    //     <button className="addSubJobDataPointButton" onClick={this.addDataPoint}>Add Data Point</button>
+    //   </div>
+    // )
+    container.appendChild(newContainer);
+
+    let newSubJobsState = this.state.subJobs;
+    // console.log("adding new data collection, state before", newSubJobsState);
+    newSubJobsState[majorIdx].data.push({
+      title: "",
+      list: []
+    });
+    // console.log("adding new data collection, state after", newSubJobsState);
+    this.setState({ subJobs: newSubJobsState });
   }
 
   subJobDataCollectionTitleChange(e) {
@@ -165,13 +201,31 @@ class CreateChallenge extends React.Component {
 
   addDataPoint(e) {
     let container = e.target.parentNode;
-    let idx = this.state.subJobs[e.target.parentNode.parentNode.dataset.num].data.list.length;
-    let newDataPoint = (
-      <div className="addSubJobDataPointContainer" data-num={idx}>
-        • <input className="addSubJobDataPointInput" onChange={this.subJobDataPointChange} />
-      </div>
-    )
-    container.appendChild(newDataPoint);
+    let majorIdx = container.parentNode.dataset.num;
+    let minorIdx = container.dataset.num;
+    // console.log("addDataPoint", this.state.subJobs, this.state.subJobs[container.parentNode.dataset.num])
+    let idx = this.state.subJobs[majorIdx].data[minorIdx].list.length;
+
+    let newContainer = document.createElement("div");
+    newContainer.classList.add("addSubJobDataPointContainer");
+    newContainer.dataset.num = idx;
+    newContainer.innerText = "• ";
+
+    let newInput = document.createElement("input");
+    newInput.classList.add("addSubJobDataPointInput");
+    newInput.addEventListener("change", this.subJobDataPointChange);
+    newContainer.appendChild(newInput);
+
+    // let newDataPoint = (
+    //   <div className="addSubJobDataPointContainer" data-num={idx}>
+    //     • <input className="addSubJobDataPointInput" onChange={this.subJobDataPointChange} />
+    //   </div>
+    // )
+    container.appendChild(newContainer);
+
+    let newSubJobsState = this.state.subJobs;
+    newSubJobsState[majorIdx].data[minorIdx].list.push("");
+    this.setState({ subJobs: newSubJobsState });
   }
 
   subJobDataPointChange(e) {
@@ -204,7 +258,7 @@ class CreateChallenge extends React.Component {
 
           <div className="addHuntFormContainer">
             <span className="addHuntFormFieldName">Description</span>
-            <input className="addHuntFormInput" type="textarea" placeholder="Job Description" id="description"
+            <textarea className="addHuntFormInput addHuntDescription" type="text" placeholder="Job Description" id="description"
               onChange={this.inputChange}
             />
             <br />
