@@ -229,11 +229,11 @@ class JobDetails extends React.Component {
 
           <div className="jobTabs" ref={el => this.jobTabs = el}>
             {jobState.subJobs.map((el, i) => {
-              const containerClass = i % 2 === 0 ? 
+              const containerClass = i === 0 ? 
               "jobTabContainer jobTabContainerRight" : 
               "jobTabContainer jobTabContainerLeft";
               return (
-                <div className={containerClass} key={i} style={{}}>
+                <div className={"jobTabContainer"} key={i} style={{right: i * 25}}>
                   <div className="jobTabLeftInactive"></div>
                   <div className="jobTabInactive" key={i} onClick={(e) => {this.tabSwitch(e, i)}}>{el.title}</div>
                   <div className="jobTabRightInactive"></div>

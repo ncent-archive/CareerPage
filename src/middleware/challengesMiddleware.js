@@ -60,7 +60,7 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
       });
       dispatch(receiveChallenge(challenge.data));
     } else {
-      let newStr = challenge.data.challengeSettings.metadatas[0].value;
+      let newStr = challenge.data.challengeSettings.metadatas[0].value.replace(/\\"/g, '"');
       challenge.data.challengeSettings.metadatas[0].value = JSON.parse(newStr);
       dispatch(receiveChallenge(challenge.data));
     }

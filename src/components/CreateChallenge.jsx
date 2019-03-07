@@ -62,7 +62,7 @@ class CreateChallenge extends React.Component {
                   "shareText": this.state.shareText,
                   "totalUsdReward": this.state.totalReward || "1000.00"
                 },
-                "subJobs": [this.state.subJobs]
+                "subJobs": this.state.subJobs
               }
             }
           ],
