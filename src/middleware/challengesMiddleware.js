@@ -30,9 +30,13 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
         subJob.data = [subJob.niceToHave, subJob.requirements, subJob.responsibilities];
         return subJob;
       });
+      dispatch(receiveChallenges(challenges.data[0]));
+    } else {
+      let newStr = challenges.data[0].challengeSettings.metadatas[0].value;
+      challenges.data[0].challengeSettings.metadatas[0].value = JSON.parse(newStr);
+      dispatch(receiveChallenges(challenges.data[0]));
     }
 
-    dispatch(receiveChallenges(challenges.data[0]));
   };
 
   let receiveChallengeSuccess = (challenge) => {
@@ -54,10 +58,12 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
         subJob.data = [subJob.niceToHave, subJob.requirements, subJob.responsibilities];
         return subJob;
       });
+      dispatch(receiveChallenge(challenge.data));
+    } else {
+      let newStr = challenge.data.challengeSettings.metadatas[0].value;
+      challenge.data.challengeSettings.metadatas[0].value = JSON.parse(newStr);
+      dispatch(receiveChallenge(challenge.data));
     }
-
-    // console.log("JSON.parse", JSON.parse(newStr));
-    dispatch(receiveChallenge(challenge.data));
   }
 
   let error = e => console.log("Error in Challenges Middleware!", e);

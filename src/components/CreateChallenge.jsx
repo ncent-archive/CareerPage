@@ -67,30 +67,32 @@ class CreateChallenge extends React.Component {
             }
           ],
           "name": this.state.name,
-          "offChain": false,
+          "offChain": true,
           "shareExpiration": this.state.shareExpiration || "2020-02-02T00:35:01.441Z",
           "sponsorName": this.state.sponsorName
         },
-        // "completionCriteria": {
-        //   "address": "[B@28e7acf0",
-        //   "prereq": [],
-        //   "reward": {
-        //     "type": {
-        //       "audience": "PROVIDENCE",
-        //       "type": "EVEN"
-        //     }
-        //   }
-        // },
-        // "distributionFeeReward": {
-        //   "type": {
-        //     "audience": "PROVIDENCE",
-        //     "type": "SINGLE"
-        //   }
-        // },
+        "completionCriteria": {
+          "address": "[B@708f5957",
+          "prereq": [],
+          "reward": {
+            "type": {
+              "audience": "PROVIDENCE",
+              "type": "N_OVER_2"
+            }
+          }
+        },
+        "distributionFeeReward": {
+          "type": {
+            "audience": "PROVIDENCE",
+            "type": "SINGLE"
+          }
+        }, 
         "subChallenges": []
       }
     }
     console.log("\nchallenge about to be dispatched from CreateChallenge.jsx", obj);
+    obj.challengeNamespace.challengeSettings.metadatas[0].value = JSON.stringify(obj.challengeNamespace.challengeSettings.metadatas[0].value).replace(/"/g, '\\"');
+    console.log(obj.challengeNamespace.challengeSettings.metadatas[0].value);
     let response = await apiUtil.createChallenge(obj);
     console.log("\nin CreateChallenge.jsx, createChallenge api call just returned", response.data);
   }
@@ -127,19 +129,12 @@ class CreateChallenge extends React.Component {
     newButton.addEventListener("click", this.addDataCollection);
     newSubJob.appendChild(newButton);
 
-    // newSubJob.innerHTML = `
-    //     <span class="addSubJob">Sub-Job Title</span>
-    //     <input class="addSubJobInput" type="text" placeholder="Name for sub-job" 
-    //       onchange="subJobTitleChange()" 
-    //     />
-    //     <button class="addDataCollectionButton" onclick="addDataCollection()">Add Data Collection</button>
-    // `;
     let newSubJobsState = this.state.subJobs.concat({
       title: "",
       data: []
     });
     this.setState({ subJobs: newSubJobsState });
-    console.log("\naddSubJob in CreateChallenge.jsx, newSubJob before adding is", newSubJob);
+    // console.log("\naddSubJob in CreateChallenge.jsx, newSubJob before adding is", newSubJob);
     container.appendChild(newSubJob);
   }
 
@@ -176,13 +171,6 @@ class CreateChallenge extends React.Component {
     newButton.addEventListener("click", this.addDataPoint);
     newContainer.appendChild(newButton);
 
-    // let newDataCollection = (
-    //   <div className="addSubJobDataCollectionContainer" data-num={idx}>
-    //     <span className="addSubJobDataCollectionTitle">Data Collection Title</span>
-    //     <input className="addSubJobDataCollectionInput" onChange={this.subJobDataCollectionTitleChange} />
-    //     <button className="addSubJobDataPointButton" onClick={this.addDataPoint}>Add Data Point</button>
-    //   </div>
-    // )
     container.appendChild(newContainer);
 
     let newSubJobsState = this.state.subJobs;
@@ -219,11 +207,6 @@ class CreateChallenge extends React.Component {
     newInput.addEventListener("change", this.subJobDataPointChange);
     newContainer.appendChild(newInput);
 
-    // let newDataPoint = (
-    //   <div className="addSubJobDataPointContainer" data-num={idx}>
-    //     • <input className="addSubJobDataPointInput" onChange={this.subJobDataPointChange} />
-    //   </div>
-    // )
     container.appendChild(newContainer);
 
     let newSubJobsState = this.state.subJobs;
@@ -269,7 +252,7 @@ class CreateChallenge extends React.Component {
 
           <div className="addHuntFormContainer">
             <span className="addHuntFormFieldName">Image Url</span>
-            <input className="addHuntFormInput" type="text" placeholder="Icon for job posting" id="imageUrl"
+            <input className="addHuntFormInput" type="text" placeholder="Icon for job posting (nCent logo if empty)" id="imageUrl"
               onChange={this.inputChange}
             />
             <br />
