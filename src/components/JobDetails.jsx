@@ -11,6 +11,10 @@ import downArrow from "../img/Scroll Down-595b40b75ba036ed117d58fa.svg";
 // let formHTML = require("./../testForm.html");
 // import testForm from "./../testForm.js";
 
+const invisible = {
+    visibility: "none"
+};
+
 $(function() {
     $('a').on('click', function(e) {
         console.log('link clicked');
@@ -37,7 +41,9 @@ class JobDetails extends React.Component {
             prefQuals: [],
             location: "",
             subIdx: 0,
-            formLoaded: false
+            formLoaded: false,
+            arrowUp: true,
+            renderExplainer: false
         };
 
         //bindings
@@ -52,7 +58,9 @@ class JobDetails extends React.Component {
         this.getChallenge = this.getChallenge.bind(this);
         this.handleGetChallenge = this.handleGetChallenge.bind(this);
         this.formLoad = this.formLoad.bind(this);
-
+        this.renderArrow = this.renderArrow.bind(this);
+        this.handleExpansion = this.handleExpansion.bind(this);
+        this.renderPreviewTitle = this.renderPreviewTitle.bind(this);
     }
 
     //functions
@@ -67,6 +75,29 @@ class JobDetails extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (!prevProps.received && this.props.received) this.setTabs();
+    }
+
+    handleExpansion(e) {
+        e.stopPropagation();
+        this.setState({ arrowUp: !this.state.arrowUp });
+        this.setState({ renderExplainer: !this.state.renderExplainer });
+
+    }
+
+    renderArrow() {
+        if (this.state.arrowUp) {
+            return (
+                <svg className="positionArrow arrowUp" viewBox="0 0 10 16" version="1.1" width="12" height="20">
+                    <path fillRule="evenodd" d="M10 10l-1.5 1.5L5 7.75 1.5 11.5 0 10l5-5 5 5z"></path>
+                </svg>
+            )
+        } else {
+            return (
+                <svg className="positionArrow arrowDown" viewBox="0 0 10 16" version="1.1" width="12" height="20">
+                    <path fillRule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"></path>
+                </svg>
+            )
+        }
     }
 
     getChallenge() {
@@ -177,8 +208,21 @@ class JobDetails extends React.Component {
         }
     }
 
-    render() {
+    renderPreviewTitle() {
+        if (this.state.referralCode) {
+            return (
+                <span className="previewTitle">You Were Referred To Help Us Fill This Job</span>
+            );
+        } else {
+            return (
+                <span className="previewTitle">Help Us Fill This Job</span>
+            );
+        }
+    }
 
+    render() {
+        console.log(this.state);
+        let explainerClass = this.state.renderExplainer ? "visibleExplainer" : "invisibleExplainer";
         if (!this.props.received) {
             console.log("spinner condition", this.props.challengeData);
             return (
@@ -196,30 +240,32 @@ class JobDetails extends React.Component {
 
                     {this.renderModal()}
                     <section id="section03" className="demo">
-                        <span className="previewTitle">Help Us Fill This Job</span>
+                        {this.renderPreviewTitle()}
                         <div className="infoContainer">
                             <span className="infoSpan">Step 1: SHARE this job with your network</span>
                             <span className="infoSpan">Step 2: If anyone in your sharing network finds the person we hire... YOU will share the rewards!</span>
-                            <div className="exampleContainer">
-                                <span className="infoSpan">EXAMPLE</span>
-                                <span className="infoSpan">Person 0: Gets hired by nCent Labs</span>
-                                <span className="infoSpan">Person 1: Shares this listing with Person 0 and earns a $4,000 reward.</span>
-                                <span className="infoSpan">Person 2: Shares this listing with Person 1 and earns a $2K reward.</span>
-                                <span className="infoSpan">Person 3: Shares this listing with Person 2 and earns a $1K reward.</span>
-                                <span className="infoSpan">... and so on...</span>
+                            <div className="exampleContainer" onClick={this.handleExpansion}>
+                                <div className="seeHowThisWorks">
+                                    <span>See how this works</span>
+                                {this.renderArrow()}
+                            </div>
+                                <div className={explainerClass}>
+                                    <span className="infoSpan">Person 0: Gets hired by nCent Labs</span>
+                                    <span className="infoSpan">Person 1: Shares this listing with Person 0 and earns a $4,000 reward.</span>
+                                    <span className="infoSpan">Person 2: Shares this listing with Person 1 and earns a $2K reward.</span>
+                                    <span className="infoSpan">Person 3: Shares this listing with Person 2 and earns a $1K reward.</span>
+                                    <span className="infoSpan">... and so on...</span>
+                                </div>
                             </div>
                         </div>
                         <a href="#jobDetails" onClick={scrollToDetails}>
                             <div className="scrollBtnContainer">
                                 <img className="downArrow" src={downArrow}/>
-                                <span className="shareNow">Share Now</span>
+                                <span className="shareNow">Get Started</span>
                             </div>
                         </a>
                     </section>
                     <div id="jobDetails" className="logoAndReferBtn">
-                        <div className="logo">
-                            <img className="logoImg" src={jobState.company.iconUrl} onError={this.imgError}/>
-                        </div>
                         <a className="referA" onClick={this.triggerModalOn}>Share Now
                             <img className="shareIcon" src="https://cdn1.iconfinder.com/data/icons/media-icons-23/100/share-512.png"/>
                         </a>

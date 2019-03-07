@@ -280,9 +280,8 @@ a {
   height: 78px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .logo {
@@ -314,7 +313,6 @@ a {
 .referA {
   background: #ffffff;
   font-weight: normal;
-  padding: 12px 20px 14px 20px;
   font-size: 14px;
   line-height: 17px;
   border-radius: 3px;
@@ -324,6 +322,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px;
 }
 
 .referA:hover {
@@ -391,7 +390,6 @@ a {
 }
 
 .jobTitle {
-  margin: 10px 0px 0px 0px;
   font-size: 28px;
   font-weight: bolder;
 }
@@ -993,9 +991,8 @@ section {
 .previewTitle {
   z-index: 2;
   color: black;
-  font: normal 300 32px/1 'Josefin Sans', sans-serif;
+  font: normal 300 26px/1 'Josefin Sans', sans-serif;
   text-align: center;
-  white-space: nowrap;
 }
 
 .downArrow {
@@ -1032,10 +1029,26 @@ section {
   flex-direction: column;
   font : normal 400 18px/1 'Josefin Sans', sans-serif;
 }
+.visibleExplainer {
+  display: flex;
+  flex-direction: column;
+  visibility: visible;
+}
+.invisibleExplainer {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+}
 .infoSpan {
   margin-top: 20px;
 }
-
+.seeHowThisWorks {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+  vertical-align: middle;
+}
 .shareIcon {
   height: 20px;
   width: 20px;
