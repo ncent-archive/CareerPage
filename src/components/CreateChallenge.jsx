@@ -1,4 +1,5 @@
 import React from "react";
+const apiUtil = require("./../util/apiUtil.js");
 
 class CreateChallenge extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class CreateChallenge extends React.Component {
 
   //functions
 
-  addHunt() {
+  async addHunt() {
     console.log("\n\nCreateChallenge.jsx, adding challenge");
     let obj = {
       "challengeNamespace": {
@@ -90,6 +91,8 @@ class CreateChallenge extends React.Component {
       }
     }
     console.log("\nchallenge about to be dispatched from CreateChallenge.jsx", obj);
+    let response = await apiUtil.createChallenge(obj);
+    console.log("\nin CreateChallenge.jsx, createChallenge api call just returned", response.data);
   }
 
   inputChange(e) {

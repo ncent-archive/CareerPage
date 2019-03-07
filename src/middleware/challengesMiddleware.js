@@ -24,6 +24,12 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
   
       //changing idiosyncratic data on challenges object before dispatching
       challenges.data[0].challengeSettings.metadatas[0].value = JSON.parse(newStr);
+
+      //changing format of JSON to generalized format
+      challenges.data[0].challengeSettings.metadatas[0].value.subJobs = challenges.data[0]                          .challengeSettings.metadatas[0].value.subJobs.map(subJob => {
+        subJob.data = [subJob.niceToHave, subJob.requirements, subJob.responsibilities];
+        return subJob;
+      });
     }
 
     dispatch(receiveChallenges(challenges.data[0]));
@@ -42,6 +48,12 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
   
       //changing idiosyncratic data on challenges object before dispatching
       challenge.data.challengeSettings.metadatas[0].value = JSON.parse(newStr);
+
+      //changing format of JSON to generalized format
+      challenge.data.challengeSettings.metadatas[0].value.subJobs = challenge.data.challengeSettings.metadatas[0].value.subJobs.map(subJob => {
+        subJob.data = [subJob.niceToHave, subJob.requirements, subJob.responsibilities];
+        return subJob;
+      });
     }
 
     // console.log("JSON.parse", JSON.parse(newStr));

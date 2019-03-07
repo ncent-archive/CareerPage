@@ -178,6 +178,23 @@ class JobDetails extends React.Component {
       const jobState = this.props.challengeData.challengeSettings.metadatas[0].value;
       const idx = this.state.subIdx;
 
+      //for idiosyncratic default challenge
+      let Benefits = "";
+      if (jobState.company.benefits) {
+        Benefits = (
+          <div className="moreInfoPs">
+            <div className="moreInfoP">
+              <div className="moreInfoPHeader">
+                {jobState.company.benefits.title}
+              </div>
+              <div className="moreInfoPBody">
+                {jobState.company.benefits.description}
+              </div>
+            </div>
+          </div>
+        )
+      }
+
       return (
         <div className="jobDetailContainer">
 
@@ -227,12 +244,28 @@ class JobDetails extends React.Component {
 
           <div className="qualificationsContainer">
 
-            {/* {change way data is in subJobs - have title and array of other data} 
-            
-            
-            */}
+            {/* {change way data is in subJobs - have title and array of other data}  */}
+            {jobState.subJobs[idx].data.map((el, i) => {
+              return (
+                <div className="qualContainer" key={i}>
+                  <div className="qualsHeader">
+                    {el.title}:
+                  </div>
+                  <div className="qualsListing">
+                    {el.list.map((str, i) => {
+                      return (
+                        <div className="qualText" key={i}>
+                          • <span className="qualTextStr">{str}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+           
 
-            <div className="qualContainer">
+            {/* <div className="qualContainer">
               <div className="qualsHeader">
                 Responsibilities:
               </div>
@@ -276,19 +309,10 @@ class JobDetails extends React.Component {
                 })}
               </div>
             </div>
-          
+           */}
           </div>
 
-          <div className="moreInfoPs">
-            <div className="moreInfoP">
-              <div className="moreInfoPHeader">
-                {jobState.company.benefits.title}
-              </div>
-              <div className="moreInfoPBody">
-                {jobState.company.benefits.description}
-              </div>
-            </div>
-          </div>
+          {Benefits}
 
           <ApplicationForm referralCode={this.state.referralCode} 
             status={this.props.jobApplication.jobApplicationSuccessful}

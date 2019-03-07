@@ -92,6 +92,13 @@ export const shareChallenge = async (challengeId, shares, expiration, referralCo
     });
 }
 
+export const createChallenge = async (challenge) => {
+    console.log("\n\ncreateChallenge in apiUtil");
+    return axios.post('/api/challenges', {
+        challengeNameSpace: challenge
+    });
+}
+
 export const sendApplication = async (data, dispatch) => {
     console.log("\n\apiUtil, sendApplication", data);
     try {
