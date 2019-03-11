@@ -5,8 +5,8 @@ class Positions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrowUp: true,
-      renderListing: false
+      arrowUp: false,
+      renderListing: true
     };
     //bindings
     this.handleExpansion = this.handleExpansion.bind(this);
@@ -63,7 +63,6 @@ class Positions extends React.Component {
           </div>
           <div className="positionOpenings">
             <span className="positionOpeningsText">
-              {/* {`${this.props.data.length} opening${this.props.data.length > 1 ? 's' : ''}`} */}
               1 Opening
             </span>
             {this.renderArrow()}

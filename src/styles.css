@@ -4,6 +4,14 @@ body {
   line-height: 1.5;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .headerContainer {
   width: 100vw;
   background-color: #24292e;
@@ -92,10 +100,14 @@ body {
 }
 
 .infoIcon {
-  width: 106px;
-  height: 80px;
-  background-color: black;
+  width: 100px;
+  height: 100px;
   margin-bottom: 16px;
+}
+
+.landingImage {
+  width: 100%;
+  height: 100%;
 }
 
 .infoHeader {
@@ -261,10 +273,16 @@ body {
 }
 
 .jobDetailContainer {
-  padding: 20px 10px 20px 10px;
   font-family: "Helvetica Neue", Helvetica, Arial, Helvetica, sans-serif;
-  max-width: 700px;
+  width: 80vw;
+  max-width: 850px;
   margin: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
 .logoAndReferBtn {
@@ -273,35 +291,79 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 .logo {
-  height: 75px;
-  width: 75px;
+  height: 70px;
+  width: 70px;
   background-color: black;
   border-radius: 50px;
 }
 
 .logoImg {
-  height: 75px;
-  width: 75px;
+  height: 70px;
+  width: 70px;
   border-radius: 50px;
 }
 
+.referAndInstructions {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  position: relative;
+  left: 33px;
+}
+
+.questionMark {
+  font-size: 22px;
+  opacity: 0.75;
+  margin-left: 14px;
+  padding: 3px 13px;
+  border: 1px solid #000000ab;
+  border-radius: 25px;
+  background-color: #0000000d;
+}
+
+.questionMark:hover {
+  background-color: #e0e0e0;
+}
+
+.landingLogoImg {
+  height: 100%;
+}
+
+.openPositionsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #ffffff;
+  padding-right: 5px;
+}
+
 .referA {
-  background: #2975CA;
+  background: #0090ff;
   font-weight: normal;
-  padding: 12px 20px 14px 20px;
   font-size: 14px;
   line-height: 17px;
-  border-radius: 3px;
+  border-radius: 8px;
+  border: 1px solid black;
   color: white;
   text-decoration: unset;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  padding: 10px;
 }
 
 .referA:hover {
-  /* background-color: #0000bf; */
+  background-color: #2f6eff;
 }
 
 .jobTabs {
@@ -369,7 +431,6 @@ body {
 }
 
 .jobTitle {
-  margin: 10px 0px 0px 0px;
   font-size: 28px;
   font-weight: bolder;
 }
@@ -393,6 +454,7 @@ body {
 
 .qualificationsContainer {
   margin-bottom: 60px;
+  align-self: flex-start;
 }
 
 .qualContainer {
@@ -464,6 +526,7 @@ body {
   background-color: white;
   text-align: center;
   font-size: 22px;
+  border-radius: 30px;
 }
 
 .referralModalInputBtnWrapper {
@@ -508,6 +571,7 @@ body {
 .referralModalLinkAnchor {
   font-size: 14px;
   text-overflow: ellipsis;
+  overflow: auto;
 }
 
 .referralModalLoading {
@@ -523,6 +587,7 @@ body {
   justify-content: space-around;
   background-color: white;
   text-align: center;
+  border-radius: 30px;
 }
 
 .referralModalLoadingInformation {
@@ -597,6 +662,7 @@ body {
   margin: auto;
   border-radius: 5px;
   min-height: 575px;
+  margin-bottom: 25px;
 }
 
 .applicationFormHeaderRow {
@@ -761,7 +827,7 @@ body {
 
 a:hover {
   cursor: pointer;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .contactButtons a:hover {
@@ -1143,4 +1209,430 @@ a:hover {
 .addHuntFormHeader {
   font-size: 28px;
   margin-bottom: 16px;
+}
+
+
+/*scroll button css*/
+
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:300,400);
+
+section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.previewTitle {
+  z-index: 2;
+  color: black;
+  font: normal 300 26px/1 'Josefin Sans', sans-serif;
+  text-align: center;
+}
+
+.downArrow {
+  height: 75px;
+  width: 75px;
+  padding-bottom: 10px;
+}
+
+.demo a {
+  z-index: 10;
+  display: inline-block;
+  color: black;
+  font : normal 400 20px/1 'Josefin Sans', sans-serif;
+  letter-spacing: .1em;
+  text-decoration: none;
+  transition: opacity .3s;
+}
+
+.demo a:hover {
+  opacity: .5;
+}
+
+.demo {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 10vh;
+}
+
+.infoContainer {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  font : normal 400 18px/1 'Josefin Sans', sans-serif;
+}
+
+.visibleExplainer {
+  display: flex;
+  flex-direction: column;
+  visibility: visible;
+}
+
+.invisibleExplainer {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+}
+
+.infoSpan {
+  margin-top: 20px;
+}
+
+.seeHowThisWorks {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+  vertical-align: middle;
+}
+
+.shareIcon {
+  height: 20px;
+  width: 20px;
+  margin-left: 10px;
+  filter: invert(1);
+}
+
+.exampleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollBtnContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+#section03 a {
+
+}
+
+#section03 a span::after {
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  box-sizing: border-box;
+}
+
+#section03 a span::before {
+  box-shadow: 0 0 0 0 rgba(255,255,255,.1);
+  border-radius: 100%;
+  opacity: 0;
+  -webkit-animation: sdb03 3s infinite;
+  animation: sdb03 3s infinite;
+  box-sizing: border-box;
+}
+
+@-webkit-keyframes sdb03 {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  60% {
+    box-shadow: 0 0 0 60px rgba(255,255,255,.1);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sdb03 {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  60% {
+    box-shadow: 0 0 0 60px rgba(255,255,255,.1);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.huntCollectionContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 35px;
+  padding: 0px 10px 0px 10px;
+}
+
+.huntContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-evenly;
+  margin: 13px 6px 16px 6px;
+  height: 665px;
+  min-height: 660px;
+  width: 350px;
+  max-width: 95vw;
+  border: 3px solid #000000ad;
+  border-radius: 35px;
+  padding: 0px 6px 0px 6px;
+  background-color: #f5f5f561;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+
+.huntContainerDashboard {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: space-evenly;
+  /* margin: 13px 6px 16px 6px; */
+  height: 100px;
+  width: 99vw;
+  /* need to fix later */
+  max-width: 800px;
+  border: 2px solid #000000ad;
+  /* border-radius: 35px; */
+  /* padding: 0px 7px 0px 7px; */
+  background-color: #f5f5f561;
+  overflow: hidden;
+  position: relative;
+}
+
+.switchToCollection {
+ position: absolute;
+ top: 7px;
+ right: 6px;
+ font-size: 14px;
+ background-color: rgba(219, 219, 219, 0.32);
+ padding: 4px 10px;
+ border-radius: 20px;
+ border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.switchToCollection:hover {
+  background-color: rgb(211, 211, 211);
+}
+
+.huntImage {
+  max-height: 50px;
+  max-width: 50px;
+  visibility: hidden;
+}
+
+.huntImageLoaded {
+  align-self: center;
+  min-height: 50px;
+  max-width: 50px;
+  /* flex-grow: 1; */
+}
+
+.huntImageLoading {
+  align-self: center;
+  height: 50px;
+  width: 50px;
+  flex-grow: 1;
+  border-radius: 30px;
+  background-color: rgb(232, 232, 232);
+  z-index: 2;
+}
+
+.huntDashboardExpiryAndSponsor {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.huntDashboardNameAndReward {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: space-between;
+}
+
+.huntDashboardDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 6;
+  padding: 4px;
+}
+
+.huntDescription {
+  font-size: 18px;
+  max-height: 108px;
+  overflow-y: scroll;
+}
+
+.huntDetailsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.huntEmbed {
+  transform: rotate(-45deg);
+  position: absolute;
+  right: -17px;
+  top: 2px;
+  font-family: sans-serif;
+  background-color: #7caaff;
+  color: white;
+  border-bottom-left-radius: 130px;
+  border-bottom-right-radius: 130px;
+  padding-left: 21px;
+  padding-right: 31px;
+}
+
+.huntEmbed:hover {
+  background-color: #2f78ff;
+}
+
+.huntEmbedded {
+  align-self: center;
+  background: linear-gradient(to bottom, #fcfcfc 0%, rgb(232, 232, 232) 16%);
+  position: absolute;
+  bottom: 0px;
+  padding: 0px 7px 0px 7px;
+  height: 70px;
+  font-size: 15px;
+  line-height: 21px;
+  font-family: monospace;
+  background-color: rgb(232, 232, 232);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1.5s;
+}
+
+.huntEmbeddedText {
+  position: relative;
+  top: 9px;
+}
+
+.huntExpiration {
+  color: gray;
+  font-size: 12px;
+  font-style: italic;
+  position: absolute;
+  right: 0px;
+}
+
+.huntImage {
+  max-height: 50px;
+  max-width: 50px;
+  visibility: hidden;
+}
+
+.huntImageLoaded {
+  align-self: center;
+  min-height: 50px;
+  max-width: 50px;
+  /* flex-grow: 1; */
+}
+
+.huntImageLoading {
+  align-self: center;
+  height: 50px;
+  width: 50px;
+  flex-grow: 1;
+  border-radius: 30px;
+  background-color: rgb(232, 232, 232);
+  z-index: 2;
+}
+
+.huntMaxRewards {
+  color: green;
+  font-size: 25px;
+}
+
+.huntName {
+  font-size: 25px;
+}
+
+.huntShareRow {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  background-color: #8080800f;
+  padding: 0px 15px 0px 30px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  width: 100%;
+  position: relative;
+  top: 5px;
+}
+
+.huntShareRowButton {
+  margin: 0px 6px 0px 6px;
+}
+
+.huntShareRowButtons {
+  display: flex;
+  flex-direction: row;
+  background-color: #80808017;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+.huntShareRowText {
+  align-self: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.huntShareRowTextButtonContainer {
+  display: flex;
+  position: relative;
+  left: 10%;
+}
+
+.huntSponsorName {
+  font-size: 13px;
+  color: #ababab;
+  /* margin-bottom: 15px; */
+}
+
+.huntText {
+  font-size: 15px;
+}
+
+.tweetButtonColor {
+  max-width: 25px;
+}
+
+.tweetButtonGray {
+  filter: grayscale(100%);
+  max-width: 25px;
+}
+
+.challengeActions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.challengeAction {
+  background-color: #5959ff;
+  border: 2px solid rgba(0, 0, 0, 0.575);
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  padding: 5px 20px;
+}
+
+.challengeAction:hover {
+  background-color: rgb(0, 0, 250);
 }

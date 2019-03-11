@@ -13,10 +13,13 @@ import {
 const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
 
   let receiveChallengesSuccess = (challenges) => {
-    console.log("\n\nchallengesmiddleware, receive all challenges success", challenges.data[0]);
+    console.log("\n\nchallengesmiddleware, receive all challenges success", challenges.data);
     // .challengeSettings.metadatas[0].value);
     if (challenges.data[0].id === 1 && 
-        typeof challenges.data[0].challengeSettings.metadatas[0].value === "string") {
+        typeof challenges.data[0].challengeSettings.metadatas[0].value === "string" && 
+        challenges.data[0].createdAt === "2019-02-27T23:56:36.000Z"
+      ) {
+      console.log("\nrunning idiosyncratic regex for first challenge");
       //running idiosyncratic regex
       let newStr = challenges.data[0].challengeSettings.metadatas[0].value
         .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
@@ -30,13 +33,22 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
         subJob.data = [subJob.niceToHave, subJob.requirements, subJob.responsibilities];
         return subJob;
       });
-      dispatch(receiveChallenges(challenges.data[0]));
-    } else {
-      let newStr = challenges.data[0].challengeSettings.metadatas[0].value;
-      challenges.data[0].challengeSettings.metadatas[0].value = JSON.parse(newStr);
-      dispatch(receiveChallenges(challenges.data[0]));
+      // dispatch(receiveChallenges(challenges.data[0]));
+    } 
+    
+    console.log("\niterating over remaining challenges and fixing");
+    for (let challenge of challenges.data) {
+      if (typeof challenge.challengeSettings.metadatas[0].value === "string") {
+        if (challenge.id === 1 && challenge.createdAt === "2019-02-27T23:56:36.000Z") continue;
+        console.log("\nin iteration, current challenge being parsed is", challenge);
+        let newStr = challenge.challengeSettings.metadatas[0].value.replace(/\\"/g, '"');
+        challenge.challengeSettings.metadatas[0].value = JSON.parse(newStr);
+      }
     }
 
+    console.log("\nabout to dispatch", challenges.data);
+    dispatch(receiveChallenges(challenges.data));
+    console.log("\nexiting receiveChallengesSuccess in challengesMiddleware.js");
   };
 
   let receiveChallengeSuccess = (challenge) => {

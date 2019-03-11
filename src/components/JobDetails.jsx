@@ -7,9 +7,28 @@ import { fetchChallenge } from "./../actions/challengeActions.js";
 import { verifyingSession } from "./../actions/userActions.js";
 import formLink from "./../formLink.js";
 import ApplicationForm from "./ApplicationForm.jsx";
+import $ from "jquery";
+import downArrow from "../img/Scroll Down-595b40b75ba036ed117d58fa.svg";
 
 // let formHTML = require("./../testForm.html");
 // import testForm from "./../testForm.js";
+
+const invisible = {
+  visibility: "none"
+};
+
+// $(function () {
+//   $('a').on('click', function (e) {
+//     console.log('link clicked');
+//     e.preventDefault();
+//     $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top }, 500, 'linear');
+//   });
+// });
+
+// function scrollToDetails(e) {
+//   e.preventDefault();
+//   $('html, body').animate({ scrollTop: $('#jobDetails').offset().top }, 500, 'linear');
+// }
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -24,7 +43,10 @@ class JobDetails extends React.Component {
       prefQuals: [],
       location: "",
       subIdx: 0,
-      formLoaded: false
+      formLoaded: false,
+      arrowUp: true,
+      renderExplainer: false,
+      showInstructions: true
     }
 
     //bindings
@@ -39,7 +61,11 @@ class JobDetails extends React.Component {
     this.getChallenge = this.getChallenge.bind(this);
     this.handleGetChallenge = this.handleGetChallenge.bind(this);
     this.formLoad = this.formLoad.bind(this);
-
+    this.renderArrow = this.renderArrow.bind(this);
+    this.handleExpansion = this.handleExpansion.bind(this);
+    this.renderPreviewTitle = this.renderPreviewTitle.bind(this);
+    this.switchInstructions = this.switchInstructions.bind(this);
+    
   }
   //functions
 
@@ -52,7 +78,29 @@ class JobDetails extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.received && this.props.received) this.setTabs();
+    if (!prevProps.received && this.props.received && !this.state.showInstructions) this.setTabs();
+  }
+
+  handleExpansion(e) {
+    e.stopPropagation();
+    this.setState({ arrowUp: !this.state.arrowUp });
+    this.setState({ renderExplainer: !this.state.renderExplainer });
+  }
+
+  renderArrow() {
+    if (this.state.arrowUp) {
+      return (
+        <svg className="positionArrow arrowUp" viewBox="0 0 10 16" version="1.1" width="12" height="20">
+          <path fillRule="evenodd" d="M10 10l-1.5 1.5L5 7.75 1.5 11.5 0 10l5-5 5 5z"></path>
+        </svg>
+      )
+    } else {
+      return (
+        <svg className="positionArrow arrowDown" viewBox="0 0 10 16" version="1.1" width="12" height="20">
+          <path fillRule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"></path>
+        </svg>
+      )
+    }
   }
 
   getChallenge() {
@@ -119,7 +167,7 @@ class JobDetails extends React.Component {
     if (this.state.renderModal) {
       return <ReferralModal closeModal={this.triggerModalOff} jobId={this.state.jobId} 
         user={this.props.user} challenge={this.props.challengeData} referralCode={this.state.referralCode}
-        />;
+      />;
     }
   }
 
@@ -162,8 +210,26 @@ class JobDetails extends React.Component {
     }
   }
 
-  render() {
+  renderPreviewTitle() {
+    if (this.state.referralCode) {
+      return (
+        <span className="previewTitle">You Were Referred To Help Us Fill This Job!</span>
+      );
+    } else {
+      return (
+        <span className="previewTitle">Help Us Fill This Job</span>
+      );
+    }
+  }
 
+  switchInstructions() {
+    this.setState({ showInstructions: !this.state.showInstructions }, () => {
+      if (!this.state.showInstructions) this.setTabs();
+    });
+  }
+
+  render() {
+    let explainerClass = this.state.renderExplainer ? "visibleExplainer" : "invisibleExplainer";
     if (!this.props.received) {
       console.log("spinner condition", this.props.challengeData);
       return (
@@ -195,132 +261,131 @@ class JobDetails extends React.Component {
         )
       }
 
-      return (
-        <div className="jobDetailContainer">
-
-          {this.renderModal()}
-
-          <div className="logoAndReferBtn">
-            <div className="logo">
-              <img className="logoImg" src={jobState.company.iconUrl} onError={this.imgError} />
+      if (this.state.showInstructions) {
+        return (
+          <section id="section03" className="demo">
+            {this.renderPreviewTitle()}
+            <div className="infoContainer">
+              <span className="infoSpan">Step 1: SHARE this job with your network</span>
+              <span className="infoSpan">Step 2: If anyone in your sharing network finds the person we hire... YOU will share the rewards!</span>
+              <div className="exampleContainer" onClick={this.handleExpansion}>
+                <div className="seeHowThisWorks">
+                  <span>See how this works</span>
+                  {this.renderArrow()}
+                </div>
+                <div className={explainerClass}>
+                  <span className="infoSpan">Person 0: Gets hired by nCent Labs</span>
+                  <span className="infoSpan">Person 1: Shares this listing with Person 0 and earns a $4,000 reward.</span>
+                  <span className="infoSpan">Person 2: Shares this listing with Person 1 and earns a $2K reward.</span>
+                  <span className="infoSpan">Person 3: Shares this listing with Person 2 and earns a $1K reward.</span>
+                  <span className="infoSpan">... and so on...</span>
+                </div>
+              </div>
             </div>
-            <a className="referA" onClick={this.triggerModalOn}>Share Now</a>
-          </div>
-
-          <div className="jobDetailContentContainer">
-            <div className="jobTitle">
-              {jobState.company.jobTitle} 
-              {/* - {jobState.subJobs[idx].title} */}
+            <a href="#jobDetails" onClick={() => {}}>
+              <div className="scrollBtnContainer">
+                <img className="downArrow" src={downArrow} onClick={this.switchInstructions} />
+                <span className="shareNow">Get Started</span>
+              </div>
+            </a>
+          </section>
+        )
+      } else {
+        return (
+          <div className="jobDetailContainer">
+  
+            {this.renderModal()}
+  
+            {/* <div id="jobDetails" className="logoAndReferBtn">
+              <a className="referA" onClick={this.triggerModalOn}>Share Now
+                <img className="shareIcon" src="https://cdn1.iconfinder.com/data/icons/media-icons-23/100/share-512.png" />
+              </a>
+            </div> */}
+  
+            <div className="logoAndReferBtn" id="jobDetails">
+              <div className="logo">
+                <img className="logoImg" src={jobState.company.iconUrl} onError={this.imgError} />
+              </div>
+              <div className="referAndInstructions">
+                <a className="referA" onClick={this.triggerModalOn}>
+                  Share Now 
+                  <img className="shareIcon" src="https://cdn1.iconfinder.com/data/icons/media-icons-23/100/share-512.png" />
+                </a>
+                <div className="questionMark" onClick={this.switchInstructions}>
+                  ?
+                </div>
+              </div>
             </div>
-            <div className="jobSponsor">
-              at {jobState.company.name}
+  
+            <div className="jobDetailContentContainer">
+              <div className="jobTitle">
+                {jobState.company.jobTitle} 
+                {/* - {jobState.subJobs[idx].title} */}
+              </div>
+              <div className="jobSponsor">
+                at {jobState.company.name}
+              </div>
+              <div className="jobLocation">
+                {jobState.company.location}
+              </div>
+              <div className="jobDescription">
+                {jobState.company.description.split("\n").map((el, i) => {
+                  return (
+                    <p key={i}>{el.trim()}</p>
+                  )
+                })}
+              </div>
             </div>
-            <div className="jobLocation">
-              {jobState.company.location}
-            </div>
-            <div className="jobDescription">
-              {jobState.company.description.split("\n").map((el, i) => {
+  
+            <div className="jobTabs" ref={el => this.jobTabs = el}>
+              {jobState.subJobs.map((el, i) => {
+                const containerClass = i === 0 ? 
+                "jobTabContainer jobTabContainerRight" : 
+                "jobTabContainer jobTabContainerLeft";
                 return (
-                  <p key={i}>{el.trim()}</p>
+                  <div className={"jobTabContainer"} key={i} style={{right: i * 25}}>
+                    <div className="jobTabLeftInactive"></div>
+                    <div className="jobTabInactive" key={i} onClick={(e) => {this.tabSwitch(e, i)}}>{el.title}</div>
+                    <div className="jobTabRightInactive"></div>
+                  </div>
                 )
               })}
             </div>
-          </div>
-
-          <div className="jobTabs" ref={el => this.jobTabs = el}>
-            {jobState.subJobs.map((el, i) => {
-              const containerClass = i === 0 ? 
-              "jobTabContainer jobTabContainerRight" : 
-              "jobTabContainer jobTabContainerLeft";
-              return (
-                <div className={"jobTabContainer"} key={i} style={{right: i * 25}}>
-                  <div className="jobTabLeftInactive"></div>
-                  <div className="jobTabInactive" key={i} onClick={(e) => {this.tabSwitch(e, i)}}>{el.title}</div>
-                  <div className="jobTabRightInactive"></div>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="qualificationsContainer">
-
-            {/* {change way data is in subJobs - have title and array of other data}  */}
-            {jobState.subJobs[idx].data.map((el, i) => {
-              return (
-                <div className="qualContainer" key={i}>
-                  <div className="qualsHeader">
-                    {el.title}:
+  
+            <div className="qualificationsContainer">
+  
+              {/* {change way data is in subJobs - have title and array of other data}  */}
+              {jobState.subJobs[idx].data.map((el, i) => {
+                return (
+                  <div className="qualContainer" key={i}>
+                    <div className="qualsHeader">
+                      {el.title}:
+                    </div>
+                    <div className="qualsListing">
+                      {el.list.map((str, i) => {
+                        return (
+                          <div className="qualText" key={i}>
+                            • <span className="qualTextStr">{str}</span>
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
-                  <div className="qualsListing">
-                    {el.list.map((str, i) => {
-                      return (
-                        <div className="qualText" key={i}>
-                          • <span className="qualTextStr">{str}</span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              )
-            })}
-           
-
-            {/* <div className="qualContainer">
-              <div className="qualsHeader">
-                Responsibilities:
-              </div>
-              <div className="qualsListing">
-                {jobState.subJobs[idx].responsibilities.list.map((str, i) => {
-                  return (
-                    <div className="qualText" key={i}>
-                      • <span className="qualTextStr">{str}</span>
-                    </div>
-                  )
-                })}
-              </div>
+                )
+              })}
+             
             </div>
+  
+            {Benefits}
+  
+            <ApplicationForm referralCode={this.state.referralCode} 
+              status={this.props.jobApplication.jobApplicationSuccessful}
+              position={jobState.company.jobTitle} subPosition={jobState.subJobs[idx].title}
+            />
 
-            <div className="qualContainer">
-              <div className="qualsHeader">
-                Minimum Qualifications:
-              </div>
-              <div className="qualsListing">
-                {jobState.subJobs[idx].requirements.list.map((str, i) => {
-                  return (
-                    <div className="qualText" key={i}>
-                      • <span className="qualTextStr">{str}</span>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            <div className="qualContainer">
-              <div className="qualsHeader">
-                Preferred Qualifications:
-              </div>
-              <div className="qualsListing">
-                {jobState.subJobs[idx].niceToHave.list.map((str, i) => {
-                  return (
-                    <div className="qualText" key={i}>
-                      • <span className="qualTextStr">{str}</span>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-           */}
           </div>
-
-          {Benefits}
-
-          <ApplicationForm referralCode={this.state.referralCode} 
-            status={this.props.jobApplication.jobApplicationSuccessful}
-            position={jobState.company.jobTitle} subPosition={jobState.subJobs[idx].title}
-          />
-
-        </div>
-      )
+        )
+      }
     }
   }
 }
