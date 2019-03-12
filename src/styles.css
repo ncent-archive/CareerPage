@@ -1030,6 +1030,40 @@ a:hover {
   }
 }
 
+.createChallengeOptions {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.spinnerContainerChallenge {
+  width: 100vw;
+  height: calc(100vh - 110px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinnerChallenge {
+  height: 100px;
+  width: 100px;
+  border: 6px solid;
+  border-color: transparent black black black;
+  border-radius: 75px;
+  -webkit-animation: rotate 1.2s infinite linear,
+  fadeIn 2.5s 1 linear;
+  animation: rotate 1.2s infinite linear,
+  fadeIn 2.5s 1 linear;
+}
+
+.spinnerChallengeText {
+  margin-bottom: 45px;
+  font-size: 29px;
+}
+
 .addHuntButton {
   background-color: #2b2bff;
   color: white;

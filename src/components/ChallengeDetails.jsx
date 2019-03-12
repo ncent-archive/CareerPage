@@ -183,28 +183,45 @@ class ChallengeDetails extends React.Component {
         </div>
       )
     } else if (this.state.stage === "redeemListLoaded") {
-      return (
-        <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
-          <div className="referralModal">
-            <div className="redeemListContainer">
-              <div className="redeemListItems" ref={el => this.redeemList = el}>
-                {Object.keys(this.state.emails).map((el, i) => {
-                  return (
-                    <div className="redeemListItem" onClick={this.selectEmail} key={i} data-num={i}>
-                      {el}
-                    </div>
-                  )
-                })}
+      if (this.state.emails.length > 0) {
+        return (
+          <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
+            <div className="referralModal">
+              <div className="redeemListContainer">
+                <div className="redeemListItems" ref={el => this.redeemList = el}>
+                  {Object.keys(this.state.emails).map((el, i) => {
+                    return (
+                      <div className="redeemListItem" onClick={this.selectEmail} key={i} data-num={i}>
+                        {el}
+                      </div>
+                    )
+                  })}
+                </div>
+                <button className="activateRedeem" 
+                  onClick={this.completeChallengeRedemption}
+                >
+                  Redeem Challenge
+                </button>
               </div>
-              <button className="activateRedeem" 
-                onClick={this.completeChallengeRedemption}
-              >
-                Redeem Challenge
-              </button>
             </div>
           </div>
-        </div>
-      )
+        )
+      } else {
+        return (
+          <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
+            <div className="referralModal">
+              <div className="referralModalInformation">
+                There are no users associated with this challenge!
+                <br />
+                <br />
+                <br />
+                <br />
+                Please share this challenge.
+              </div>
+            </div>
+          </div>
+        )
+      }
     } else if (this.state.stage === "redeeming") {
       return (
         <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
@@ -219,8 +236,10 @@ class ChallengeDetails extends React.Component {
     } else if (this.state.stage === "redeemed") {
       return (
         <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
-          <div className="referralModalInformation">
-            The challenge has been redeemed successfully!
+          <div className="referralModal">
+            <div className="referralModalInformation">
+              The challenge has been redeemed successfully!
+            </div>
           </div>
         </div>
       )

@@ -10,16 +10,19 @@ class AdminPage extends React.Component {
     this.state = {
       spinner: true,
       challengeDetail: false,
-      challengeDetailIdx: null
+      challengeDetailIdx: null,
+      redirect: ""
     };
     //bindings
-    this.switchToDetails = this.switchToDetails.bind(this);    
-    this.switchToCollection = this.switchToCollection.bind(this);      
+    this.switchToDetails = this.switchToDetails.bind(this);
+    this.switchToCollection = this.switchToCollection.bind(this);
+    this.processParams = this.processParams.bind(this);
 
   }
   //functions
 
   async componentWillMount() {
+    this.processParams();
     store.dispatch(fetchAllChallenges());
   }
 
@@ -27,8 +30,28 @@ class AdminPage extends React.Component {
     console.log("compDidUpdate in AdminPage", "\nprevProps", prevProps, "\nthis.props", this.props);
     if (!prevProps.challengesReceived && this.props.challengesReceived) {
       console.log("\nAdminPage.jsx, turning off spinner");
-      this.setState({ spinner: false });
+      this.setState({ spinner: false }, () => {
+        //select last challenge if redirect param
+        if (this.state.redirect) {
+          let idx = this.container.children.length - 1;
+          this.switchToDetails(idx);
+        }
+      });
     }
+  }
+
+  processParams() {
+    let str = window.location.href;
+    let paramsStr = str.split("?")[1];
+    let obj = {};
+    if (paramsStr) {
+      let paramsArr = paramsStr.split("&");
+      for (let pair of paramsArr) {
+        let splitPair = pair.split("=");
+        obj[splitPair[0]] = splitPair[1];
+      }
+    }
+    this.setState(obj);
   }
 
   switchToDetails(idx) {
@@ -43,6 +66,9 @@ class AdminPage extends React.Component {
       challengeDetail: false,
       challengeDetailIdx: null
     });
+    if (window.location.href.includes("?")) {
+      window.history.pushState({}, "", `${window.location.origin + window.location.pathname}`);
+    }
   }
 
   render() {
@@ -63,7 +89,7 @@ class AdminPage extends React.Component {
         )
       } else {
         return (
-          <div className="huntCollectionContainer">
+          <div className="huntCollectionContainer" ref={el => this.container = el}>
             {this.props.challengesData.map((challenge, i) => {
               return (
                 <Challenge
