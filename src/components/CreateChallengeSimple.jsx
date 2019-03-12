@@ -26,7 +26,18 @@ class CreateChallengeSimple extends React.Component {
       maxNodes: "",
       subJobs: [],
       spinner: false,
-      challengeCreated: false
+      challengeCreated: false,
+      stage: [
+        "initial",
+        "sponsorName",
+        "name",
+        "location",
+        "description",
+        "imageUrl",
+        "subJobs",
+        "final"
+      ],
+      stageIdx: 0
     }
 
     //bindings
@@ -39,6 +50,9 @@ class CreateChallengeSimple extends React.Component {
     this.addDataPoint = this.addDataPoint.bind(this);
     this.subJobDataPointChange = this.subJobDataPointChange.bind(this);
     this.redirectToAdminPage = this.redirectToAdminPage.bind(this);
+    this.renderCurrentStage = this.renderCurrentStage.bind(this);
+    this.advanceStage = this.advanceStage.bind(this);
+    this.regressStage = this.regressStage.bind(this);
 
   }
 
@@ -239,6 +253,136 @@ class CreateChallengeSimple extends React.Component {
     this.setState({ subJobs: newSubJobsState });
   }
 
+  renderCurrentStage() {
+    switch(this.state.stage[this.state.stageIdx]) {
+      case "initial":
+        return (
+          <div className="addChallengeSimpleHeader">
+            This form will allow you to create a new job posting.
+          </div>
+        );
+      case "sponsorName":
+        return (
+          <div className="addChallengeFormContainer">
+            <span className="addChallengeFormFieldName">Which company is hiring?</span>
+            <input className="addHuntFormInput" type="text" placeholder="nCent Labs" id="sponsorName"
+              onChange={this.inputChange} value={this.state.sponsorName}
+            />
+            <br />
+          </div>
+        );
+      case "name":
+        return (
+          <div className="addChallengeFormContainer">
+            <span className="addChallengeFormFieldName">What general position are you hiring for?</span>
+            <input className="addHuntFormInput" type="text" placeholder="Senior Software Engineer" id="name"
+              onChange={this.inputChange} value={this.state.name}
+            />
+            <br />
+          </div>
+        );
+      case "location":
+        return (
+          <div className="addChallengeFormContainer">
+            <span className="addChallengeFormFieldName">Where is this position geographically?</span>
+            <input className="addHuntFormInput" type="text" placeholder="Redwood City, CA" id="location"
+              onChange={this.inputChange} value={this.state.location}
+            />
+            <br />
+          </div>
+        );
+      case "description":
+        return (
+          <div className="addChallengeFormContainer">
+            <span className="addChallengeFormFieldName">Please provide a general description for this position.</span>
+            <textarea className="addHuntFormInput addHuntDescription" type="text" placeholder="Job Description" id="description"
+              onChange={this.inputChange} value={this.state.description}
+            />
+            <br />
+          </div>
+        );
+      case "imageUrl":
+        return (
+          <div className="addChallengeFormContainer">
+            <span className="addChallengeFormFieldName">Give us a link to your company logo so we can add it to the posting</span>
+            <input className="addHuntFormInput" type="text" placeholder="Image URL (nCent logo if empty)" id="imageUrl"
+              onChange={this.inputChange} value={this.state.imageUrl}
+            />
+            <br />
+          </div>
+        );
+      case "subJobs":
+        return (
+          <div className="addChallengeFormContainer">
+            <button className="addSubJobButton" onClick={this.addSubJob}>Add Sub-Job</button>
+
+            <div className="addSubJobsContainer" ref={el => this.subJobsContainer = el}>
+              {/* Content created by addSubJob */}
+            </div>
+          </div>
+        );
+      case "final":
+        return (
+          <div className="addChallengeFormContainer">
+            <span className="addChallengeFormFieldName">
+              That's everything!
+              <br />
+              Submit whenever you are ready.
+            </span>
+            <button className="addHuntButton" onClick={this.addHunt}>Create Job Posting</button>
+          </div>
+        );
+      default:
+        return (
+          <div>
+            There was an error. Please try again.
+          </div>
+        )
+    }
+  }
+
+  advanceStage() {
+    let newIdx = this.state.stageIdx + 1 >= this.state.stage.length ? 
+      this.state.stage.length - 1 : 
+      this.state.stageIdx + 1;
+    this.setState({ stageIdx: newIdx });
+  }
+
+  regressStage() {
+    let newIdx = this.state.stageIdx - 1 <= 0 ?
+      0 :
+      this.state.stageIdx - 1;
+    this.setState({ stageIdx: newIdx });
+  }
+
+  renderLeftArrow() {
+    if (this.state.stageIdx > 0) {
+      return (
+        <div className="addChallengeSimpleArrow" onClick={this.regressStage}>
+          ←
+        </div>
+      )
+    } else {
+      return (
+        <div className="arrowPlaceHolder"></div>
+      )
+    }
+  }
+
+  renderRightArrow() {
+    if (this.state.stageIdx < this.state.stage.length - 1) {
+      return (
+        <div className="addChallengeSimpleArrow" onClick={this.advanceStage}>
+          →
+        </div>
+      )
+    } else {
+      return (
+        <div className="arrowPlaceHolder"></div>
+      )
+    }
+  }
+
   render() {
     if (this.state.spinner) {
       if (!this.state.challengeCreated) {
@@ -258,72 +402,15 @@ class CreateChallengeSimple extends React.Component {
       }
     } else {
       return (
-        <div className="addHuntContainer">
+        <div className="addChallengeSimpleContainer">
 
-          <div className="addHuntHeader">
-            Sponsor a New Job
+          <div className="addChallengeInputContainer">
+            {this.renderCurrentStage()}
           </div>
 
-          <div className="addHuntFormsContainer">
-
-            <div className="addHuntFormHeader">Job Information</div>
-
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Position</span>
-              <input className="addHuntFormInput" type="text" placeholder="General name for position" id="name"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Description</span>
-              <textarea className="addHuntFormInput addHuntDescription" type="text" placeholder="Job Description" id="description"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Image Url</span>
-              <input className="addHuntFormInput" type="text" placeholder="Icon for job posting (nCent logo if empty)" id="imageUrl"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Name of Sponsor</span>
-              <input className="addHuntFormInput" type="text" placeholder="Company hiring" id="sponsorName"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Location</span>
-              <input className="addHuntFormInput" type="text" placeholder="Location of job" id="location"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Share Message</span>
-              <input className="addHuntFormInput" type="text" placeholder="Custom message on sharing" id="shareText"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-
-            <button className="addSubJobButton" onClick={this.addSubJob}>Add Sub-Job</button>
-
-            <div className="addSubJobsContainer" ref={el => this.subJobsContainer = el}>
-              {/* Content created by addSubJob */}
-            </div>
-
-            <button className="addHuntButton" onClick={this.addHunt}>Create Job Posting</button>
-
+          <div className="addChallengeSimpleArrows">
+            {this.renderLeftArrow()}
+            {this.renderRightArrow()}
           </div>
         </div>
       )

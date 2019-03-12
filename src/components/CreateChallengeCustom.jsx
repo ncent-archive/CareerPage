@@ -267,6 +267,14 @@ class CreateChallengeCustom extends React.Component {
           <div className="addHuntFormsContainer">
   
             <div className="addHuntFormHeader">Challenge Metadata</div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Name of Sponsor</span>
+              <input className="addHuntFormInput" type="text" placeholder="Company hiring" id="sponsorName"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
   
             <div className="addHuntFormContainer">
               <span className="addHuntFormFieldName">Position</span>
@@ -291,10 +299,18 @@ class CreateChallengeCustom extends React.Component {
               />
               <br />
             </div>
-  
+
             <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Name of Sponsor</span>
-              <input className="addHuntFormInput" type="text" placeholder="Company hiring" id="sponsorName"
+              <span className="addHuntFormFieldName">Location</span>
+              <input className="addHuntFormInput" type="text" placeholder="Location of job" id="location"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Share Message</span>
+              <input className="addHuntFormInput" type="text" placeholder="Custom message on sharing" id="shareText"
                 onChange={this.inputChange}
               />
               <br />
@@ -327,22 +343,6 @@ class CreateChallengeCustom extends React.Component {
             <div className="addHuntFormContainer">
               <span className="addHuntFormFieldName">Hold Challenge Off Chain?</span>
               <input className="addHuntFormInput" type="text" placeholder="false (nullable for now)" id="offChain"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-  
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Location</span>
-              <input className="addHuntFormInput" type="text" placeholder="Location of job" id="location"
-                onChange={this.inputChange}
-              />
-              <br />
-            </div>
-  
-            <div className="addHuntFormContainer">
-              <span className="addHuntFormFieldName">Share Message</span>
-              <input className="addHuntFormInput" type="text" placeholder="Custom message on sharing" id="shareText"
                 onChange={this.inputChange}
               />
               <br />

@@ -1043,23 +1043,28 @@ a:hover {
 }
 
 .createChallengeOptionsHeader {
-  font-size: 24px;
-  margin-bottom: 55px;
+  font-size: 30px;
+  margin-bottom: 75px;
+  text-align: center;
 }
 
 .createChallengeOption {
-  font-size: 16px;
+  font-size: 22px;
   width: 70vw;
-  max-width: 650px;
-  margin-bottom: 25px;
-  height: 35px;
+  max-width: 500px;
+  margin-bottom: 55px;
+  height: 40px;
   padding: auto;
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.055);
+  background-color: rgba(38, 108, 214, 1.0);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 7px;
+  border: 2px solid #0000001f;
 }
 
 .createChallengeOption:hover {
-  background-color: rgba(0, 0, 0, 0.095);
+  background-color: rgba(38, 108, 214, 0.85);
 }
 
 .spinnerContainerChallenge {
@@ -1090,6 +1095,79 @@ a:hover {
   font-size: 29px;
 }
 
+.addChallengeSimpleContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  max-width: 680px;
+  height: 100vh;
+  margin: auto;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.addChallengeInputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 80%;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  position: relative;
+}
+
+.addChallengeFormContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-top: 100px;
+  align-items: center;
+}
+
+.addChallengeSimpleHeader {
+  position: absolute;
+  top: 45%;
+  text-align: center;
+}
+
+.addChallengeFormFieldName {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 15px;
+  height: 70px;
+}
+
+.addChallengeSimpleArrows {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+}
+
+.addChallengeSimpleArrow {
+  font-size: 50px;
+  color: rgba(47, 47, 255, 0.88);
+  padding: 0px 17px;
+  border-radius: 55px;
+}
+
+.addChallengeSimpleArrow:hover {
+  background-color: rgba(0, 0, 0, 0.022);
+}
+
+.addChallengeSimpleArrow:active {
+  background-color: rgba(0, 0, 0, 0.040);
+}
+
+.arrowPlaceHolder {
+  width: 75px;
+  height: 75px;
+}
+
 .addHuntButton {
   background-color: #2b2bff;
   color: white;
@@ -1101,6 +1179,12 @@ a:hover {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.addSubJobsMacroContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 
 .addSubJobButton {
   background-color: #f6f6f9;
