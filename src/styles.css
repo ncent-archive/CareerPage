@@ -1031,9 +1031,35 @@ a:hover {
 }
 
 .createChallengeOptions {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-direction: column;
   flex-direction: column;
   margin: auto;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.createChallengeOptionsHeader {
+  font-size: 24px;
+  margin-bottom: 55px;
+}
+
+.createChallengeOption {
+  font-size: 16px;
+  width: 70vw;
+  max-width: 650px;
+  margin-bottom: 25px;
+  height: 35px;
+  padding: auto;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.055);
+}
+
+.createChallengeOption:hover {
+  background-color: rgba(0, 0, 0, 0.095);
 }
 
 .spinnerContainerChallenge {

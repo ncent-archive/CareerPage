@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 const apiUtil = require("./../util/apiUtil.js");
 
 
@@ -23,7 +24,9 @@ class CreateChallengeSimple extends React.Component {
       maxSharesPerReceivedShare: "",
       maxDepth: "",
       maxNodes: "",
-      subJobs: []
+      subJobs: [],
+      spinner: false,
+      challengeCreated: false
     }
 
     //bindings
@@ -35,6 +38,8 @@ class CreateChallengeSimple extends React.Component {
     this.subJobDataCollectionTitleChange = this.subJobDataCollectionTitleChange.bind(this);
     this.addDataPoint = this.addDataPoint.bind(this);
     this.subJobDataPointChange = this.subJobDataPointChange.bind(this);
+    this.redirectToAdminPage = this.redirectToAdminPage.bind(this);
+
   }
 
   //functions
@@ -94,8 +99,19 @@ class CreateChallengeSimple extends React.Component {
     console.log("\nchallenge about to be dispatched from CreateChallenge.jsx", obj);
     obj.challengeNamespace.challengeSettings.metadatas[0].value = JSON.stringify(obj.challengeNamespace.challengeSettings.metadatas[0].value).replace(/"/g, '\\"');
     console.log(obj.challengeNamespace.challengeSettings.metadatas[0].value);
+
+    //setting spinner
+    this.setState({ spinner: true });
+
     let response = await apiUtil.createChallenge(obj);
     console.log("\nin CreateChallenge.jsx, createChallenge api call just returned", response.data);
+
+    this.setState({ challengeCreated: true });
+    setTimeout(this.redirectToAdminPage.bind(this), 850);
+  }
+
+  redirectToAdminPage() {
+    this.props.history.push("/admin?redirect=latest");
   }
 
   inputChange(e) {
@@ -224,165 +240,95 @@ class CreateChallengeSimple extends React.Component {
   }
 
   render() {
-    return (
-      <div className="addHuntContainer">
+    if (this.state.spinner) {
+      if (!this.state.challengeCreated) {
+        return (
+          <div className="spinnerContainerChallenge">
+            <span className="spinnerChallengeText">Posting job</span>
+            <div className="spinnerChallenge">
+            </div>
+          </div>
+        )
+      } else {
+        return (
+          <div className="spinnerContainerChallenge">
+            <span className="spinnerChallengeText">Job posted successfully!</span>
+          </div>
+        )
+      }
+    } else {
+      return (
+        <div className="addHuntContainer">
 
-        <div className="addHuntHeader">
-          Sponsor a New Challenge
+          <div className="addHuntHeader">
+            Sponsor a New Job
+          </div>
+
+          <div className="addHuntFormsContainer">
+
+            <div className="addHuntFormHeader">Job Information</div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Position</span>
+              <input className="addHuntFormInput" type="text" placeholder="General name for position" id="name"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Description</span>
+              <textarea className="addHuntFormInput addHuntDescription" type="text" placeholder="Job Description" id="description"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Image Url</span>
+              <input className="addHuntFormInput" type="text" placeholder="Icon for job posting (nCent logo if empty)" id="imageUrl"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Name of Sponsor</span>
+              <input className="addHuntFormInput" type="text" placeholder="Company hiring" id="sponsorName"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Location</span>
+              <input className="addHuntFormInput" type="text" placeholder="Location of job" id="location"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
+
+            <div className="addHuntFormContainer">
+              <span className="addHuntFormFieldName">Share Message</span>
+              <input className="addHuntFormInput" type="text" placeholder="Custom message on sharing" id="shareText"
+                onChange={this.inputChange}
+              />
+              <br />
+            </div>
+
+            <button className="addSubJobButton" onClick={this.addSubJob}>Add Sub-Job</button>
+
+            <div className="addSubJobsContainer" ref={el => this.subJobsContainer = el}>
+              {/* Content created by addSubJob */}
+            </div>
+
+            <button className="addHuntButton" onClick={this.addHunt}>Create Job Posting</button>
+
+          </div>
         </div>
-
-        <div className="addHuntFormsContainer">
-
-          <div className="addHuntFormHeader">Challenge Metadata</div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Position</span>
-            <input className="addHuntFormInput" type="text" placeholder="General name for position" id="name"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Description</span>
-            <textarea className="addHuntFormInput addHuntDescription" type="text" placeholder="Job Description" id="description"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Image Url</span>
-            <input className="addHuntFormInput" type="text" placeholder="Icon for job posting (nCent logo if empty)" id="imageUrl"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Name of Sponsor</span>
-            <input className="addHuntFormInput" type="text" placeholder="Company hiring" id="sponsorName"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Challenge Expiration Date</span>
-            <input className="addHuntFormInput" type="text" placeholder="2020-07-25T12:36:40.623-08:00 (nullable)" id="expiration"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Challenge Share Expiration Date</span>
-            <input className="addHuntFormInput" type="text" placeholder="2020-01-25T12:36:40.623-08:00 (nullable)" id="shareExpiration"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Challenge Administrator</span>
-            <input className="addHuntFormInput" type="text" placeholder="1 (nullable for now)" id="admin"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Hold Challenge Off Chain?</span>
-            <input className="addHuntFormInput" type="text" placeholder="false (nullable for now)" id="offChain"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Location</span>
-            <input className="addHuntFormInput" type="text" placeholder="Location of job" id="location"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Share Message</span>
-            <input className="addHuntFormInput" type="text" placeholder="Custom message on sharing" id="shareText"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Maximum Shares</span>
-            <input className="addHuntFormInput" type="text" placeholder="100 (nullable for now)" id="maxShares"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Total Reward (USD)</span>
-            <input className="addHuntFormInput" type="text" placeholder="Total reward for entire chain (nullable for now)" id="totalReward"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Maximum Reward</span>
-            <input className="addHuntFormInput" type="text" placeholder="null" id="maxRewards"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Maximum Distribution Fee Reward</span>
-            <input className="addHuntFormInput" type="text" placeholder="null" id="maxDistributionFeeReward"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Maximum Shares Per Received Share</span>
-            <input className="addHuntFormInput" type="text" placeholder="null" id="maxSharesPerReceivedShare"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Maximum Depth</span>
-            <input className="addHuntFormInput" type="text" placeholder="null" id="maxDepth"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <div className="addHuntFormContainer">
-            <span className="addHuntFormFieldName">Maximum Nodes</span>
-            <input className="addHuntFormInput" type="text" placeholder="null" id="maxNodes"
-              onChange={this.inputChange}
-            />
-            <br />
-          </div>
-
-          <button className="addSubJobButton" onClick={this.addSubJob}>Add Sub-Job</button>
-
-          <div className="addSubJobsContainer" ref={el => this.subJobsContainer = el}>
-            {/* Content created by addSubJob */}
-          </div>
-
-          <button className="addHuntButton" onClick={this.addHunt}>Sponsor Challenge</button>
-
-        </div>
-      </div>
-    )
+      )
+    }
   }
 }
 
-export default CreateChallengeSimple;
+export default withRouter(CreateChallengeSimple);
