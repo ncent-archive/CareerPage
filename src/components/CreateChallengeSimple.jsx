@@ -89,7 +89,8 @@ class CreateChallengeSimple extends React.Component {
           "name": this.state.name,
           "offChain": true,
           "shareExpiration": this.state.shareExpiration || "2020-02-02T00:35:01.441Z",
-          "sponsorName": this.state.sponsorName
+          "sponsorName": this.state.sponsorName,
+          "challengeType": "jobSimplified"
         },
         "completionCriteria": {
           "address": "[B@708f5957",
@@ -265,7 +266,7 @@ class CreateChallengeSimple extends React.Component {
         return (
           <div className="addChallengeFormContainer">
             <span className="addChallengeFormFieldName">Which company is hiring?</span>
-            <input className="addHuntFormInput" type="text" placeholder="nCent Labs" id="sponsorName"
+            <input className="addHuntFormInput" type="text" placeholder="e.g. nCent Labs" id="sponsorName"
               onChange={this.inputChange} value={this.state.sponsorName}
             />
             <br />
@@ -274,10 +275,15 @@ class CreateChallengeSimple extends React.Component {
       case "name":
         return (
           <div className="addChallengeFormContainer">
-            <span className="addChallengeFormFieldName">What general position are you hiring for?</span>
-            <input className="addHuntFormInput" type="text" placeholder="Senior Software Engineer" id="name"
+            <span className="addChallengeFormFieldName">
+              What general position are you hiring for?
+            </span>
+            <input className="addHuntFormInput" type="text" placeholder="e.g. Senior Software Engineer" id="name"
               onChange={this.inputChange} value={this.state.name}
             />
+            <span className="addChallengeFormFieldNameSmaller">
+              We will add specific sub-jobs later, such as front-end or back-end
+            </span>
             <br />
           </div>
         );
@@ -285,7 +291,7 @@ class CreateChallengeSimple extends React.Component {
         return (
           <div className="addChallengeFormContainer">
             <span className="addChallengeFormFieldName">Where is this position geographically?</span>
-            <input className="addHuntFormInput" type="text" placeholder="Redwood City, CA" id="location"
+            <input className="addHuntFormInput" type="text" placeholder="e.g. Redwood City, CA" id="location"
               onChange={this.inputChange} value={this.state.location}
             />
             <br />
@@ -294,8 +300,8 @@ class CreateChallengeSimple extends React.Component {
       case "description":
         return (
           <div className="addChallengeFormContainer">
-            <span className="addChallengeFormFieldName">Please provide a general description for this position.</span>
-            <textarea className="addHuntFormInput addHuntDescription" type="text" placeholder="Job Description" id="description"
+            <span className="addChallengeFormFieldName">Please tell us about your company</span>
+            <textarea className="addChallengeSimpleDescription" type="text" placeholder="e.g. nCent Labs is a Stanford / Google / MIT PhD-led blockchain startup backed by Sequoia, SV Angel, Winklevoss Capital, MetaStable, Naval Ravikant, Steve Jurvetson, and others. We have a bold mission to..." id="description"
               onChange={this.inputChange} value={this.state.description}
             />
             <br />
@@ -305,9 +311,12 @@ class CreateChallengeSimple extends React.Component {
         return (
           <div className="addChallengeFormContainer">
             <span className="addChallengeFormFieldName">Give us a link to your company logo so we can add it to the posting</span>
-            <input className="addHuntFormInput" type="text" placeholder="Image URL (nCent logo if empty)" id="imageUrl"
+            <input className="addHuntFormInput" type="text" placeholder="Image URL" id="imageUrl"
               onChange={this.inputChange} value={this.state.imageUrl}
             />
+            <span className="addChallengeFormFieldNameSmaller">
+              You can leave this blank if you like
+            </span>
             <br />
           </div>
         );
@@ -323,9 +332,10 @@ class CreateChallengeSimple extends React.Component {
         );
       case "final":
         return (
-          <div className="addChallengeFormContainer">
+          <div className="addChallengeFormFinished">
             <span className="addChallengeFormFieldName">
               That's everything!
+              <br />
               <br />
               Submit whenever you are ready.
             </span>

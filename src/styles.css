@@ -1122,7 +1122,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding-top: 100px;
+  padding-top: 70px;
   align-items: center;
 }
 
@@ -1135,8 +1135,29 @@ a:hover {
 .addChallengeFormFieldName {
   text-align: center;
   font-size: 28px;
-  margin-bottom: 15px;
-  height: 70px;
+  margin-bottom: 3px;
+  height: 175px;
+}
+
+.addChallengeFormFieldNameSmaller {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 55px;
+}
+
+.addChallengeSimpleDescription {
+  width: 455px;
+  max-width: 80vw;
+  height: 250px;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 3px;
+  font-size: 20px;
+}
+
+.addChallengeSimpleDescription::placeholder {
+  font-size: 18px;
+  text-align: center;
 }
 
 .addChallengeSimpleArrows {
@@ -1153,6 +1174,7 @@ a:hover {
   color: rgba(47, 47, 255, 0.88);
   padding: 0px 17px;
   border-radius: 55px;
+  z-index: 21;
 }
 
 .addChallengeSimpleArrow:hover {
@@ -1161,6 +1183,15 @@ a:hover {
 
 .addChallengeSimpleArrow:active {
   background-color: rgba(0, 0, 0, 0.040);
+}
+
+.addChallengeFormFinished {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .arrowPlaceHolder {

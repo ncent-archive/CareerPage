@@ -75,7 +75,8 @@ class CreateChallengeCustom extends React.Component {
           "name": this.state.name,
           "offChain": true,
           "shareExpiration": this.state.shareExpiration || "2020-02-02T00:35:01.441Z",
-          "sponsorName": this.state.sponsorName
+          "sponsorName": this.state.sponsorName,
+          "challengeType": "custom"
         },
         "completionCriteria": {
           "address": "[B@708f5957",
