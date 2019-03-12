@@ -209,6 +209,10 @@ a:hover {
   display: none;
 }
 
+.arrowUp {
+  transform: rotate(270deg);
+}
+
 .positionsList {
   display: flex;
   flex-direction: column;
@@ -502,7 +506,7 @@ a:hover {
 }
 
 .referralModalContainer {
-  z-index: 5;
+  z-index: 15;
   position: fixed;
   display: flex;
   top: 0px;
@@ -513,7 +517,7 @@ a:hover {
 }
 
 .referralModal {
-  z-index: 6;
+  z-index: 20;
   height: calc(100% - 280px);
   width: calc(100% - 125px);
   max-height: 620px;

@@ -180,7 +180,13 @@ class ChallengeDetails extends React.Component {
         </div>
       )
     } else if (this.state.stage === "redeemListLoaded") {
+      return (
+        <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
+          <div className="referralModal">
 
+          </div>
+        </div>
+      )
     } else if (this.state.stage === "redeeming") {
 
     } else if (this.state.stage === "redeemed") {
