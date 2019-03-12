@@ -10,7 +10,8 @@ class ChallengeDetails extends React.Component {
       copied: false,
       mouseHover: false,
       embedTransitioning: false,
-      stage: "default"
+      stage: "default",
+      selectedEmail: null
     }
 
     //bindings
@@ -34,6 +35,8 @@ class ChallengeDetails extends React.Component {
     this.renderChallengeAction = this.renderChallengeAction.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.copyReferralLink = this.copyReferralLink.bind(this);
+    this.completeChallengeRedemption = this.completeChallengeRedemption.bind(this);
+    this.selectEmail = this.selectEmail.bind(this);
 
   }
   //functions
@@ -183,14 +186,44 @@ class ChallengeDetails extends React.Component {
       return (
         <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
           <div className="referralModal">
-
+            <div className="redeemListContainer">
+              <div className="redeemListItems" ref={el => this.redeemList = el}>
+                {Object.keys(this.state.emails).map((el, i) => {
+                  return (
+                    <div className="redeemListItem" onClick={this.selectEmail} key={i} data-num={i}>
+                      {el}
+                    </div>
+                  )
+                })}
+              </div>
+              <button className="activateRedeem" 
+                onClick={this.completeChallengeRedemption}
+              >
+                Redeem Challenge
+              </button>
+            </div>
           </div>
         </div>
       )
     } else if (this.state.stage === "redeeming") {
-
+      return (
+        <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
+          <div className="referralModalLoading">
+            <div className="referralModalLoadingInformation">
+              Redeeming Challenge
+            </div>
+            <div className="spinnerCode"></div>
+          </div>
+        </div>
+      )
     } else if (this.state.stage === "redeemed") {
-
+      return (
+        <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
+          <div className="referralModalInformation">
+            The challenge has been redeemed successfully!
+          </div>
+        </div>
+      )
     } else {
       return (
         <div></div>
@@ -222,9 +255,42 @@ class ChallengeDetails extends React.Component {
     let allBalancesRes = await apiUtil.findAllBalancesForChallenge(this.props.data.id);
     console.log("\nredeeming challenge in ChallengeDetails.jsx, response", allBalancesRes);
 
-    let challengeId = this.props.data.completionCriteria.id;
-    let completerPublicKey = this.props.data.completionCriteria.address;
-    // await apiUtil.completeChallenge(challengeId, completerPublicKey);
+    let user = await apiUtil.findOneUser(this.props.data.challengeSettings.admin);
+    console.log("\nfinding sponsor of challenge in ChallengeDetails.jsx, response", user);
+
+    let emailsCollection = allBalancesRes.data.emailToChallengeBalances;
+    //removing sponsor from collection
+    delete emailsCollection[user.data.userMetadata.email];
+    this.setState({ emails: emailsCollection });
+
+    this.setState({ stage: "redeemListLoaded" });
+
+  }
+
+  async completeChallengeRedemption() {
+    if (this.state.selectedEmail === null) {
+      //error message
+    } else {
+      let challengeId = this.props.data.completionCriteria.id;
+      let completerEmail = this.state.selectedEmail;
+      let completionRes = await apiUtil.completeChallenge(challengeId, completerEmail);
+      console.log("\nChallengeDetails.jsx, challengeRedemption returned", completionRes.data);
+      this.setState({ stage: "redeemed" });
+    }
+  }
+
+  selectEmail(e) {
+    this.setState({ selectedEmail: e.target.innerText });
+    let idx = e.target.dataset.num;
+    Array.from(this.redeemList.children).forEach((el, i) => {
+      if (i === Number(idx)) {
+        el.classList.add("redeemListItemSelected");
+        el.style.fontWeight = "bolder";
+      } else {
+        el.classList.remove("redeemListItemSelected");
+        el.style.fontWeight = "unset";
+      }
+    })
   }
 
   async shareChallenge() {

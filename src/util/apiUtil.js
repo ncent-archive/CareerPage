@@ -78,10 +78,11 @@ export const findAllBalancesForChallenge = async (challengeId) => {
     return await axios.get(`/api/challenges/balances/${challengeId}`);
 }
 
-export const completeChallenge = async (challengeId, completerPublicKey) => {
-    return await axios.post(`/api/challenges/complete`, {
+export const completeChallenge = async (challengeId, completerEmail) => {
+    console.log("\n\ncompleteChallenge in apiUtil.js");
+    return await axios.patch(`/api/challenges/complete`, {
         challengeId,
-        completerPublicKey
+        completerEmail
     });
 }
 
