@@ -211,6 +211,10 @@ a {
   width: 100%;
 }
 
+.arrowUp {
+  transform: rotate(270deg);
+}
+
 .positionItemContainer {
   display: flex;
   flex-direction: column;
