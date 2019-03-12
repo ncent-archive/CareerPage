@@ -460,7 +460,7 @@ a {
 }
 
 .referralModalContainer {
-  z-index: 5;
+  z-index: 15;
   position: fixed;
   display: flex;
   top: 0px;
@@ -471,7 +471,7 @@ a {
 }
 
 .referralModal {
-  z-index: 6;
+  z-index: 20;
   height: calc(100% - 280px);
   width: calc(100% - 125px);
   max-height: 620px;
