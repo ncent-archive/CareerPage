@@ -326,115 +326,197 @@ class ChallengeDetails extends React.Component {
   }
 
   render() {
-    return (
-      <div className="huntContainer" data-clicktarget="Hunt Details">
-        {this.renderChallengeAction()}
-        <div className="switchToCollection" onClick={this.props.switchToCollection}>
-          X
-        </div>
-        <div className="huntImageLoading">
-          <img src={this.props.data.challengeSettings.imageUrl} className="huntImage"
-            onError={this.imgError} onLoad={this.imgLoad} />
-        </div>
-        <div className="huntName">
-          {this.props.data.challengeSettings.name}
-        </div>
-        <div className="huntDescription">
-          {this.props.data.challengeSettings.description}
-        </div>
-        <div className="huntSponsorName">
-          Sponsored by {this.props.data.challengeSettings.sponsorName}
-        </div>
-        {/* <div className="huntExpiration huntText">
-          <b>Expiration Date:</b> <i>{this.props.data.challengeSettings.expiration.split("T")[0]}</i>
-        </div> */}
-        <div className="huntAdmin huntText">
-          <b>Challenge Administrator:</b> <i>{this.props.data.challengeSettings.admin}</i>
-        </div>
-        <div className="huntOffChain huntText">
-          <b>{this.props.data.challengeSettings.offChain === "true" ? "Off Chain" : "On Chain"}</b>
-        </div>
-        <div className="huntMaxShares huntText">
-          <b>Max Shares:</b> <i>{this.props.data.challengeSettings.maxShares === "null" ? "Unlimited" : this.props.data.challengeSettings.maxShares}</i>
-        </div>
-        <div className="huntMaxRewards huntText">
-          <b>Max Rewards:</b> <i>{this.props.data.challengeSettings.maxRewards}</i>
-        </div>
-        <div className="huntMaxDistributionFeeReward huntText">
-          <b>Max Distribution Fee Reward:</b> <i>{this.props.data.challengeSettings.maxDistributionFeeReward}</i>
-        </div>
-        <div className="huntMaxSharesPerReceivedShare huntText">
-          <b>Max Shares Per Received Share:</b> <i>{this.props.data.challengeSettings.maxSharesPerReceivedShare}</i>
-        </div>
-        <div className="huntMaxDepth huntText">
-          <b>Max Depth:</b> <i>{this.props.data.challengeSettings.maxDepth === "null" ? "Unlimited" : this.props.data.challengeSettings.maxDepth}</i>
-        </div>
-        <div className="huntMaxNodes huntText">
-          <b>Max Nodes:</b> <i>{this.props.data.challengeSettings.maxNodes === "null" ? "Unlimited" : this.props.data.challengeSettings.maxNodes}</i>
-        </div>
-        <div className="huntShareExpiration huntText">
-          <b>Share Expiration:</b> <i>{this.props.data.challengeSettings.shareExpiration.split("T")[0]}</i>
-        </div>
-        <div className="challengeActions">
-          <button onClick={this.redeemChallenge} className="challengeAction">Redeem</button>
-          <button onClick={this.shareChallenge} className="challengeAction">Share</button>
-        </div>
-        <div className="huntShareRow">
+    if (this.props.data.challengeSettings.metadatas[0].value.challengeType === "jobSimplified") {
+      return (
+        <div className="huntContainerSimple" data-clicktarget="Hunt Details">
+          {this.renderChallengeAction()}
+          <div className="switchToCollection" onClick={this.props.switchToCollection}>
+            X
+          </div>
+          <div className="huntImageLoading">
+            <img src={this.props.data.challengeSettings.imageUrl} className="huntImage"
+              onError={this.imgError} onLoad={this.imgLoad} />
+          </div>
+          <div className="huntName">
+            {this.props.data.challengeSettings.name}
+          </div>
+          <div className="huntDescription">
+            {this.props.data.challengeSettings.description}
+          </div>
+          <div className="huntSponsorNameSimple">
+            Sponsored by {this.props.data.challengeSettings.sponsorName}
+          </div>
+          <div className="challengeActionsSimple">
+            <button onClick={this.redeemChallenge} className="challengeAction">Redeem</button>
+            <button onClick={this.shareChallenge} className="challengeAction">Share</button>
+          </div>
+          <div className="huntShareRow">
 
-          <div className="huntShareRowTextButtonContainer">
-            <span className="huntShareRowText">
-              Share:
-            </span>
+            <div className="huntShareRowTextButtonContainer">
+              <span className="huntShareRowText">
+                Share:
+              </span>
 
-            <div className="huntShareRowButtons">
-              <div className="huntShareRowButton">
-                <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
-                  src={twitterIcon} onMouseEnter={this.tweetButtonColor}
-                  onMouseLeave={this.tweetButtonGray}
-                />
+              <div className="huntShareRowButtons">
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+
               </div>
-
-              <div className="huntShareRowButton">
-                <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
-                  src={twitterIcon} onMouseEnter={this.tweetButtonColor}
-                  onMouseLeave={this.tweetButtonGray}
-                />
-              </div>
-
-              <div className="huntShareRowButton">
-                <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
-                  src={twitterIcon} onMouseEnter={this.tweetButtonColor}
-                  onMouseLeave={this.tweetButtonGray}
-                />
-              </div>
-
-              <div className="huntShareRowButton">
-                <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
-                  src={twitterIcon} onMouseEnter={this.tweetButtonColor}
-                  onMouseLeave={this.tweetButtonGray}
-                />
-              </div>
-
             </div>
+            <div className="huntEmbed" title="Embed a subscription button to this hunt on any page."
+              onClick={this.copyText}
+            >
+              {this.state.copied ? "Copied!" : "Embed"}
+            </div>
+
           </div>
-          <div className="huntEmbed" title="Embed a subscription button to this hunt on any page."
-            onClick={this.copyText}
+
+          <div className="huntEmbedded" ref={el => { this.embedMsg = el }}
+            onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}
           >
-            {this.state.copied ? "Copied!" : "Embed"}
+            <span className="huntEmbeddedText">
+              The code has been copied to your clipboard. Paste this code directly into your HTML.
+            </span>
           </div>
 
         </div>
-
-        <div className="huntEmbedded" ref={el => { this.embedMsg = el }}
-          onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}
-        >
-          <span className="huntEmbeddedText">
-            The code has been copied to your clipboard. Paste this code directly into your HTML.
-          </span>
+      )
+    } else {
+      return (
+        <div className="huntContainer" data-clicktarget="Hunt Details">
+          {this.renderChallengeAction()}
+          <div className="switchToCollection" onClick={this.props.switchToCollection}>
+            X
+          </div>
+          <div className="huntImageLoading">
+            <img src={this.props.data.challengeSettings.imageUrl} className="huntImage"
+              onError={this.imgError} onLoad={this.imgLoad} />
+          </div>
+          <div className="huntName">
+            {this.props.data.challengeSettings.name}
+          </div>
+          <div className="huntDescription">
+            {this.props.data.challengeSettings.description}
+          </div>
+          <div className="huntSponsorName">
+            Sponsored by {this.props.data.challengeSettings.sponsorName}
+          </div>
+          {/* <div className="huntExpiration huntText">
+            <b>Expiration Date:</b> <i>{this.props.data.challengeSettings.expiration.split("T")[0]}</i>
+          </div> */}
+          <div className="huntAdmin huntText">
+            <b>Challenge Administrator:</b> <i>{this.props.data.challengeSettings.admin}</i>
+          </div>
+          <div className="huntOffChain huntText">
+            <b>{this.props.data.challengeSettings.offChain === "true" ? "Off Chain" : "On Chain"}</b>
+          </div>
+          <div className="huntMaxShares huntText">
+            <b>Max Shares:</b> <i>{this.props.data.challengeSettings.maxShares === "null" ? "Unlimited" : this.props.data.challengeSettings.maxShares}</i>
+          </div>
+          <div className="huntMaxRewards huntText">
+            <b>Max Rewards:</b> <i>{this.props.data.challengeSettings.maxRewards}</i>
+          </div>
+          <div className="huntMaxDistributionFeeReward huntText">
+            <b>Max Distribution Fee Reward:</b> <i>{this.props.data.challengeSettings.maxDistributionFeeReward}</i>
+          </div>
+          <div className="huntMaxSharesPerReceivedShare huntText">
+            <b>Max Shares Per Received Share:</b> <i>{this.props.data.challengeSettings.maxSharesPerReceivedShare}</i>
+          </div>
+          <div className="huntMaxDepth huntText">
+            <b>Max Depth:</b> <i>{this.props.data.challengeSettings.maxDepth === "null" ? "Unlimited" : this.props.data.challengeSettings.maxDepth}</i>
+          </div>
+          <div className="huntMaxNodes huntText">
+            <b>Max Nodes:</b> <i>{this.props.data.challengeSettings.maxNodes === "null" ? "Unlimited" : this.props.data.challengeSettings.maxNodes}</i>
+          </div>
+          <div className="huntShareExpiration huntText">
+            <b>Share Expiration:</b> <i>{this.props.data.challengeSettings.shareExpiration.split("T")[0]}</i>
+          </div>
+          <div className="challengeActions">
+            <button onClick={this.redeemChallenge} className="challengeAction">Redeem</button>
+            <button onClick={this.shareChallenge} className="challengeAction">Share</button>
+          </div>
+          <div className="huntShareRow">
+  
+            <div className="huntShareRowTextButtonContainer">
+              <span className="huntShareRowText">
+                Share:
+              </span>
+  
+              <div className="huntShareRowButtons">
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+  
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+  
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+  
+                <div className="huntShareRowButton">
+                  <img className="tweetButtonGray" onClick={this.executeTweetWorkflow}
+                    src={twitterIcon} onMouseEnter={this.tweetButtonColor}
+                    onMouseLeave={this.tweetButtonGray}
+                  />
+                </div>
+  
+              </div>
+            </div>
+            <div className="huntEmbed" title="Embed a subscription button to this hunt on any page."
+              onClick={this.copyText}
+            >
+              {this.state.copied ? "Copied!" : "Embed"}
+            </div>
+  
+          </div>
+  
+          <div className="huntEmbedded" ref={el => { this.embedMsg = el }}
+            onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}
+          >
+            <span className="huntEmbeddedText">
+              The code has been copied to your clipboard. Paste this code directly into your HTML.
+            </span>
+          </div>
+  
         </div>
-
-      </div>
-    )
+      )
+    }
   }
 }
 
