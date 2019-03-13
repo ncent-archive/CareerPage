@@ -64,8 +64,10 @@ class CreateChallengeSimple extends React.Component {
     console.log("\n\nCreateChallenge.jsx, adding challenge");
     let obj = {
       "challengeNamespace": {
+        "challengeType": "jobSimplified",
         "challengeSettings": {
           "admin": this.state.admin || 1,
+          "challengeType": "jobSimplified",
           "description": this.state.description,
           "expiration": this.state.expiration || "2020-02-02T00:35:01.441Z",
           "imageUrl": this.state.imageUrl || "https://ncent.io/Applications/landingPage/img/ncent_NOsubline_500px_white.png",
@@ -84,7 +86,8 @@ class CreateChallengeSimple extends React.Component {
                   "shareText": this.state.shareText || "",
                   "totalUsdReward": this.state.totalReward || "1000.00"
                 },
-                "subJobs": this.state.subJobs
+                "subJobs": this.state.subJobs,
+                "challengeType": "jobSimplified"
               }
             }
           ],
@@ -92,7 +95,6 @@ class CreateChallengeSimple extends React.Component {
           "offChain": true,
           "shareExpiration": this.state.shareExpiration || "2020-02-02T00:35:01.441Z",
           "sponsorName": this.state.sponsorName,
-          "challengeType": "jobSimplified"
         },
         "completionCriteria": {
           "address": "[B@708f5957",

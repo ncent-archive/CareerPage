@@ -1111,6 +1111,7 @@ a:hover {
   width: 90vw;
   max-width: 680px;
   height: 100vh;
+  max-height: 620px;
   margin: auto;
   justify-content: space-around;
   align-items: center;
