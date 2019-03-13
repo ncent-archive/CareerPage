@@ -11,19 +11,8 @@ class CreateChallengeSimple extends React.Component {
       description: "",
       imageUrl: "",
       sponsorName: "",
-      expiration: "",
-      shareExpiration: "",
       admin: "",
-      offChain: "",
       location: "",
-      shareText: "",
-      totalReward: "",
-      maxShares: "",
-      maxRewards: "",
-      maxDistributionFeeReward: "",
-      maxSharesPerReceivedShare: "",
-      maxDepth: "",
-      maxNodes: "",
       subJobs: [],
       spinner: false,
       challengeCreated: false,
@@ -37,7 +26,11 @@ class CreateChallengeSimple extends React.Component {
         "subJobs",
         "final"
       ],
-      stageIdx: 0
+      stageIdx: 0,
+      subJobsStage: 0,
+      currentSubJobTitle: "",
+      currentSubJobDataCollection: "",
+      currentSubJobDataPoint: ""
     }
 
     //bindings
@@ -53,6 +46,15 @@ class CreateChallengeSimple extends React.Component {
     this.renderCurrentStage = this.renderCurrentStage.bind(this);
     this.advanceStage = this.advanceStage.bind(this);
     this.regressStage = this.regressStage.bind(this);
+    this.advanceSubJobStage = this.advanceSubJobStage.bind(this);
+    this.regressSubJobStage = this.regressSubJobStage.bind(this);
+    this.revertToNewHeader = this.revertToNewHeader.bind(this);
+    this.revertToNewSubJob = this.revertToNewSubJob.bind(this);
+    this.addNewSubJobSimple = this.addNewSubJobSimple.bind(this);
+    this.addNewDataCollectionSimple = this.addNewDataCollectionSimple.bind(this);
+    this.addNewDataPointSimple = this.addNewDataPointSimple.bind(this);
+    this.renderLeftArrow = this.renderLeftArrow.bind(this);
+    this.renderRightArrow = this.renderRightArrow.bind(this);
 
   }
 
@@ -79,7 +81,7 @@ class CreateChallengeSimple extends React.Component {
                   "jobsUrl": "",
                   "location": this.state.location,
                   "name": this.state.sponsorName,
-                  "shareText": this.state.shareText,
+                  "shareText": this.state.shareText || "",
                   "totalUsdReward": this.state.totalReward || "1000.00"
                 },
                 "subJobs": this.state.subJobs
@@ -321,15 +323,126 @@ class CreateChallengeSimple extends React.Component {
           </div>
         );
       case "subJobs":
-        return (
-          <div className="addChallengeFormContainer">
-            <button className="addSubJobButton" onClick={this.addSubJob}>Add Sub-Job</button>
-
-            <div className="addSubJobsContainer" ref={el => this.subJobsContainer = el}>
-              {/* Content created by addSubJob */}
-            </div>
-          </div>
-        );
+        switch(this.state.subJobsStage) {
+          case 0:
+            return (
+              <div className="addChallengeFormContainer">
+                <span className="addChallengeFormFieldName">
+                  Now we're going to add sub-jobs<br />
+                  These are specific positions, such as front-end, back-end, etc.
+                </span>
+                <button className="addSubJobSimpleButton" 
+                  onClick={this.advanceSubJobStage}
+                >
+                  Add New Sub-Job
+                </button>
+              </div>
+            );
+          case 1:
+            return (
+              <div className="addChallengeFormContainer">
+                <span className="addChallengeFormFieldName">
+                  What is the specific position?
+                </span>
+                <input className="addHuntFormInput" type="text" placeholder="e.g. Front-End Engineer" 
+                  id="currentSubJobTitle" onChange={this.inputChange}
+                />
+                <button className="addSubJobSimpleButton"
+                  onClick={this.addNewSubJobSimple}
+                >
+                  Add Position to Sub-Job
+                </button>
+              </div>
+            );
+          case 2:
+            return (
+              <div className="addChallengeFormContainer">
+                <span className="addChallengeFormFieldName">
+                  What is a good header for a collection of bullet points?
+                </span>
+                <input className="addHuntFormInput" type="text" placeholder="e.g. Minimum Requirements"
+                  id="currentSubJobDataCollection" onChange={this.inputChange}
+                />
+                <button className="addSubJobSimpleButton"
+                  onClick={this.addNewDataCollectionSimple}
+                >
+                  Add Paragraph Header
+                </button>
+                <span className="addChallengeFormFieldNameSmaller">
+                  We will build the bullet points next
+                </span>
+              </div>
+            );
+          case 3:
+            return (
+              <div className="addChallengeFormContainer">
+                <span className="addChallengeFormFieldName">
+                  Please add one data point
+                </span>
+                • <input className="addHuntFormInput" type="text" placeholder="e.g. 5+ years of professional experience" id="currentSubJobDataPoint" onChange={this.inputChange}
+                />
+                <button className="addSubJobSimpleButton"
+                  onClick={this.addNewDataPointSimple}
+                >
+                  Add Data Point
+                </button>
+              </div>
+            );
+          case 4:
+            return (
+              <div className="addChallengeFormContainer">
+                <span className="addChallengeFormFieldName">
+                  Would you like to add another data point?
+                </span>
+                <button className="addSubJobSimpleButton"
+                  onClick={this.regressSubJobStage}
+                >
+                  Yes
+                </button>
+                <button className="addSubJobSimpleButton"
+                  onClick={this.advanceSubJobStage}
+                >
+                  No, I'm done
+                </button>
+              </div>
+            );
+          case 5:
+            return (
+              <div className="addChallengeFormContainer">
+                <span className="addChallengeFormFieldName">
+                  Would you like to add another paragraph header to {this.state.currentSubJobTitle}?
+                </span>
+                <button className="addSubJobSimpleButton"
+                  onClick={this.revertToNewHeader}
+                >
+                  Yes
+                </button>
+                <button className="addSubJobSimpleButton"
+                  onClick={this.advanceSubJobStage}
+                >
+                  No, I'm done
+                </button>
+              </div>
+            );
+          case 6: 
+            return (
+              <div className="addChallengeFormContainer">
+                <span className="addChallengeFormFieldName">
+                  Would you like to add another sub-job to {this.state.name}?
+                </span>
+                <button className="addSubJobSimpleButton"
+                  onClick={this.revertToNewSubJob}
+                >
+                  Yes
+                </button>
+                <button className="addSubJobSimpleButton"
+                  onClick={this.advanceSubJobStage}
+                >
+                  No, I'm done
+                </button>
+              </div>
+            );
+        }
       case "final":
         return (
           <div className="addChallengeFormFinished">
@@ -337,7 +450,7 @@ class CreateChallengeSimple extends React.Component {
               That's everything!
               <br />
               <br />
-              Submit whenever you are ready.
+              Submit whenever you are ready
             </span>
             <button className="addHuntButton" onClick={this.addHunt}>Create Job Posting</button>
           </div>
@@ -363,6 +476,59 @@ class CreateChallengeSimple extends React.Component {
       0 :
       this.state.stageIdx - 1;
     this.setState({ stageIdx: newIdx });
+  }
+
+  advanceSubJobStage() {
+    let newIdx = this.state.subJobsStage + 1;
+    newIdx <= 6 ? 
+    this.setState({ subJobsStage: this.state.subJobsStage + 1 }) :
+    this.advanceStage();
+  }
+
+  regressSubJobStage() {
+    this.setState({ subJobsStage: this.state.subJobsStage - 1 });
+  }
+
+  revertToNewHeader() {
+    this.setState({ subJobsStage: 2 });
+  }
+
+  revertToNewSubJob() {
+    this.setState({ subJobsStage: 1 });
+  }
+
+  addNewSubJobSimple() {
+    let newSubJobsState = this.state.subJobs.concat({
+      title: this.state.currentSubJobTitle,
+      data: []
+    });
+    this.setState({ subJobs: newSubJobsState }, () => {
+      this.advanceSubJobStage();
+    });
+  }
+
+  addNewDataCollectionSimple() {
+    let newSubJobsState = this.state.subJobs;
+    let majorIdx = newSubJobsState.length - 1;
+    // console.log("adding new data collection, state before", newSubJobsState);
+    newSubJobsState[majorIdx].data.push({
+      title: this.state.currentSubJobDataCollection,
+      list: []
+    });
+    // console.log("adding new data collection, state after", newSubJobsState);
+    this.setState({ subJobs: newSubJobsState }, () => {
+      this.advanceSubJobStage();
+    });
+  }
+
+  addNewDataPointSimple() {
+    let newSubJobsState = this.state.subJobs;
+    let majorIdx = newSubJobsState.length - 1;
+    let minorIdx = newSubJobsState[majorIdx].data.length - 1;
+    newSubJobsState[majorIdx].data[minorIdx].list.push(this.state.currentSubJobDataPoint);
+    this.setState({ subJobs: newSubJobsState }, () => {
+      this.advanceSubJobStage();
+    });
   }
 
   renderLeftArrow() {

@@ -1067,6 +1067,10 @@ a:hover {
   background-color: rgba(38, 108, 214, 0.85);
 }
 
+.createChallengeOption:active {
+  background-color: rgba(38, 108, 214, 0.65);
+}
+
 .spinnerContainerChallenge {
   width: 100vw;
   height: calc(100vh - 110px);
@@ -1158,6 +1162,29 @@ a:hover {
 .addChallengeSimpleDescription::placeholder {
   font-size: 18px;
   text-align: center;
+}
+
+.addSubJobSimpleButton {
+  font-size: 20px;
+  width: 50vw;
+  max-width: 450px;
+  margin-bottom: 55px;
+  height: 35px;
+  padding: auto;
+  background-color: rgba(38, 108, 214, 1.0);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 7px;
+  border: 2px solid #0000001f;
+}
+
+.addSubJobSimpleButton:hover {
+  background-color: rgba(38, 108, 214, 0.85);
+}
+
+.addSubJobSimpleButton:active {
+  background-color: rgba(38, 108, 214, 0.65);
 }
 
 .addChallengeSimpleArrows {
