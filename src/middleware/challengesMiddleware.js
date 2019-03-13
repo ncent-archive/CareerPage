@@ -41,7 +41,7 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
       if (typeof challenge.challengeSettings.metadatas[0].value === "string") {
         if (challenge.id === 1 && challenge.createdAt === "2019-02-27T23:56:36.000Z") continue;
         console.log("\nin iteration, current challenge being parsed is", challenge);
-        let newStr = challenge.challengeSettings.metadatas[0].value.replace(/\\"/g, '"');
+        let newStr = challenge.challengeSettings.metadatas[0].value.replace(/\\"/g, '"').replace(/\n/g, "\\n");
         challenge.challengeSettings.metadatas[0].value = JSON.parse(newStr);
       }
     }
@@ -72,7 +72,7 @@ const ChallengesMiddleware = ({ getState, dispatch }) => next => action => {
       });
       dispatch(receiveChallenge(challenge.data));
     } else {
-      let newStr = challenge.data.challengeSettings.metadatas[0].value.replace(/\\"/g, '"');
+      let newStr = challenge.data.challengeSettings.metadatas[0].value.replace(/\\"/g, '"').replace(/\n/g, "\\n");
       challenge.data.challengeSettings.metadatas[0].value = JSON.parse(newStr);
       dispatch(receiveChallenge(challenge.data));
     }

@@ -1063,11 +1063,17 @@ a:hover {
   border: 2px solid #0000001f;
 }
 
-.createChallengeOption:hover {
+.createChallengeOption:hover, 
+.addSubJobSimpleButton:hover, 
+.addSubJobSimpleButtonChoice:hover, 
+.addSubJobSimpleButtonInitial:hover {
   background-color: rgba(38, 108, 214, 0.85);
 }
 
-.createChallengeOption:active {
+.createChallengeOption:active, 
+.addSubJobSimpleButton:active, 
+.addSubJobSimpleButtonChoice:active, 
+.addSubJobSimpleButtonInitial:active {
   background-color: rgba(38, 108, 214, 0.65);
 }
 
@@ -1164,18 +1170,70 @@ a:hover {
   text-align: center;
 }
 
-.addSubJobSimpleButton {
+.addChallengeFormContainerSubJobs {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+  align-items: center;
+  position: relative;
+}
+
+.addSubJobSimpleButtonInitial {
   font-size: 20px;
-  width: 50vw;
+  width: 60vw;
   max-width: 450px;
   margin-bottom: 55px;
-  height: 35px;
+  margin-top: 160px;
+  height: 40px;
   padding: auto;
   background-color: rgba(38, 108, 214, 1.0);
   color: white;
   border-radius: 10px;
   text-align: center;
-  padding-top: 7px;
+  padding-top: 2px;
+  border: 2px solid #0000001f;
+}
+
+.addChallengeFormSimpleButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  bottom: 15px;
+  position: absolute;
+}
+
+.addSubJobSimpleButton {
+  font-size: 20px;
+  width: 70vw;
+  position: absolute;
+  bottom: 15px;
+  max-width: 450px;
+  height: 40px;
+  padding: auto;
+  background-color: rgba(38, 108, 214, 1.0);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 2px;
+  border: 2px solid #0000001f;
+}
+
+.addSubJobSimpleButtonChoice {
+  font-size: 20px;
+  width: 70vw;
+  max-width: 450px;
+  padding-top: 35px;
+  height: 40px;
+  padding: auto;
+  background-color: rgba(38, 108, 214, 1.0);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 2px;
+  margin-top: 55px;
   border: 2px solid #0000001f;
 }
 
@@ -1185,6 +1243,25 @@ a:hover {
 
 .addSubJobSimpleButton:active {
   background-color: rgba(38, 108, 214, 0.65);
+}
+
+.addChallengeButtonSimple {
+  background-color: #2b2bff;
+  color: white;
+  width: 260px;
+  height: 50px;
+  font-size: 24px;
+  border: 2px solid #0000002e;
+  border-radius: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  bottom: -60px;
+}
+
+.addChallengeSimpleDataPointContainer {
+  display: flex;
+  flex-direction: row;
 }
 
 .addChallengeSimpleArrows {
