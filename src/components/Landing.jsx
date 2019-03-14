@@ -4,6 +4,13 @@ import store from "./../store/initializeStore.js";
 import {fetchAllChallenges} from "./../actions/challengeActions.js";
 import logo from "../img/ncent_NOsubline_500px_white.png";
 import impact from "../img/impact-icon-15.jpg";
+import downArrow from "../img/Scroll Down-595b40b75ba036ed117d58fa.svg";
+import $ from "jquery";
+
+function scrollDown(e) {
+    e.preventDefault();
+    $('html, body').animate({ scrollTop: $('#positions').offset().top}, 500, 'linear');
+}
 
 class Landing extends React.Component {
     constructor(props) {
@@ -26,27 +33,26 @@ class Landing extends React.Component {
             return (
                 <div className="appContainer">
                     <div className="headerContainer">
-
                         <img className="landingLogoImg" src={logo} onError={this.imgError}/>
-                        <a className="openPositionsBtn" href="#positions">Open Positions</a>
-
+                        <span className="openPositionsBtn" onClick={scrollDown}>Openings</span>
                     </div>
                     <div className="main">
 
                         <div className="mainHeader">
-                            Help us find the perfect candidate. Share your network, share the rewards
+                            <div className="titleBullets">
+                                <span className="titleBullet">Help us recruit</span><br/>
+                                <span className="titleBullet">Share your network</span><br/>
+                                <span className="titleBullet">Share the rewards</span><br/>
+                            </div>
+                            <div onClick={scrollDown}>
+                                <div className="scrollBtnContainer">
+                                    <img className="downArrow" src={downArrow}/>
+                                    <span className="shareNow">View Openings</span>
+                                </div>
+                            </div>
                         </div>
-                        <p className="mainDescription">
-                            The internet was created to democratize access to information and opportunity. It grew to be a platform where central actors now monetize the value of our connections, data and networks. We are building a new protocol to provide the correct incentives online so that you can own the value of your networks. Join us.
-                        </p>
 
-                        <div className="rolesAnchorsList">
-                            <a href="#positions" className="role">
-                                Open positions
-                            </a>
-                        </div>
-
-                        <div className="moreInfo">
+                        <div id="moreInfo" className="moreInfo">
 
                             <div className="infoItem">
                                 <div className="infoIcon">
