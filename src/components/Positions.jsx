@@ -5,8 +5,8 @@ class Positions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrowUp: false,
-      renderListing: true
+      arrowUp: true,
+      renderListing: false
     };
     //bindings
     this.handleExpansion = this.handleExpansion.bind(this);
