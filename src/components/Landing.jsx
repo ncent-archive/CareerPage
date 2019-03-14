@@ -15,10 +15,28 @@ function scrollDown(e) {
 class Landing extends React.Component {
     constructor(props) {
         super(props);
+
+        this.positionsByType = this.positionsByType.bind(this);
     }
 
     async componentWillMount() {
         store.dispatch(fetchAllChallenges());
+    }
+
+    positionsByType() {
+        const challenges = this.props.challengesData;
+        const positionTypesMap = {};
+
+        challenges.forEach(function(challenge) {
+            let department = challenge.challengeSettings.metadatas[0].value.company.department;
+            if (positionTypesMap[department]) {
+                positionTypesMap[department].push(challenge);
+            } else {
+                positionTypesMap[department] = [challenge];
+            }
+        });
+
+        return positionTypesMap;
     }
 
     render() {
@@ -102,8 +120,8 @@ class Landing extends React.Component {
                             <div className="positionsHeader">
                                 Open Positions
                             </div>
-                            {this.props.challengesData.map((el, i) => {
-                                return <Positions jobType="Engineering" data={el} key={i}/>
+                            {Object.keys(this.positionsByType()).map((key, i) => {
+                                return <Positions jobType={key} data={this.positionsByType()[key]} key={i}/>
                             })}
                         </div>
 
