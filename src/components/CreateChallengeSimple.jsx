@@ -565,7 +565,7 @@ class CreateChallengeSimple extends React.Component {
   }
 
   renderLeftArrow() {
-    if (this.state.stageIdx > 0 && this.state.stageIdx <= 6) {
+    if (this.state.stageIdx > 0 && this.state.stageIdx < 6) {
       return (
         <div className="addChallengeSimpleArrow" onClick={this.regressStage}>
           ←
@@ -579,7 +579,7 @@ class CreateChallengeSimple extends React.Component {
   }
 
   renderRightArrow() {
-    if (this.state.stageIdx < this.state.stage.length - 1 && this.state.stageIdx <= 6) {
+    if (this.state.stageIdx < this.state.stage.length - 1 && this.state.stageIdx < 6) {
       return (
         <div className="addChallengeSimpleArrow" onClick={this.advanceStage}>
           →

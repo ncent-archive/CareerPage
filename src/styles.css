@@ -1968,12 +1968,15 @@ section {
   flex-direction: column;
   max-height: 85%;
   height: 85%;
-  overflow: scroll;
+  overflow-y: scroll;
+  text-overflow: ellipsis;
 }
 
 .redeemListItem {
   margin-bottom: 14px;
   border-radius: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .redeemListItem:hover {

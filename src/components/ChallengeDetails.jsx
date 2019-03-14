@@ -11,7 +11,9 @@ class ChallengeDetails extends React.Component {
       mouseHover: false,
       embedTransitioning: false,
       stage: "default",
-      selectedEmail: null
+      selectedEmail: null,
+      generatingTweet: false,
+      emails: null
     }
 
     //bindings
@@ -37,15 +39,20 @@ class ChallengeDetails extends React.Component {
     this.copyReferralLink = this.copyReferralLink.bind(this);
     this.completeChallengeRedemption = this.completeChallengeRedemption.bind(this);
     this.selectEmail = this.selectEmail.bind(this);
+    this.tweetSpinner = this.tweetSpinner.bind(this);
 
   }
   //functions
 
   generateTweetObj() {
+    console.log("in generateTweetObj", this.state.referralLink)
+    let encodedReferralLink = this.state.referralLink.replace("&referralCode", "%26referralCode");
     return {
       original_referer: window.location.origin,
-      text: `Follow me and join ${this.props.data.challengeSettings.name}! https://www.nCent.com/hunts/${this.props.data.cryptoKeyPair.publicKey}`,
-      tw_p: "tweetbutton"
+      text: `Follow me and sign up for ${this.props.data.challengeSettings.name}!`,
+      tw_p: "tweetbutton",
+      url: encodedReferralLink,
+      hashtags: "nCent, blockchain"
     };
   }
 
@@ -61,13 +68,46 @@ class ChallengeDetails extends React.Component {
   }
 
   generateTweetRequest(url) {
+    console.log("\n\ngeneratingTweetRequest in ChallengeDetails", url)
     window.open(decodeURIComponent(url), "_blank");
+    this.setState({ generatingTweet: false });
   }
 
-  executeTweetWorkflow() {
-    let tweetObj = this.generateTweetObj();
-    let tweetURL = this.generateTweetURL(tweetObj);
-    this.generateTweetRequest(tweetURL);
+  async executeTweetWorkflow() {
+    this.setState({ generatingTweet: true });
+
+    if (!this.state.referralLink) {
+      console.log("\n\nChallengeDetails, getting referral link for tweet");
+      let referralRes = await apiUtil.createReferralCode(this.props.data.id);
+      let referralCode = referralRes.data.challengeParticipant.referralCode;
+      console.log("referralCode just returned to tweet generation", referralCode);
+      this.setState({ referralLink: `${window.location.origin}/detail?jobId=${this.props.data.id}&referralCode=${referralCode}` }, () => {
+        let tweetObj = this.generateTweetObj();
+        let tweetURL = this.generateTweetURL(tweetObj);
+        this.generateTweetRequest(tweetURL);
+      });
+    } else {
+      let tweetObj = this.generateTweetObj();
+      let tweetURL = this.generateTweetURL(tweetObj);
+      this.generateTweetRequest(tweetURL);
+    }
+  }
+
+  tweetSpinner() {
+    if (this.state.generatingTweet) {
+      return (
+        <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
+          <div className="referralModalLoading">
+            <div className="referralModalLoadingInformation">
+              Generating Tweet
+            </div>
+            <div className="spinnerCode"></div>
+          </div>
+        </div>
+      )
+    } else {
+      return;
+    }
   }
 
   tweetButtonColor(e) {
@@ -183,7 +223,7 @@ class ChallengeDetails extends React.Component {
         </div>
       )
     } else if (this.state.stage === "redeemListLoaded") {
-      if (this.state.emails.length > 0) {
+      if (this.state.emails) {
         return (
           <div className="referralModalContainer" ref={el => this.modal = el} onClick={this.closeModal}>
             <div className="referralModal">
@@ -272,14 +312,16 @@ class ChallengeDetails extends React.Component {
     this.setState({ stage: "redeemListLoading" });
 
     let allBalancesRes = await apiUtil.findAllBalancesForChallenge(this.props.data.id);
-    console.log("\nredeeming challenge in ChallengeDetails.jsx, response", allBalancesRes);
+    console.log("\nredeeming challenge, findingAllBalances in ChallengeDetails.jsx, response", allBalancesRes);
 
     let user = await apiUtil.findOneUser(this.props.data.challengeSettings.admin);
     console.log("\nfinding sponsor of challenge in ChallengeDetails.jsx, response", user);
 
     let emailsCollection = allBalancesRes.data.emailToChallengeBalances;
     //removing sponsor from collection
+    console.log("emailCollection before delete", emailsCollection);
     delete emailsCollection[user.data.userMetadata.email];
+    console.log("emailCollection after delete", emailsCollection);
     this.setState({ emails: emailsCollection });
 
     this.setState({ stage: "redeemListLoaded" });
@@ -292,6 +334,7 @@ class ChallengeDetails extends React.Component {
     } else {
       let challengeId = this.props.data.completionCriteria.id;
       let completerEmail = this.state.selectedEmail;
+      console.log("\nabout to call completeChallenge from ChallengeDetails.jsx", challengeId, completerEmail);
       let completionRes = await apiUtil.completeChallenge(challengeId, completerEmail);
       console.log("\nChallengeDetails.jsx, challengeRedemption returned", completionRes.data);
       this.setState({ stage: "redeemed" });
@@ -314,11 +357,15 @@ class ChallengeDetails extends React.Component {
 
   async shareChallenge() {
     this.setState({ stage: "sharing" });
-    let referralRes = await apiUtil.createReferralCode(this.props.data.id);
-    let referralCode = referralRes.data.challengeParticipant.referralCode;
-    this.setState({ referralLink: `${window.location.origin}/detail?jobId=${this.props.data.id}&referralCode=${referralCode}` }, () => {
+    if (!this.state.referralLink) {
+      let referralRes = await apiUtil.createReferralCode(this.props.data.id);
+      let referralCode = referralRes.data.challengeParticipant.referralCode;
+      this.setState({ referralLink: `${window.location.origin}/detail?jobId=${this.props.data.id}&referralCode=${referralCode}` }, () => {
+        this.setState({ stage: "shared" });
+      });
+    } else {
       this.setState({ stage: "shared" });
-    });
+    }
   }
 
   closeChallengeAction() {
@@ -330,6 +377,7 @@ class ChallengeDetails extends React.Component {
       return (
         <div className="huntContainerSimple" data-clicktarget="Hunt Details">
           {this.renderChallengeAction()}
+          {this.tweetSpinner()}
           <div className="switchToCollection" onClick={this.props.switchToCollection}>
             X
           </div>
