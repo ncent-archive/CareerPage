@@ -74,6 +74,18 @@ export const findAllChallenges = async (data, dispatch, err) => {
     }
 };
 
+export const findAllBalancesForChallenge = async (challengeId) => {
+    return await axios.get(`/api/challenges/balances/${challengeId}`);
+}
+
+export const completeChallenge = async (challengeId, completerEmail) => {
+    console.log("\n\ncompleteChallenge in apiUtil.js");
+    return await axios.patch(`/api/challenges/complete`, {
+        challengeId,
+        completerEmail
+    });
+}
+
 export const createReferralCode = async (challengeId) => {
     return await axios.post(`api/challenges/referralCode/${challengeId}`);
 };
@@ -89,6 +101,13 @@ export const shareChallenge = async (challengeId, shares, expiration, referralCo
         shares,
         expiration,
         referralCode
+    });
+}
+
+export const createChallenge = async (challenge) => {
+    console.log("\n\ncreateChallenge in apiUtil");
+    return axios.post('/api/challenges', {
+        challenge
     });
 }
 

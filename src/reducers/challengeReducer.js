@@ -11,7 +11,8 @@ export default(state = {
     challengesData: [],
     referralCodeData: {},
     shareTransactionData: {},
-    challengeReceived: false
+    challengeReceived: false,
+    challengesReceived: false
 }, action) => {
     let newState;
     Object.freeze(state);
@@ -29,7 +30,8 @@ export default(state = {
             // newState = merge({}, state, {challengesData});
             newState = {
                 ...state,
-                challengesData: state.challengesData.concat(newChallenges)
+                challengesData: state.challengesData.concat(newChallenges),
+                challengesReceived: true
             }
             return newState;
         case RECEIVE_SHARE_TRANSACTION:
