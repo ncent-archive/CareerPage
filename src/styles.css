@@ -397,6 +397,16 @@ a:hover {
     padding-right: 5px;
 }
 
+.createChallengeBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #ffffff;
+    padding-right: 10px;
+    font-size: 40px;
+}
+
 .referA {
     background: #0090ff;
     font-weight: normal;
@@ -1925,7 +1935,7 @@ section {
 }
 
 .huntName {
-    font-size: 25px;
+    font-size: 20px;
     padding-left: 3px;
 }
 
