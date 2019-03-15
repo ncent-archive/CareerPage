@@ -63,7 +63,7 @@ class Landing extends React.Component {
                                 <span className="titleBullet">Share the rewards</span><br/>
                             </div>
                             <div onClick={scrollDown}>
-                                <div className="scrollBtnContainer">
+                                <div className="detailBtnContainer">
                                     <img className="downArrow" src={downArrow}/>
                                     <span className="shareNow">View Openings</span>
                                 </div>

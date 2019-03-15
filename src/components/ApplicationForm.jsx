@@ -52,7 +52,7 @@ class ApplicationForm extends React.Component {
     if (this.state.currentStage === "Submit") {
 
       return (
-        <div className="applicationFormContainer">
+        <div id="applicationForm" className="applicationFormContainer">
           <div className="applicationFormHeaderRow">
             <div className="applicationFormHeaderRowHeader">
               Apply for this job

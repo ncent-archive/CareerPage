@@ -20,6 +20,21 @@ a:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    /* padding: 12px 0px; */
+}
+
+.detailHeaderContainer {
+    width: 100vw;
+    background-color: #24292e;
+    color: white;
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     position: fixed;
     top: 0;
     /* padding: 12px 0px; */
@@ -292,22 +307,24 @@ a:hover {
 
 .jobDetailContainer {
     font-family: "Helvetica Neue", Helvetica, Arial, Helvetica, sans-serif;
-    width: 80vw;
+    width: 90vw;
     max-width: 850px;
     margin: auto;
-    padding-left: 10px;
-    padding-right: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
 }
 
+.detailsSpacer {
+    height: 8vh;
+}
+
 .logoAndReferBtn {
     height: 78px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     width: 100%;
     margin-bottom: 15px;
@@ -350,7 +367,25 @@ a:hover {
 }
 
 .landingLogoImg {
-    height: 100%;
+    height: 52px;
+}
+
+.shareIconImage {
+    height: 30px;
+    padding-right: 10px;
+    margin-left: 12px;
+}
+
+.shareIconContainer {
+    max-height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailTitle {
+    font: normal 400 20px/1 'Josefin Sans', sans-serif;
 }
 
 .openPositionsBtn {
@@ -676,7 +711,6 @@ a:hover {
     padding: 20px 30px 30px 30px;
     background-color: #f3f3f3;
     max-width: 550px;
-    width: 75%;
     margin: auto;
     border-radius: 5px;
     min-height: 575px;
@@ -1528,8 +1562,9 @@ section {
 .previewTitle {
     z-index: 2;
     color: black;
-    font: normal 300 26px/1 'Josefin Sans', sans-serif;
+    font: normal 400 26px/1 'Josefin Sans', sans-serif;
     text-align: center;
+    padding-bottom: 2vh;
 }
 
 .downArrow {
@@ -1552,7 +1587,8 @@ section {
 }
 
 .demo {
-    height: 90vh;
+    margin-top: 10vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -1606,6 +1642,14 @@ section {
 }
 
 .scrollBtnContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.detailBtnContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
