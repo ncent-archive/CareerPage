@@ -75,12 +75,12 @@ export const findAllChallenges = async (data, dispatch, err) => {
 };
 
 export const findAllBalancesForChallenge = async (challengeId) => {
-    return await axios.get(`/api/challenges/balances/${challengeId}`);
+    return await axios.get(`/api/challenge/balances/${challengeId}`);
 }
 
 export const completeChallenge = async (challengeId, completerEmail) => {
     console.log("\n\ncompleteChallenge in apiUtil.js");
-    return await axios.patch(`/api/challenges/complete`, {
+    return await axios.put(`/api/challenges/complete`, {
         challengeId,
         completerEmail
     });
