@@ -29,7 +29,8 @@ export const sendOTP = async (userId) => {
 
 export const loginUser = async (userId, code, dispatch) => {
     console.log("\n\nloginUser in apiUtil, userId", userId, "code", code)
-    const user = await axios.post(`api/users/login?userId=${userId}`, {
+    const user = await axios.post('api/users/login', {
+        userId,
         code
     });
     console.log("loginUser returned in apiUtil");
