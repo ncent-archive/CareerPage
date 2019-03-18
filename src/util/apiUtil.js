@@ -75,7 +75,7 @@ export const findAllChallenges = async (data, dispatch, err) => {
 };
 
 export const findAllBalancesForChallenge = async (challengeId) => {
-    return await axios.get(`/api/challenge/balances/${challengeId}`);
+    return await axios.get(`/api/challenges/balances/${challengeId}`);
 }
 
 export const completeChallenge = async (challengeId, completerEmail) => {
