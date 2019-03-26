@@ -46,21 +46,21 @@ class ReferralModal extends React.Component {
             console.log("\nreferralRes on compWillMount createdReferralCode\n", referralRes);
 
             let referralCode = referralRes.data.challengeParticipant.referralCode;
-            this.setState({referralCode}, function () {
-                this.setState({referralLink: this.generateReferralLink()}, function () {
+            console.log(this.generateReferralLink());
+            this.setState({referralCode}, async function () {
+                const shortLink = await this.generateReferralLink();
+                this.setState({referralLink: shortLink}, function () {
                     this.setState({modalStage: "displayLink"})
-                })
-            })
+                }.bind(this))
+            }.bind(this))
         }
     }
 
     async componentDidUpdate(prevProps, prevState) {
 
         //code has been verified
-        if ((!prevProps.user.userData || !prevProps.user.userData.active) &&
-            (this.props.user.userData && this.props.user.userData.active)) {
-            console.log("\n\ncompDidUpdate in referralModal, user loggedIn, before and after",
-                prevProps.user.userData.loggedIn, this.props.user.userData.loggedIn);
+        if ((!prevProps.user.userData) &&
+            (this.props.user.userData)) {
             let referralRes = await apiUtil.createReferralCode(this.props.jobId);
 
             if (referralRes.status === 201) {
@@ -70,13 +70,13 @@ class ReferralModal extends React.Component {
             //send above when a query param is in URL
             //otherwise send where baseUser is sponsor, needs embedded call
 
-            console.log("\nReferralModal.jsx, createReferraCode returned referralRes.data\n", referralRes.data);
             let referralCode = referralRes.data.challengeParticipant.referralCode;
-            this.setState({referralCode}, function () {
-                this.setState({referralLink: this.generateReferralLink()}, function () {
+            this.setState({referralCode}, async function () {
+                const shortLink = await this.generateReferralLink();
+                this.setState({referralLink: shortLink}, function () {
                     this.setState({modalStage: "displayLink"})
-                })
-            })
+                }.bind(this))
+            }.bind(this))
         }
 
     }
@@ -86,7 +86,7 @@ class ReferralModal extends React.Component {
         try {
             result = await bitly.shorten(url);
         } catch (e) {
-            throw e;
+            result = url;
         }
         return result;
     }
@@ -203,7 +203,7 @@ class ReferralModal extends React.Component {
 
         //mail is sent through updates
 
-        this.setState({modalStage: "sendCode"});
+        this.setState({modalStage: "displayLink"});
 
         this.emailInput.value = "";
     }
