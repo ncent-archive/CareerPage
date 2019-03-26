@@ -42,15 +42,18 @@ class Positions extends React.Component {
     renderPositionList() {
         if (this.state.renderListing) {
             return this.props.data.map((el, i) => {
-                return (
-                    <PositionItem jobTitle={el.challengeSettings.metadatas[0].value.company.jobTitle}
-                                  location={el.challengeSettings.metadatas[0].value.company.location}
-                                  link={el.challengeSettings.metadatas[0].value.company.jobsUrl ||
-                                  `${window.location.origin}/detail?jobId=${el.id}`}
-                                  key={i}
-                    />
-                )
-            })
+                const subJobs = el.challengeSettings.metadatas[0].value.subJobs;
+                return subJobs.map(function(subJob, j) {
+                    return (
+                        <PositionItem jobTitle={`${el.challengeSettings.metadatas[0].value.company.jobTitle}: ${subJob.title}`}
+                                      location={el.challengeSettings.metadatas[0].value.company.location}
+                                      link={el.challengeSettings.metadatas[0].value.company.jobsUrl ||
+                                      `${window.location.origin}/detail?jobId=${el.id}${j === 0 ? "" : "&tabSwitch=" + j}`}
+                                      key={i + j}
+                        />
+                    )
+                });
+            });
         }
     }
 
@@ -64,7 +67,7 @@ class Positions extends React.Component {
                     </div>
                     <div className="positionOpenings">
             <span className="positionOpeningsText">
-              1 Opening
+              Openings
             </span>
                         {this.renderArrow()}
                     </div>
