@@ -225,7 +225,7 @@ class JobDetails extends React.Component {
                     </div>
                     <section id="section03" className="demo">
                         {this.renderPreviewTitle()}
-                        <span className="detailTitle">Earn up to ${jobState.company.totalUsdReward}!</span>
+                        <span className="detailTitle">Earn up to ${jobState.company.totalUsdReward/2}!</span>
                         <div className="infoContainer">
                             <span className="infoSpan">Step 1: SHARE this job with your network</span>
                             <span className="infoSpan">Step 2: If anyone in your sharing network finds the person we hire... YOU will share the rewards!</span>
