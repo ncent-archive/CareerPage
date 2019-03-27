@@ -19,9 +19,11 @@ class PositionItem extends React.Component {
             {this.props.jobTitle}
           </a>
         </span>
-        <span className="positionItemLocation">
-          <span>{this.props.location}</span>
-        </span>
+        <div className="positionItemLocation">
+          <span className="positionItemDetail">{this.props.location}</span>
+            <span className="positionItemDetail">{this.props.salaryRange}</span>
+            <span className="positionItemDetail">{this.props.equityRange}</span>
+        </div>
       </div>
     )
   }

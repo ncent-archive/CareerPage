@@ -545,8 +545,13 @@ a:hover {
     margin-left: 6px;
 }
 
+.positionItemDetail {
+    margin-right: 20px;
+}
+
 .moreInfoPs {
     margin-bottom: 60px;
+    width: 100%;
 }
 
 .moreInfoP {

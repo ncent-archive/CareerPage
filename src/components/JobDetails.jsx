@@ -355,6 +355,20 @@ class JobDetails extends React.Component {
                     <div className="moreInfoPs">
                         <div className="moreInfoP">
                             <div className="moreInfoPHeader">
+                                {jobState.company.compensation.title}
+                            </div>
+                            <div className="moreInfoPBody">
+                                Salary: {jobState.company.compensation.salaryRange}
+                            </div>
+                            <div className="moreInfoPBody">
+                                Equity: {jobState.company.compensation.equityRange}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="moreInfoPs">
+                        <div className="moreInfoP">
+                            <div className="moreInfoPHeader">
                                 {jobState.company.benefits.title}
                             </div>
                             <div className="moreInfoPBody">

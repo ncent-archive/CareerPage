@@ -31,10 +31,27 @@ const ChallengesMiddleware = ({getState, dispatch}) => next => action => {
             // dispatch(receiveChallenges(challenges.data[0]));
         }
 
+        if (challenges.data[1] && typeof challenges.data[1].challengeSettings.metadatas[0].value === "string") {
+            //running idiosyncratic regex
+            let newStr = challenges.data[1].challengeSettings.metadatas[0].value
+                .replace("shipping robust code. \n We're looking", "shipping robust code. \\n We're looking")
+                .replace('Expertise in Javascript, NodeJS, React"', 'Expertise in Javascript, NodeJS, React",');
+
+            //changing idiosyncratic data on challenges object before dispatching
+            challenges.data[1].challengeSettings.metadatas[0].value = JSON.parse(newStr);
+
+            //changing format of JSON to generalized format
+            challenges.data[1].challengeSettings.metadatas[0].value.subJobs = challenges.data[1].challengeSettings.metadatas[0].value.subJobs.map(subJob => {
+                subJob.data = [subJob.niceToHave, subJob.requirements, subJob.responsibilities];
+                return subJob;
+            });
+            // dispatch(receiveChallenges(challenges.data[0]));
+        }
+
         for (let challenge of challenges.data) {
             if (typeof challenge.challengeSettings.metadatas[0].value === "string") {
-                if (challenge.id === 1 && challenge.createdAt === "2019-02-27T23:56:36.000Z") continue;
                 let newStr = challenge.challengeSettings.metadatas[0].value.replace(/\\"/g, '"').replace(/\n/g, "\\n");
+                console.log(newStr);
                 challenge.challengeSettings.metadatas[0].value = JSON.parse(newStr);
             }
         }

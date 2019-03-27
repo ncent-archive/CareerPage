@@ -47,6 +47,8 @@ class Positions extends React.Component {
                     return (
                         <PositionItem jobTitle={`${el.challengeSettings.metadatas[0].value.company.jobTitle}: ${subJob.title}`}
                                       location={el.challengeSettings.metadatas[0].value.company.location}
+                                      salaryRange={el.challengeSettings.metadatas[0].value.company.compensation.salaryRange}
+                                      equityRange={el.challengeSettings.metadatas[0].value.company.compensation.equityRange}
                                       link={el.challengeSettings.metadatas[0].value.company.jobsUrl ||
                                       `${window.location.origin}/detail?jobId=${el.id}${j === 0 ? "" : "&tabSwitch=" + j}`}
                                       key={i + j}
