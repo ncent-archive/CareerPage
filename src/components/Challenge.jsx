@@ -160,7 +160,7 @@ class Hunt extends React.Component {
                             {this.props.data.challengeSettings.name}
                         </div>
                         <div className="huntMaxRewards" title="Max Reward">
-                            <b>${this.props.data.challengeSettings.metadatas[0].value.company.totalUsdReward}</b>
+                            <b>${this.props.data.challengeSettings.metadatas[0].value.company.totalUsdReward/2}</b>
                         </div>
                     </div>
 
