@@ -2,7 +2,8 @@ import React from "react";
 import {
     createUser,
     sendOTP,
-    loginUser
+    loginUser,
+    verifyingSession
 } from "./../actions/userActions.js";
 import store from "./../store/initializeStore.js";
 import {BitlyClient} from 'bitly';
@@ -18,7 +19,8 @@ class ReferralModal extends React.Component {
             modalStage: "sendMail",
             referralLink: "",
             email: "",
-            code: ""
+            code: "",
+            loaded: true
         };
         //bindings
         this.renderModalContent = this.renderModalContent.bind(this);
@@ -34,22 +36,21 @@ class ReferralModal extends React.Component {
         this.copyReferralLink = this.copyReferralLink.bind(this);
         this.generateShare = this.generateShare.bind(this);
         this.createShortUrl = this.createShortUrl.bind(this);
+        this.renderSpinner = this.renderSpinner.bind(this);
+        this.componentRedemptionCodeUpdate = this.componentRedemptionCodeUpdate.bind(this);
     }
 
     //functions
 
     async componentWillMount() {
-        console.log("compWillMount in referralModal");
-        if (this.props.user.userData && this.props.user.userData.active) {
+        console.log("compWillMount in referralModal")
+        if (this.props.user.sessionStatus && this.props.user.sessionStatus.user) {
             let referralRes = await apiUtil.createReferralCode(this.props.jobId);
 
-            console.log("\nreferralRes on compWillMount createdReferralCode\n", referralRes);
-
             let referralCode = referralRes.data.challengeParticipant.referralCode;
-            console.log(this.generateReferralLink());
             this.setState({referralCode}, async function () {
                 const shortLink = await this.generateReferralLink();
-                this.setState({referralLink: shortLink}, function () {
+                this.setState({referralLink: shortLink, loaded: true}, function () {
                     this.setState({modalStage: "displayLink"})
                 }.bind(this))
             }.bind(this))
@@ -57,28 +58,35 @@ class ReferralModal extends React.Component {
     }
 
     async componentDidUpdate(prevProps, prevState) {
+        const prevSessionStatus = prevProps.user.sessionStatus;
+        const currentSessionStatus = this.props.user.sessionStatus;
+        if(prevSessionStatus && 
+            (prevSessionStatus.user.apiId !== currentSessionStatus.user.apiId)) {
+            await this.componentRedemptionCodeUpdate()
+        } else if(!prevSessionStatus && currentSessionStatus && currentSessionStatus.user.apiId) {
+            await this.componentRedemptionCodeUpdate()
+        } else if(!currentSessionStatus && this.props.user.userData.apiId) {
+            store.dispatch(verifyingSession());
+        }
+    }
 
-        //code has been verified
-        if ((!prevProps.user.userData) &&
-            (this.props.user.userData)) {
-            let referralRes = await apiUtil.createReferralCode(this.props.jobId);
+    async componentRedemptionCodeUpdate() {
+        let referralRes = await apiUtil.createReferralCode(this.props.jobId);
 
-            if (referralRes.status === 201) {
-                this.generateShare();
-            }
-
-            //send above when a query param is in URL
-            //otherwise send where baseUser is sponsor, needs embedded call
-
-            let referralCode = referralRes.data.challengeParticipant.referralCode;
-            this.setState({referralCode}, async function () {
-                const shortLink = await this.generateReferralLink();
-                this.setState({referralLink: shortLink}, function () {
-                    this.setState({modalStage: "displayLink"})
-                }.bind(this))
-            }.bind(this))
+        if (referralRes.status === 201) {
+            this.generateShare();
         }
 
+        //send above when a query param is in URL
+        //otherwise send where baseUser is sponsor, needs embedded call
+
+        let referralCode = referralRes.data.challengeParticipant.referralCode;
+        this.setState({referralCode}, async function () {
+            const shortLink = await this.generateReferralLink();
+            this.setState({referralLink: shortLink, loaded: true}, function () {
+                this.setState({modalStage: "displayLink"})
+            }.bind(this))
+        }.bind(this))
     }
 
     async createShortUrl(url) {
@@ -119,7 +127,7 @@ class ReferralModal extends React.Component {
                 return (
                     <div className="referralModal">
                         <div className="referralModalInformation">
-                            Enter your email address, and we'll send you a login code.
+                            Enter your email address to receive your personal sharing url.
                         </div>
                         <div className="referralModalInputBtnWrapper">
                             <input className="referralModalInput" placeholder="Your Email Address"
@@ -127,37 +135,39 @@ class ReferralModal extends React.Component {
                                    onChange={this.changeEmail}
                             />
                             <button className="referralModalSendBtn" onClick={this.sendMail}>
-                                Send Mail
+                                Generate Personal Link
                             </button>
                         </div>
                     </div>
                 );
-            case "sendCode":
-                return (
-                    <div className="referralModal">
-                        <div className="referralModalInformation">
-                            Email sent! <br/>
-                            Please enter the code you received.
-                        </div>
-                        <div className="referralModalInputBtnWrapper">
-                            <input className="referralModalInput" placeholder="Your Code"
-                                   onKeyDown={this.codeKey} ref={el => this.codeInput = el} onChange={this.changeCode}
-                            />
-                            <button className="referralModalSendBtn" onClick={this.sendCode}>
-                                Send Code
-                            </button>
-                        </div>
-                    </div>
-                );
-            case "evaluatingCode":
-                return (
-                    <div className="referralModalLoading">
-                        <div className="referralModalLoadingInformation">
-                            Evaluating Code
-                        </div>
-                        <div className="spinnerCode"></div>
-                    </div>
-                );
+            case "loading":
+                return this.renderSpinner();
+            // case "sendCode":
+            //     return (
+            //         <div className="referralModal">
+            //             <div className="referralModalInformation">
+            //                 Email sent! <br/>
+            //                 Please enter the code you received.
+            //             </div>
+            //             <div className="referralModalInputBtnWrapper">
+            //                 <input className="referralModalInput" placeholder="Your Code"
+            //                        onKeyDown={this.codeKey} ref={el => this.codeInput = el} onChange={this.changeCode}
+            //                 />
+            //                 <button className="referralModalSendBtn" onClick={this.sendCode}>
+            //                     Send Code
+            //                 </button>
+            //             </div>
+            //         </div>
+            //     );
+            // case "evaluatingCode":
+            //     return (
+            //         <div className="referralModalLoading">
+            //             <div className="referralModalLoadingInformation">
+            //                 Evaluating Code
+            //             </div>
+            //             <div className="spinnerCode"></div>
+            //         </div>
+            //     );
             case "displayLink":
                 return (
                     <div className="referralModal">
@@ -203,7 +213,7 @@ class ReferralModal extends React.Component {
 
         //mail is sent through updates
 
-        this.setState({modalStage: "displayLink"});
+        this.setState({modalStage: "loading", loaded: false});
 
         this.emailInput.value = "";
     }
@@ -250,7 +260,18 @@ class ReferralModal extends React.Component {
         })
     }
 
+    renderSpinner() {
+        return (
+            <div className="spinnerContainer">
+                <div className="spinner">
+                </div>
+            </div>
+        )
+    }
+
     render() {
+        console.log("ARYA-ARRRR: ")
+        console.log(this.props.user)
         return (
             <div className="referralModalContainer" onClick={this.closeModal} ref={el => this.modalContainer = el}>
                 {this.renderModalContent()}
