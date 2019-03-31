@@ -16,7 +16,7 @@ class ReferralModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalStage: "sendMail",
+            modalStage: "loading",
             referralLink: "",
             email: "",
             code: "",
@@ -38,6 +38,7 @@ class ReferralModal extends React.Component {
         this.createShortUrl = this.createShortUrl.bind(this);
         this.renderSpinner = this.renderSpinner.bind(this);
         this.componentRedemptionCodeUpdate = this.componentRedemptionCodeUpdate.bind(this);
+        this.loading = this.loading.bind(this)
     }
 
     //functions
@@ -92,8 +93,11 @@ class ReferralModal extends React.Component {
     async createShortUrl(url) {
         let result;
         try {
+            console.log("generating shortened url..."+JSON.stringify(process.env));
             result = await bitly.shorten(url);
+            console.log("short url: " + result);
         } catch (e) {
+            console.log(e);
             result = url;
         }
         return result;
@@ -218,6 +222,14 @@ class ReferralModal extends React.Component {
         this.emailInput.value = "";
     }
 
+    loading() {
+        if(this.props.user.sessionStatus.user.id) {
+            this.componentWillMount()
+        } else {
+            this.sendMail()
+        }
+    }
+
     async sendCode() {
         console.log('sending code', this.state.code);
         store.dispatch(loginUser(this.props.user.userData.apiId, this.state.code));
@@ -245,7 +257,6 @@ class ReferralModal extends React.Component {
         newInput.select();
         document.execCommand("copy");
         newInput.remove();
-        e.target.innerText = "Copied!";
     }
 
     closeModal(e) {

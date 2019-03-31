@@ -6,7 +6,6 @@ class Hunt extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            copied: false,
             mouseHover: false,
             embedTransitioning: false
         };

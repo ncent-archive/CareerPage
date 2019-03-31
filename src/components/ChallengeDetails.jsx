@@ -7,7 +7,6 @@ class ChallengeDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      copied: false,
       mouseHover: false,
       embedTransitioning: false,
       stage: "default",
@@ -436,20 +435,7 @@ class ChallengeDetails extends React.Component {
 
               </div>
             </div>
-            <div className="huntEmbed" title="Embed a subscription button to this hunt on any page."
-              onClick={this.copyText}
-            >
-              {this.state.copied ? "Copied!" : "Embed"}
-            </div>
 
-          </div>
-
-          <div className="huntEmbedded" ref={el => { this.embedMsg = el }}
-            onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}
-          >
-            <span className="huntEmbeddedText">
-              The code has been copied to your clipboard. Paste this code directly into your HTML.
-            </span>
           </div>
 
         </div>
@@ -546,20 +532,7 @@ class ChallengeDetails extends React.Component {
   
               </div>
             </div>
-            <div className="huntEmbed" title="Embed a subscription button to this hunt on any page."
-              onClick={this.copyText}
-            >
-              {this.state.copied ? "Copied!" : "Embed"}
-            </div>
   
-          </div>
-  
-          <div className="huntEmbedded" ref={el => { this.embedMsg = el }}
-            onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}
-          >
-            <span className="huntEmbeddedText">
-              The code has been copied to your clipboard. Paste this code directly into your HTML.
-            </span>
           </div>
   
         </div>
