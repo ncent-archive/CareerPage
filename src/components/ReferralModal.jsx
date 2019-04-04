@@ -3,7 +3,8 @@ import {
     createUser,
     sendOTP,
     loginUser,
-    verifyingSession
+    verifyingSession,
+    emailUserRefferalLink
 } from "./../actions/userActions.js";
 import store from "./../store/initializeStore.js";
 import {BitlyClient} from 'bitly';
@@ -32,6 +33,7 @@ class ReferralModal extends React.Component {
         this.generateReferralLink = this.generateReferralLink.bind(this);
         this.delay = this.delay.bind(this);
         this.emailKey = this.emailKey.bind(this);
+        this.emailUser = this.emailUser.bind(this);
         this.codeKey = this.codeKey.bind(this);
         this.copyReferralLink = this.copyReferralLink.bind(this);
         this.generateShare = this.generateShare.bind(this);
@@ -44,7 +46,6 @@ class ReferralModal extends React.Component {
     //functions
 
     async componentWillMount() {
-        console.log("compWillMount in referralModal")
         if (this.props.user.sessionStatus && this.props.user.sessionStatus.user) {
             let referralRes = await apiUtil.createReferralCode(this.props.jobId);
 
@@ -55,10 +56,15 @@ class ReferralModal extends React.Component {
                     this.setState({modalStage: "displayLink"})
                 }.bind(this))
             }.bind(this))
+        } else {
+            this.setState({modalStage: "sendMail"});
         }
     }
 
     async componentDidUpdate(prevProps, prevState) {
+        if(!prevProps) {
+            return;
+        }
         const prevSessionStatus = prevProps.user.sessionStatus;
         const currentSessionStatus = this.props.user.sessionStatus;
         if(prevSessionStatus && 
@@ -84,6 +90,9 @@ class ReferralModal extends React.Component {
         let referralCode = referralRes.data.challengeParticipant.referralCode;
         this.setState({referralCode}, async function () {
             const shortLink = await this.generateReferralLink();
+            if(referralRes.status === 201) {
+                this.emailUser(shortLink);
+            }
             this.setState({referralLink: shortLink, loaded: true}, function () {
                 this.setState({modalStage: "displayLink"})
             }.bind(this))
@@ -105,6 +114,7 @@ class ReferralModal extends React.Component {
 
     async generateShare() {
         // console.log("generateShare")
+        let sponsor = await apiUtil.findOneUser(this.props.challenge.challengeSettings.admin).data;
         if (this.props.referralCode) {
             let shareChallengeRes = await apiUtil.shareChallenge(
                 this.props.jobId,
@@ -114,8 +124,6 @@ class ReferralModal extends React.Component {
             );
             console.log("\nReferralModal.jsx, shareChallengeRes returned in login workflow, case YES referralCodeId\n", shareChallengeRes.data);
         } else {
-            let sponsor = await apiUtil.findOneUser(this.props.challenge.challengeSettings.admin);
-            let sponsorId = sponsor.data.apiId;
             let shareChallengeRes = await apiUtil.shareChallenge(
                 this.props.jobId,
                 1,
@@ -222,6 +230,11 @@ class ReferralModal extends React.Component {
         this.emailInput.value = "";
     }
 
+    async emailUser(shortUrl) {
+        console.log('emailing user their refferal link', shortUrl);
+        store.dispatch(emailUserRefferalLink(this.state.email, shortUrl));
+    }
+
     loading() {
         if(this.props.user.sessionStatus.user.id) {
             this.componentWillMount()
@@ -281,8 +294,6 @@ class ReferralModal extends React.Component {
     }
 
     render() {
-        console.log("ARYA-ARRRR: ")
-        console.log(this.props.user)
         return (
             <div className="referralModalContainer" onClick={this.closeModal} ref={el => this.modalContainer = el}>
                 {this.renderModalContent()}

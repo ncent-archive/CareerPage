@@ -10,13 +10,23 @@ export const registerUser = async (email, firstname, lastname) => {
 
 export const upsertVerifyUser = async (email, dispatch) => {
     console.log("\n\nupsertVerifyUser in apiUtil", email);
-    const res = await axios.post("api/users/verify", {
+    const res = await axios.post(`api/users/verify`, {
         email,
         firstname: "firstName",
         lastname: "lastName"
     });
     return dispatch(res);
 };
+
+export const emailUserRefferalLinkUtil = async(email, shortUrl) => {
+    console.log("\n\nemailUserRefferalLink in apiUtil", email, shortUrl);
+    return axios.patch('/api/users/email', {
+        email,
+        shortUrl,
+        firstname: "firstName",
+        lastname: "lastName"
+    });
+}
 
 export const findOneUser = async (userId) => {
     return await axios.get(`api/users/${userId}`);

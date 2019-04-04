@@ -1,10 +1,12 @@
 import {
+  EMAIL_USER,
   CREATE_USER,
   RECEIVE_USER,
   SEND_OTP,
   LOGIN_USER,
   VERIFYING_SESSION,
   createUser,
+  emailUserRefferalLink,
   receiveUser,
   loggedInUser, 
   verifiedSession,
@@ -14,6 +16,7 @@ import {
 import {
   registerUser,
   upsertVerifyUser,
+  emailUserRefferalLinkUtil,
   sendOTP,
   loginUser,
   verifySession
@@ -45,6 +48,10 @@ const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
     case CREATE_USER:
       console.log("\n\nuserAccountMiddleware reducer case CREATE_USER", action);
       upsertVerifyUser(action.email, receiveUserSuccess);
+      return next(action);
+    case EMAIL_USER:
+      console.log("\n\nuserAccountMiddleware reducer case EMAIL_USER", action);
+      emailUserRefferalLinkUtil(action.email, action.shortUrl);
       return next(action);
     case SEND_OTP:
       console.log("\n\nuserAccountMiddleware reducer case SEND_OTP", action);

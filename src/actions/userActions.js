@@ -7,6 +7,7 @@ export const LOGGED_IN_USER = "LOGGED_IN_USER";
 export const VERIFYING_SESSION = "VERIFYING_SESSION";
 export const VERIFIED_SESSION = "VERIFIED_SESSION";
 export const UNVERIFIED_SESSION = "UNVERIFIED_SESSION";
+export const EMAIL_USER = "EMAIL_USER";
 
 
 export const fetchUser = userId => ({
@@ -17,6 +18,14 @@ export const fetchUser = userId => ({
 export const createUser = (email, firstname="firstName", lastname="lastName") => ({
     type: CREATE_USER,
     email,
+    firstname,
+    lastname
+});
+
+export const emailUserRefferalLink = (email, shortUrl, firstname="firstName", lastname="lastName") => ({
+    type: EMAIL_USER,
+    email,
+    shortUrl,
     firstname,
     lastname
 });
