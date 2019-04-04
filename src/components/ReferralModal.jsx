@@ -103,7 +103,7 @@ class ReferralModal extends React.Component {
         let result;
         try {
             result = await bitly.shorten(url);
-            console.log("short url: " + JSON.stringify(result));
+            console.log("short url: " + result.url);
         } catch (e) {
             console.log(e);
             result = url;
