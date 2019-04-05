@@ -69,14 +69,14 @@ class ReferralModal extends React.Component {
         }
         const prevSessionStatus = prevProps.user.sessionStatus;
         const currentSessionStatus = this.props.user.sessionStatus;
-        console.log(this.props);
-        console.log(this.state);
         if(prevSessionStatus && prevSessionStatus.user &&
             (prevSessionStatus.user.apiId !== currentSessionStatus.user.apiId)) {
             await this.componentRedemptionCodeUpdate()
         } else if(!prevSessionStatus && currentSessionStatus && currentSessionStatus.user.apiId) {
             await this.componentRedemptionCodeUpdate()
         } else if(!currentSessionStatus && this.props.user.userData.apiId) {
+            console.log("ATTEMPTING TO VERIFY SESSION");
+            console.log(this.props.user);
             store.dispatch(verifyingSession());
         } else if(this.props.user.userData.invalid === true) {
             // invalid user
