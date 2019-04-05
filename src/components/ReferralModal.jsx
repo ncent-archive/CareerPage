@@ -69,6 +69,7 @@ class ReferralModal extends React.Component {
         }
         const prevSessionStatus = prevProps.user.sessionStatus;
         const currentSessionStatus = this.props.user.sessionStatus;
+        console.log(this.props);
         if(prevSessionStatus && prevSessionStatus.user &&
             (prevSessionStatus.user.apiId !== currentSessionStatus.user.apiId)) {
             await this.componentRedemptionCodeUpdate()
@@ -76,7 +77,12 @@ class ReferralModal extends React.Component {
             await this.componentRedemptionCodeUpdate()
         } else if(!currentSessionStatus && this.props.user.userData.apiId) {
             store.dispatch(verifyingSession());
-        } else if(!prevSessionStatus && !currentSessionStatus && this.state.modalStage === "loading") {
+        } else if(
+            !prevSessionStatus && 
+            !currentSessionStatus && 
+            this.state.modalStage === "loading"
+        ) {
+            // invalid user
             this.setState({modalStage: "sendMail"});
         }
     }
