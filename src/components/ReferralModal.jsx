@@ -80,7 +80,6 @@ class ReferralModal extends React.Component {
             store.dispatch(verifyingSession());
         } else if(this.props.user.userData.invalid === true) {
             // invalid user
-            this.emailInput.value = "Invalid email entered.";
             this.setState({modalStage: "loading", loaded: true});
         }
     }
