@@ -70,6 +70,7 @@ class ReferralModal extends React.Component {
         const prevSessionStatus = prevProps.user.sessionStatus;
         const currentSessionStatus = this.props.user.sessionStatus;
         console.log(this.props);
+        console.log(this.state);
         if(prevSessionStatus && prevSessionStatus.user &&
             (prevSessionStatus.user.apiId !== currentSessionStatus.user.apiId)) {
             await this.componentRedemptionCodeUpdate()
