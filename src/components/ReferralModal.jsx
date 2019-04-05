@@ -82,7 +82,7 @@ class ReferralModal extends React.Component {
             !prevSessionStatus && 
             !currentSessionStatus && 
             this.state.modalStage === "loading" &&
-            this.state.loaded === true
+            this.props.user.userData.loaded === true
         ) {
             // invalid user
             this.setState({modalStage: "sendMail"});
