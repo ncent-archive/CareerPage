@@ -78,11 +78,12 @@ class ReferralModal extends React.Component {
             await this.componentRedemptionCodeUpdate()
         } else if(!currentSessionStatus && this.props.user.userData.apiId) {
             store.dispatch(verifyingSession());
-        } else if(this.props.user.userData.invalid === true) {
-            // invalid user
-            this.setState({loaded: true});
-            this.emailInput.value = "";
-        }
+        } 
+        // else if(this.props.user.userData.invalid === true) {
+        //     // invalid user
+        //     this.setState({loaded: true});
+        //     this.emailInput.value = "";
+        // }
     }
 
     async componentRedemptionCodeUpdate() {
