@@ -80,6 +80,7 @@ class ReferralModal extends React.Component {
             store.dispatch(verifyingSession());
         } else if(this.props.user.userData.invalid === true) {
             // invalid user
+            this.props.user.userData.invalid = false;
             this.setState({modalStage: "loading", loaded: true});
         }
     }
