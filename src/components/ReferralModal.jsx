@@ -81,7 +81,7 @@ class ReferralModal extends React.Component {
         } else if(this.props.user.userData.invalid === true) {
             // invalid user
             this.props.user.userData.invalid = false;
-            this.setState({modalStage: "loading", loaded: true});
+            this.setState({modalStage: "invalid", loaded: true});
         }
     }
 
@@ -158,6 +158,23 @@ class ReferralModal extends React.Component {
                         </div>
                     </div>
                 );
+            case "invalid":
+                return (
+                        <div className="referralModal">
+                            <div className="referralModalInformation">
+                                Please enter a valid email address to recieve your personalized sharing url.
+                            </div>
+                            <div className="referralModalInputBtnWrapper">
+                                <input className="referralModalInput" placeholder="Your valid email address"
+                                       onKeyDown={this.emailKey} ref={el => this.emailInput = el}
+                                       onChange={this.changeEmail}
+                                />
+                                <button className="referralModalSendBtn" onClick={this.sendMail}>
+                                    Generate Personal Link
+                                </button>
+                            </div>
+                        </div>
+                    );
             case "loading":
                 return this.renderSpinner();
             // case "sendCode":
