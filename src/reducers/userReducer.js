@@ -10,7 +10,8 @@ import {merge} from "lodash";
 export default (state = {
     userData: {
         userCreated: false,
-        loggedIn: false
+        loggedIn: false,
+        loaded: false
     }
 }, action) => {
     let newState;
@@ -22,6 +23,7 @@ export default (state = {
             const userData = action.userData;
             newState = merge({}, state, {userData});
             newState.userData.userCreated = true;
+            newState.userData.loaded = true;
             return newState;
         case LOGGED_IN_USER:
             console.log("userReducer, case LOGGED_IN_USER", action);
@@ -42,6 +44,7 @@ export default (state = {
             const invalidUserData = action.userData;
             newState = merge({}, state, {invalidUserData});
             newState.userData.userCreated = false;
+            newState.userData.loaded = true;
             return newState;
         default:
             return state;
