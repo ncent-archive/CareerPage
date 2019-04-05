@@ -8,6 +8,7 @@ export const VERIFYING_SESSION = "VERIFYING_SESSION";
 export const VERIFIED_SESSION = "VERIFIED_SESSION";
 export const UNVERIFIED_SESSION = "UNVERIFIED_SESSION";
 export const EMAIL_USER = "EMAIL_USER";
+export const INVALID_USER = "INVALID_USER";
 
 
 export const fetchUser = userId => ({
@@ -43,6 +44,11 @@ export const loginUser = (userId, confirmationCode) => ({
 
 export const receiveUser = userData => ({
     type: RECEIVE_USER,
+    userData
+});
+
+export const invalidUser = userData => ({
+    type: INVALID_USER,
     userData
 });
 

@@ -8,6 +8,7 @@ import {
   createUser,
   emailUserRefferalLink,
   receiveUser,
+  invalidUser,
   loggedInUser, 
   verifiedSession,
   unverifiedSession
@@ -29,6 +30,11 @@ const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
     dispatch(receiveUser(user.data));
   }
 
+  let receiveUserError = (user) => {
+    console.log("\nreceiveUserError in userAccountMiddleware", user);
+    dispatch(invalidUser(user.data));
+  }
+
   let loginUserSuccess = (user) => {
     console.log("\nloginUserSuccess in userAccountMiddleware", user.data);
     dispatch(loggedInUser(user.data));
@@ -47,7 +53,7 @@ const UserAccountMiddleware = ({ getState, dispatch }) => next => action => {
   switch(action.type) {
     case CREATE_USER:
       console.log("\n\nuserAccountMiddleware reducer case CREATE_USER", action);
-      upsertVerifyUser(action.email, receiveUserSuccess);
+      upsertVerifyUser(action.email, receiveUserSuccess, receiveUserError);
       return next(action);
     case EMAIL_USER:
       console.log("\n\nuserAccountMiddleware reducer case EMAIL_USER", action);

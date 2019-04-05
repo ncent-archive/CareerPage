@@ -8,14 +8,19 @@ export const registerUser = async (email, firstname, lastname) => {
     });
 };
 
-export const upsertVerifyUser = async (email, dispatch) => {
+export const upsertVerifyUser = async (email, dispatch, err) => {
     console.log("\n\nupsertVerifyUser in apiUtil", email);
-    const res = await axios.post(`api/users/verify`, {
-        email,
-        firstname: "firstName",
-        lastname: "lastName"
-    });
-    return dispatch(res);
+    try {
+        const res = await axios.post(`api/users/verify`, {
+            email,
+            firstname: "firstName",
+            lastname: "lastName"
+        });
+        return dispatch(res);
+    } catch(e) {
+        console.log(e.response);
+        return err(e.response);
+    }
 };
 
 export const emailUserRefferalLinkUtil = async(email, shortUrl) => {

@@ -46,6 +46,7 @@ class ReferralModal extends React.Component {
     //functions
 
     async componentWillMount() {
+        console.log("IN componentWillMount");
         if (this.props.user.sessionStatus && this.props.user.sessionStatus.user) {
             let referralRes = await apiUtil.createReferralCode(this.props.jobId);
 
@@ -62,6 +63,7 @@ class ReferralModal extends React.Component {
     }
 
     async componentDidUpdate(prevProps, prevState) {
+        console.log("IN componentDidUpdate");
         if(!prevProps) {
             return;
         }
@@ -74,6 +76,8 @@ class ReferralModal extends React.Component {
             await this.componentRedemptionCodeUpdate()
         } else if(!currentSessionStatus && this.props.user.userData.apiId) {
             store.dispatch(verifyingSession());
+        } else if(!prevSessionStatus && !currentSessionStatus && this.state.modalStage === "loading") {
+            this.setState({modalStage: "sendMail"});
         }
     }
 

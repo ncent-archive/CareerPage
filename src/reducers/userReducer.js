@@ -2,7 +2,8 @@ import {
     RECEIVE_USER,
     LOGGED_IN_USER,
     VERIFIED_SESSION,
-    UNVERIFIED_SESSION
+    UNVERIFIED_SESSION,
+    INVALID_USER
 } from "./../actions/userActions.js";
 import {merge} from "lodash";
 
@@ -35,6 +36,12 @@ export default (state = {
         case UNVERIFIED_SESSION:
             console.log("userReducer, case UNVERIFIED_SESSION", action);
             newState = merge({}, state, {sessionStatus: action.status});
+            return newState;
+        case INVALID_USER:
+            console.log("userReducer, case INVALID_USER", action);
+            const invalidUserData = action.userData;
+            newState = merge({}, state, {invalidUserData});
+            newState.userData.userCreated = false;
             return newState;
         default:
             return state;
