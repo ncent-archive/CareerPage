@@ -1,5 +1,6 @@
 import {
     RECEIVE_CHALLENGE,
+    RECEIVE_CHALLENGE_CHAIN,
     RECEIVE_CHALLENGES,
     RECEIVE_SHARE_TRANSACTION,
     RECEIVE_REFERRAL_CODE
@@ -8,10 +9,12 @@ import {merge} from "lodash";
 
 export default(state = {
     challengeData: {},
+    challengeChainData: {},
     challengesData: [],
     referralCodeData: {},
     shareTransactionData: {},
     challengeReceived: false,
+    challengeChainReceived: false,
     challengesReceived: false
 }, action) => {
     let newState;
@@ -23,6 +26,12 @@ export default(state = {
             const challengeData = action.challengeData;
             newState = merge({}, state, {challengeData});
             newState.challengeReceived = true;
+            return newState;
+        case RECEIVE_CHALLENGE_CHAIN:
+            console.log("challengeReducer, case RECEIVE_CHALLENGE_CHAIN", action);
+            const challengeChainData = action.challengeChainData;
+            newState = merge({}, state, {challengeChainData});
+            newState.challengeChainReceived = true;
             return newState;
         case RECEIVE_CHALLENGES:
             const challengesData = action.challengesData;

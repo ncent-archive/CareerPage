@@ -4,14 +4,21 @@ export const SHARE_CHALLENGE = "SHARE_CHALLENGE";
 export const CREATE_REFERRAL_CODE = "CREATE_REFERRAL_CODE";
 export const FETCH_REFERRAL_CODE = "FETCH_REFERRAL_CODE";
 export const RECEIVE_CHALLENGE = "RECEIVE_CHALLENGE";
+export const RECEIVE_CHALLENGE_CHAIN = "RECEIVE_CHALLENGE_CHAIN";
 export const RECEIVE_CHALLENGES = "RECEIVE_CHALLENGES";
 export const RECEIVE_SHARE_TRANSACTION = "RECEIVE_SHARE_TRANSACTION";
 export const RECEIVE_REFERRAL_CODE = "RECEIVE_REFERRAL_CODE";
+export const FETCH_CHALLENGE_CHAIN = "FETCH_CHALLENGE_CHAIN";
 
 export const fetchChallenge = challengeId => ({
     type: FETCH_CHALLENGE,
     challengeId
 });
+
+export const fetchChallengeChain = challengeId => ({
+    type: FETCH_CHALLENGE_CHAIN,
+    challengeId
+})
 
 export const fetchAllChallenges = () => ({
     type: FETCH_ALL_CHALLENGES
@@ -39,6 +46,11 @@ export const fetchReferralCode = challengeId => ({
 export const receiveChallenge = challengeData => ({
     type: RECEIVE_CHALLENGE,
     challengeData
+});
+
+export const receiveChallengeChain = challengeChainData => ({
+    type: RECEIVE_CHALLENGE_CHAIN,
+    challengeChainData
 });
 
 export const receiveChallenges = challengesData => ({

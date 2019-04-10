@@ -77,6 +77,16 @@ export const findOneChallenge = async (challengeId, dispatch, err) => {
     }
 };
 
+export const findOneChallengeChain = async (challengeId, dispatch, err) => {
+    try {
+        const res = await axios.get(`api/challenges/${challengeId}/chain`);
+        return dispatch(res);
+    } catch(e) {
+        console.log("error in findOneChallenge in apiUtil");
+        return err(e);
+    }
+};
+
 export const findAllChallenges = async (data, dispatch, err) => {
     console.log("\n\nfindAllChallenges apiutil.js");
     try {

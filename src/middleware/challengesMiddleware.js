@@ -1,13 +1,16 @@
 import {
     FETCH_ALL_CHALLENGES,
     FETCH_CHALLENGE,
+    FETCH_CHALLENGE_CHAIN,
     receiveChallenges,
-    receiveChallenge
+    receiveChallenge,
+    receiveChallengeChain,
 } from './../actions/challengeActions.js';
 
 import {
     findAllChallenges,
-    findOneChallenge
+    findOneChallenge,
+    findOneChallengeChain,
 } from '../util/apiUtil.js';
 
 const ChallengesMiddleware = ({getState, dispatch}) => next => action => {
@@ -79,6 +82,10 @@ const ChallengesMiddleware = ({getState, dispatch}) => next => action => {
         }
     };
 
+    let receiveChallengeChainSuccess = (challengeChain) => {
+        dispatch(receiveChallengeChain(challengeChain.data));
+    };
+
     let error = e => console.log("Error in Challenges Middleware!", e);
 
     switch (action.type) {
@@ -89,6 +96,10 @@ const ChallengesMiddleware = ({getState, dispatch}) => next => action => {
         case FETCH_CHALLENGE:
             console.log("challengesMiddleware.js, case FETCH_CHALLENGE", action);
             findOneChallenge(action.challengeId, receiveChallengeSuccess, error);
+            return next(action);
+        case FETCH_CHALLENGE_CHAIN:
+            console.log("challengesMiddleware.js case FETCH_CHALLENGE_CHAIN", action);
+            findOneChallengeChain(action.challengeId, receiveChallengeChainSuccess, error);
             return next(action);
         default:
             return next(action);
