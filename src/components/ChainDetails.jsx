@@ -3,7 +3,6 @@ import store from "./../store/initializeStore.js";
 import { fetchChallengeChain, fetchAllChallenges } from "./../actions/challengeActions.js";
 import $ from "jquery";
 import * as d3 from "d3";
-import d3Tip from "d3-tip"
 
 $(function () {
     $('a').on('click', function (e) {
