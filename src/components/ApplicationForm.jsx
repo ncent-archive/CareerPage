@@ -17,11 +17,15 @@ class ApplicationForm extends React.Component {
   //functions
 
   async componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.status && this.props.status) {
+    console.log("UPDATES HAPPENED: ", this);
+    if (!prevProps.status && this.props.status && !this.props.invalidApplication) {
       //for simulation of real load time
       await this.delay();
 
       this.setState({ currentStage: "Submitted" });
+    }
+    if(this.state.currentStage === "Submitting" && this.props.invalidApplication) {
+      this.setState({ currentStage: "SubmitWithError" });
     }
   }
 
@@ -161,7 +165,121 @@ class ApplicationForm extends React.Component {
   
         </div>
       )
-    } else if (this.state.currentStage === "Submitting") {
+    } else if (this.state.currentStage === "SubmitWithError") {
+
+      return (
+        <div id="applicationForm" className="applicationFormContainer">
+          <div className="applicationFormHeaderRow">
+            <div className="asterisk">You must include all required fields.</div>
+            <div className="applicationFormHeaderRowHeader">
+              Apply for this job
+            </div>
+            <div className="applicationFormHeaderRowRequired">
+              <span className="asteriskSmall">*</span> Required
+            </div>
+          </div>
+  
+          <div className="applicationFormPersonalContainer">
+  
+  
+            <div className="applicationFormInputRow">
+              <div className="applicationFormInputRowText">
+                First Name <span className="asterisk">*</span>
+              </div>
+              <div className="applicationFormInputRowInput">
+                <input className="applicationFormInputRowInputEl" 
+                  data-input-name="firstName" onChange={this.handleFormChange}
+                />
+              </div>
+            </div>
+  
+            <div className="applicationFormInputRow">
+              <div className="applicationFormInputRowText">
+                Last Name <span className="asterisk">*</span>
+              </div>
+              <div className="applicationFormInputRowInput">
+                <input className="applicationFormInputRowInputEl" 
+                  data-input-name="lastName" onChange={this.handleFormChange}
+                />
+              </div>
+            </div>
+  
+            <div className="applicationFormInputRow">
+              <div className="applicationFormInputRowText">
+                Email <span className="asterisk">*</span>
+              </div>
+              <div className="applicationFormInputRowInput">
+                <input className="applicationFormInputRowInputEl" 
+                  data-input-name="email" onChange={this.handleFormChange}
+                />
+              </div>
+            </div>
+  
+            <div className="applicationFormInputRow">
+              <div className="applicationFormInputRowText">
+                Phone
+              </div>
+              <div className="applicationFormInputRowInput">
+                <input className="applicationFormInputRowInputEl" 
+                  data-input-name="phone" onChange={this.handleFormChange}
+                />
+              </div>
+            </div>
+  
+            <div className="applicationFormInputRow">
+              <div className="applicationFormInputRowText">
+                Resume URL <span className="asterisk">*</span>
+              </div>
+              <div className="applicationFormInputRowInput">
+                <input className="applicationFormInputRowInputEl" 
+                  data-input-name="resumeURL" onChange={this.handleFormChange}
+                />
+              </div>
+            </div>
+  
+            <div className="applicationFormInputRow">
+              <div className="applicationFormInputRowText">
+                Cover Letter URL
+              </div>
+              <div className="applicationFormInputRowInput">
+                <input className="applicationFormInputRowInputEl" 
+                  data-input-name="coverLetterURL" onChange={this.handleFormChange}
+                />
+              </div>
+            </div>
+  
+          </div>
+  
+          <hr className="applicationFormDivider" />
+  
+          <div className="applicationFormLinksContainer">
+  
+            <div className="applicationFormLinkContainer">
+              <div className="applicationFormLinkText">
+                Github URL
+              </div>
+              <input className="applicationFormLinkInput" 
+                data-input-name="githubURL" onChange={this.handleFormChange}
+              />
+            </div>
+  
+            <div className="applicationFormLinkContainer">
+              <div className="applicationFormLinkText">
+                LinkedIn URL
+              </div>
+              <input className="applicationFormLinkInput" 
+                data-input-name="linkedinURL" onChange={this.handleFormChange}
+              />
+            </div>
+  
+          </div>
+  
+          <button className="submitButton" onClick={this.submitApplication}>Submit Application</button>
+  
+        </div>
+      )
+    }
+     else if (this.state.currentStage === "Submitting") {
       return (
         <div className="applicationFormContainer">
           <div className="applicationFormSpinnerContainer">
@@ -180,6 +298,7 @@ class ApplicationForm extends React.Component {
         </div>
       )
     } else {
+      console.log("ApplicationForm: Entering error case: ", this.state, this.props);
       return (
         <div className="applicationFormContainer">
           There was an error.

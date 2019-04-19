@@ -379,6 +379,7 @@ class JobDetails extends React.Component {
 
                     <ApplicationForm referralCode={this.state.referralCode}
                                      status={this.props.jobApplication.jobApplicationSuccessful}
+                                     invalidApplication={this.props.jobApplication.invalidJobApplication}
                                      position={jobState.company.jobTitle} subPosition={jobState.subJobs[idx].title}
                     />
 
