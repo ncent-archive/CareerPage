@@ -2,7 +2,7 @@ import {
   SEND_APPLICATION,
   INVALID_JOB_APPLICATION,
   sendJobApplicationSuccess,
-  invalidJobApplication
+  invalidJobApplication,
 } from "./../actions/jobApplicationActions.js";
 import { sendApplication } from "./../util/apiUtil.js";
 

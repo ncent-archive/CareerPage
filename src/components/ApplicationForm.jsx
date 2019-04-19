@@ -1,6 +1,6 @@
 import React from "react";
 import store from "./../store/initializeStore.js";
-import { sendApplication } from "./../actions/jobApplicationActions.js";
+import { sendApplication, clearInvalidApplication } from "./../actions/jobApplicationActions.js";
 
 class ApplicationForm extends React.Component {
   constructor(props) {
@@ -17,11 +17,10 @@ class ApplicationForm extends React.Component {
   //functions
 
   async componentDidUpdate(prevProps, prevState) {
-    console.log("UPDATES HAPPENED: ", this);
-
     if(this.state.currentStage === "Submitting" && this.props.invalidApplication) {
-      console.log("componentDidUpdate: Submitting with error");
+      console.log("componentDidUpdate: Submitting with error", this.state.currentStage);
       this.setState({ currentStage: "SubmitWithError" });
+      store.dispatch(clearInvalidApplication());
     } else if (!prevProps.status && this.props.status) {
       console.log("componentDidUpdate: Submitted");
       //for simulation of real load time
