@@ -18,14 +18,16 @@ class ApplicationForm extends React.Component {
 
   async componentDidUpdate(prevProps, prevState) {
     console.log("UPDATES HAPPENED: ", this);
-    if (!prevProps.status && this.props.status && !this.props.invalidApplication) {
+
+    if(this.state.currentStage === "Submitting" && this.props.invalidApplication) {
+      console.log("componentDidUpdate: Submitting with error");
+      this.setState({ currentStage: "SubmitWithError" });
+    } else if (!prevProps.status && this.props.status) {
+      console.log("componentDidUpdate: Submitted");
       //for simulation of real load time
       await this.delay();
 
       this.setState({ currentStage: "Submitted" });
-    }
-    if(this.state.currentStage === "Submitting" && this.props.invalidApplication) {
-      this.setState({ currentStage: "SubmitWithError" });
     }
   }
 
