@@ -11,10 +11,12 @@ const JobApplicationMiddleware = ({ getState, dispatch }) => next => action => {
     dispatch(sendJobApplicationSuccess());
   }
 
+  let error = e => console.log("Error in Job Applications Middleware!", e);
+
   switch(action.type) {
     case SEND_APPLICATION:
       console.log("jobApplication middleware reducer case SEND_APPLICATION");
-      sendApplication(action.data, sendApplicationSuccess);
+      sendApplication(action.data, sendApplicationSuccess, error);
       return next(action);
     default:
       return next(action);

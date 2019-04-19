@@ -136,12 +136,13 @@ export const createChallenge = async (challenge) => {
     });
 }
 
-export const sendApplication = async (data, dispatch) => {
+export const sendApplication = async (data, dispatch, err) => {
     console.log("\n\apiUtil, sendApplication", data);
     try {
         let res = await axios.post('/api/jobApplications', data);
         return dispatch(res);
     } catch(e) {
         console.log("apiUtil, sendApplication ERROR", e);
+        return err(e);
     }
 }
